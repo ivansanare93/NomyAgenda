@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
@@ -56,12 +57,12 @@ class AgendaFragment : Fragment() {
         binding.fabAddEvent.setOnClickListener { openEditor(0) }
 
         // Ensure FAB stays above the BottomNavigationView and system navigation bar on all devices.
+        val bottomNavView = requireActivity().findViewById<View>(R.id.bottom_navigation)
         val baseMargin = resources.getDimensionPixelSize(R.dimen.spacing_medium)
         val basePadding = resources.getDimensionPixelSize(R.dimen.spacing_xlarge)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            val bottomNavHeight = requireActivity().findViewById<View>(R.id.bottom_navigation).height
-            val totalOffset = maxOf(navBarHeight, bottomNavHeight)
+            val totalOffset = maxOf(navBarHeight, bottomNavView.height)
 
             binding.fabAddEvent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = baseMargin + totalOffset
@@ -69,6 +70,8 @@ class AgendaFragment : Fragment() {
             binding.recyclerAgenda.updatePadding(bottom = basePadding + totalOffset)
             insets
         }
+        // Re-apply insets once BottomNavigationView is measured in case height was 0 on first dispatch.
+        bottomNavView.doOnLayout { ViewCompat.requestApplyInsets(binding.root) }
     }
 
     private fun openEditor(entryId: Int) {
