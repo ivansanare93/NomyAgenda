@@ -57,12 +57,14 @@ class AgendaFragment : Fragment() {
         binding.fabAddEvent.setOnClickListener { openEditor(0) }
 
         // Ensure FAB stays above the BottomNavigationView and system navigation bar on all devices.
-        val bottomNavView = requireActivity().findViewById<View>(R.id.bottom_navigation)
+        // bottomNavView absorbs system navigation bar insets into its own height (via Material's
+        // built-in fitsSystemWindows behaviour), so maxOf the two avoids double-counting.
+        val bottomNavView: View? = requireActivity().findViewById(R.id.bottom_navigation)
         val baseMargin = resources.getDimensionPixelSize(R.dimen.spacing_medium)
         val basePadding = resources.getDimensionPixelSize(R.dimen.spacing_xlarge)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            val totalOffset = maxOf(navBarHeight, bottomNavView.height)
+            val totalOffset = maxOf(navBarHeight, bottomNavView?.height ?: 0)
 
             binding.fabAddEvent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = baseMargin + totalOffset
@@ -71,7 +73,7 @@ class AgendaFragment : Fragment() {
             insets
         }
         // Re-apply insets once BottomNavigationView is measured in case height was 0 on first dispatch.
-        bottomNavView.doOnLayout { ViewCompat.requestApplyInsets(binding.root) }
+        bottomNavView?.doOnLayout { ViewCompat.requestApplyInsets(binding.root) }
     }
 
     private fun openEditor(entryId: Int) {
