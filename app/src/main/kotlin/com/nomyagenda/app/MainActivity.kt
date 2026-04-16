@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
+        setSupportActionBar(binding.toolbar)
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.agendaFragment, R.id.contactsFragment, R.id.settingsFragment)
         )
