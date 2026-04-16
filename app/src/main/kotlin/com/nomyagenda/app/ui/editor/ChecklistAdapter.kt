@@ -40,14 +40,16 @@ class ChecklistAdapter(
             binding.checkboxItem.isChecked = item.done
             binding.checkboxItem.text = item.text
             binding.checkboxItem.setOnCheckedChangeListener { _, isChecked ->
-                val pos = this@ChecklistViewHolder.bindingAdapterPosition
+                @Suppress("DEPRECATION")
+                val pos = adapterPosition
                 if (pos != RecyclerView.NO_POSITION) {
                     items[pos] = items[pos].copy(done = isChecked)
                     onChanged()
                 }
             }
             binding.buttonDeleteItem.setOnClickListener {
-                val pos = this@ChecklistViewHolder.bindingAdapterPosition
+                @Suppress("DEPRECATION")
+                val pos = adapterPosition
                 if (pos != RecyclerView.NO_POSITION) {
                     items.removeAt(pos)
                     notifyItemRemoved(pos)
