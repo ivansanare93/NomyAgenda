@@ -54,10 +54,12 @@ class EntryEditorFragment : Fragment() {
         binding.chipReminder.setOnClickListener { setType(EntryType.REMINDER) }
 
         binding.buttonAddChecklistItem.setOnClickListener {
-            val text = binding.editNewChecklistItem.text?.toString() ?: ""
-            checklistAdapter.addItem(text)
-            binding.editNewChecklistItem.setText("")
-            binding.editNewChecklistItem.clearFocus()
+            val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
+            if (text.isNotBlank()) {
+                checklistAdapter.addItem(text)
+                binding.editNewChecklistItem.setText("")
+                binding.editNewChecklistItem.clearFocus()
+            }
         }
 
         binding.editDueDate.setOnClickListener { showDateTimePicker() }
