@@ -18,6 +18,9 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AgendaFragment : Fragment() {
 
@@ -39,6 +42,9 @@ class AgendaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Show today's date in the header
+        binding.textHeaderDate.text = HEADER_DATE_FORMAT.format(Date())
+
         adapter = AgendaAdapter(
             onClick = { entry -> openEditor(entry.id) },
             onLongClick = { entry -> confirmDelete(entry) }
@@ -47,7 +53,7 @@ class AgendaFragment : Fragment() {
 
         viewModel.entries.observe(viewLifecycleOwner) { entries ->
             adapter.submitList(entries)
-            binding.textEmptyAgenda.visibility = if (entries.isEmpty()) View.VISIBLE else View.GONE
+            binding.layoutEmptyAgenda.visibility = if (entries.isEmpty()) View.VISIBLE else View.GONE
         }
 
         binding.editSearch.addTextChangedListener { text ->
@@ -96,5 +102,9 @@ class AgendaFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private val HEADER_DATE_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
     }
 }

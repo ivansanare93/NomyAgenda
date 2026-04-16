@@ -4,20 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/agenda_background"
     tools:context=".ui.agenda.AgendaFragment">
 
+    <!-- Lilac header banner -->
+    <LinearLayout
+        android:id="@+id/layout_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/agenda_header_bg"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/agenda_header_title"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="@color/md_theme_light_onPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_header_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xsmall"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/agenda_header_date_text"
+            tools:text="miércoles, 16 de abril de 2025" />
+
+    </LinearLayout>
+
+    <!-- Search bar -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_search"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_medium"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_medium"
         android:hint="@string/search_hint"
+        app:boxBackgroundColor="@color/md_theme_light_surface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@android:drawable/ic_menu_search">
+        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:startIconTint="?attr/colorPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_search"
@@ -43,17 +80,28 @@
         app:layout_constraintTop_toBottomOf="@id/layout_search"
         tools:listitem="@layout/item_agenda_entry" />
 
-    <TextView
-        android:id="@+id/text_empty_agenda"
+    <LinearLayout
+        android:id="@+id/layout_empty_agenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/agenda_empty"
-        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:gravity="center"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_search" />
+        app:layout_constraintTop_toBottomOf="@id/layout_search">
+
+        <TextView
+            android:id="@+id/text_empty_agenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/agenda_empty"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?attr/colorPrimary" />
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_event"

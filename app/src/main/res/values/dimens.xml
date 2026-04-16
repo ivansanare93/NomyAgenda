@@ -6,7 +6,7 @@
     <dimen name="spacing_xlarge">32dp</dimen>
 
     <dimen name="card_corner_radius">12dp</dimen>
-    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
 
     <dimen name="bottom_nav_height">56dp</dimen>
     <dimen name="fab_bottom_margin">100dp</dimen>

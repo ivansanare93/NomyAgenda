@@ -46,4 +46,18 @@
     <color name="md_theme_dark_surfaceVariant">#49454F</color>
     <color name="md_theme_dark_onSurfaceVariant">#CAC4D0</color>
     <color name="md_theme_dark_outline">#938F99</color>
+
+    <!-- Agenda section – lilac palette -->
+    <color name="agenda_background">#F5F0FF</color>
+    <color name="agenda_header_bg">#7C4DFF</color>
+    <color name="agenda_header_date_text">#CCFFFFFF</color>
+
+    <color name="note_card_bg">#EDE7FF</color>
+    <color name="note_accent">#9575CD</color>
+
+    <color name="task_card_bg">#E8EAF6</color>
+    <color name="task_accent">#7986CB</color>
+
+    <color name="reminder_card_bg">#F3E5F5</color>
+    <color name="reminder_accent">#CE93D8</color>
 </resources>
