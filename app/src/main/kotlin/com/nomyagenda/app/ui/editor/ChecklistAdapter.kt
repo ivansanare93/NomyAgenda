@@ -17,7 +17,7 @@ class ChecklistAdapter(
     }
 
     override fun onBindViewHolder(holder: ChecklistViewHolder, position: Int) {
-        holder.bind(items[position], position)
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int = items.size
@@ -35,18 +35,24 @@ class ChecklistAdapter(
         private val binding: ItemChecklistBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ChecklistItem, position: Int) {
+        fun bind(item: ChecklistItem) {
             binding.checkboxItem.isChecked = item.done
             binding.checkboxItem.text = item.text
             binding.checkboxItem.setOnCheckedChangeListener { _, isChecked ->
-                items[position] = items[position].copy(done = isChecked)
-                onChanged()
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    items[pos] = items[pos].copy(done = isChecked)
+                    onChanged()
+                }
             }
             binding.buttonDeleteItem.setOnClickListener {
-                items.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, items.size)
-                onChanged()
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    items.removeAt(pos)
+                    notifyItemRemoved(pos)
+                    notifyItemRangeChanged(pos, items.size)
+                    onChanged()
+                }
             }
         }
     }

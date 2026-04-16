@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
@@ -45,6 +46,7 @@ class EntryEditorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         checklistAdapter = ChecklistAdapter(checklistItems) { /* updated */ }
+        binding.recyclerChecklist.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerChecklist.adapter = checklistAdapter
 
         binding.chipNote.setOnClickListener { setType(EntryType.NOTE) }
@@ -52,9 +54,12 @@ class EntryEditorFragment : Fragment() {
         binding.chipReminder.setOnClickListener { setType(EntryType.REMINDER) }
 
         binding.buttonAddChecklistItem.setOnClickListener {
-            val text = binding.editNewChecklistItem.text?.toString() ?: ""
-            checklistAdapter.addItem(text)
-            binding.editNewChecklistItem.setText("")
+            val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
+            if (text.isNotBlank()) {
+                checklistAdapter.addItem(text)
+                binding.editNewChecklistItem.setText("")
+                binding.editNewChecklistItem.clearFocus()
+            }
         }
 
         binding.editDueDate.setOnClickListener { showDateTimePicker() }
