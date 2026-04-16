@@ -45,7 +45,7 @@ class ChecklistAdapter(
             binding.buttonDeleteItem.setOnClickListener {
                 items.removeAt(position)
                 notifyItemRemoved(position)
-                notifyItemRangeChanged(position, items.size - position)
+                notifyItemRangeChanged(position, items.size)
                 onChanged()
             }
         }
