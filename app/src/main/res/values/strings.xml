@@ -10,6 +10,19 @@
     <string name="add_event">Añadir evento</string>
     <string name="agenda_empty">No hay eventos programados</string>
 
+    <!-- Add Event Dialog -->
+    <string name="event_title_hint">Título del evento</string>
+    <string name="event_date_hint">Fecha</string>
+    <string name="select_date">Seleccionar fecha</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Delete Event -->
+    <string name="delete_event">Eliminar evento</string>
+    <string name="delete_event_confirm">¿Estás seguro de que quieres eliminar este evento?</string>
+    <string name="delete">Eliminar</string>
+    <string name="event_deleted">Evento eliminado</string>
+
     <!-- Placeholders -->
     <string name="contacts_placeholder">Contactos — próximamente</string>
     <string name="settings_placeholder">Ajustes — próximamente</string>
