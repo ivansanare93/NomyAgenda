@@ -2,6 +2,10 @@ package com.nomyagenda.app.ui.agenda
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,6 +54,21 @@ class AgendaFragment : Fragment() {
         }
 
         binding.fabAddEvent.setOnClickListener { openEditor(0) }
+
+        // Ensure FAB stays above the BottomNavigationView and system navigation bar on all devices.
+        val baseMargin = resources.getDimensionPixelSize(R.dimen.spacing_medium)
+        val basePadding = resources.getDimensionPixelSize(R.dimen.spacing_xlarge)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val bottomNavHeight = requireActivity().findViewById<View>(R.id.bottom_navigation).height
+            val totalOffset = maxOf(navBarHeight, bottomNavHeight)
+
+            binding.fabAddEvent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = baseMargin + totalOffset
+            }
+            binding.recyclerAgenda.updatePadding(bottom = basePadding + totalOffset)
+            insets
+        }
     }
 
     private fun openEditor(entryId: Int) {
