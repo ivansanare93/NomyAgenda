@@ -43,8 +43,7 @@ class AgendaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Show today's date in the header
-        val dateFormat = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
-        binding.textHeaderDate.text = dateFormat.format(Date())
+        binding.textHeaderDate.text = HEADER_DATE_FORMAT.format(Date())
 
         adapter = AgendaAdapter(
             onClick = { entry -> openEditor(entry.id) },
@@ -103,5 +102,9 @@ class AgendaFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private val HEADER_DATE_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
     }
 }

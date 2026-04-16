@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xsmall"
             android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="#CCFFFFFF"
+            android:textColor="@color/agenda_header_date_text"
             tools:text="miércoles, 16 de abril de 2025" />
 
     </LinearLayout>

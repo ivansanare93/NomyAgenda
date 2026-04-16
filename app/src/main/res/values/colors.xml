@@ -50,6 +50,7 @@
     <!-- Agenda section – lilac palette -->
     <color name="agenda_background">#F5F0FF</color>
     <color name="agenda_header_bg">#7C4DFF</color>
+    <color name="agenda_header_date_text">#CCFFFFFF</color>
 
     <color name="note_card_bg">#EDE7FF</color>
     <color name="note_accent">#9575CD</color>
