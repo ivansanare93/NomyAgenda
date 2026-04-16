@@ -3,6 +3,7 @@ package com.nomyagenda.app.ui.agenda
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,13 +35,22 @@ class AgendaAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(entry: AgendaEntry) {
+            val context = binding.root.context
             binding.textEntryTitle.text = entry.title
 
             binding.chipEntryType.text = when (entry.type) {
-                EntryType.NOTE -> binding.root.context.getString(R.string.type_note)
-                EntryType.TASK -> binding.root.context.getString(R.string.type_task)
-                EntryType.REMINDER -> binding.root.context.getString(R.string.type_reminder)
+                EntryType.NOTE -> context.getString(R.string.type_note)
+                EntryType.TASK -> context.getString(R.string.type_task)
+                EntryType.REMINDER -> context.getString(R.string.type_reminder)
             }
+
+            val (cardColorRes, accentColorRes) = when (entry.type) {
+                EntryType.NOTE -> R.color.note_card_bg to R.color.note_accent
+                EntryType.TASK -> R.color.task_card_bg to R.color.task_accent
+                EntryType.REMINDER -> R.color.reminder_card_bg to R.color.reminder_accent
+            }
+            binding.root.setCardBackgroundColor(ContextCompat.getColor(context, cardColorRes))
+            binding.viewAccentStripe.setBackgroundColor(ContextCompat.getColor(context, accentColorRes))
 
             when (entry.type) {
                 EntryType.NOTE -> {

@@ -8,7 +8,8 @@
 
     <!-- Agenda -->
     <string name="add_event">Añadir evento</string>
-    <string name="agenda_empty">No hay eventos programados</string>
+    <string name="agenda_empty">No hay entradas todavía.\n¡Crea la primera!</string>
+    <string name="agenda_header_title">Mi Agenda</string>
 
     <!-- Add Event Dialog -->
     <string name="event_title_hint">Título del evento</string>

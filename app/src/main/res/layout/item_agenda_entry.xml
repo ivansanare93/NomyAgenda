@@ -12,76 +12,91 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_medium">
+        android:orientation="horizontal">
+
+        <!-- Left accent stripe (color set per entry type in the adapter) -->
+        <View
+            android:id="@+id/view_accent_stripe"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/note_accent" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_entry_type"
-                style="@style/Widget.Material3.Chip.Assist"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkable="false"
-                android:clickable="false"
-                android:focusable="false" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_entry_type"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+                <TextView
+                    android:id="@+id/text_entry_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/text_entry_title"
-                android:layout_width="0dp"
+                android:id="@+id/text_entry_preview"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/text_entry_preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xsmall"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/spacing_xsmall">
-
-            <TextView
-                android:id="@+id/text_entry_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceLabelSmall"
-                android:textColor="?attr/colorSecondary"
+                android:layout_marginTop="@dimen/spacing_xsmall"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/text_entry_tags"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:textAppearance="?attr/textAppearanceLabelSmall"
-                android:textColor="?attr/colorTertiary"
-                android:visibility="gone" />
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_xsmall">
 
-            <TextView
-                android:id="@+id/text_entry_due_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceLabelSmall"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/text_entry_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    android:textColor="?attr/colorSecondary"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/text_entry_tags"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    android:textColor="?attr/colorTertiary"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/text_entry_due_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
