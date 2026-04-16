@@ -41,6 +41,8 @@ class AgendaAdapter(
     }
 
     companion object {
+        // SimpleDateFormat is not inherently thread-safe, but onBindViewHolder always
+        // runs on the main thread, so reusing a single instance here is safe.
         private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AgendaEvent>() {

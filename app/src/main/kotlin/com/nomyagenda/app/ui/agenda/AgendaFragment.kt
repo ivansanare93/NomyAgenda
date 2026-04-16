@@ -100,11 +100,15 @@ class AgendaFragment : Fragment() {
             .show()
     }
 
-    private fun formatDate(millis: Long): String =
-        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(millis))
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        // Reused across calls; safe because all usages are on the main thread
+        private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        fun formatDate(millis: Long): String = DATE_FORMAT.format(Date(millis))
     }
 }
