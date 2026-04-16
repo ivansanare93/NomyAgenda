@@ -1,5 +1,6 @@
 package com.nomyagenda.app.ui.editor
 
+import android.util.Log
 import com.nomyagenda.app.data.local.entity.ChecklistItem
 import org.json.JSONArray
 import org.json.JSONObject
@@ -25,7 +26,7 @@ object ChecklistManager {
                 val obj = array.getJSONObject(i)
                 result.add(ChecklistItem(text = obj.getString("text"), done = obj.getBoolean("done")))
             }
-        } catch (e: Exception) { /* ignore malformed JSON */ }
+        } catch (e: Exception) { Log.w("ChecklistManager", "Failed to parse checklist JSON", e) }
         return result
     }
 }

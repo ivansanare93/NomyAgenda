@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
@@ -36,9 +37,9 @@ class AgendaAdapter(
             binding.textEntryTitle.text = entry.title
 
             binding.chipEntryType.text = when (entry.type) {
-                EntryType.NOTE -> "Nota"
-                EntryType.TASK -> "Tarea"
-                EntryType.REMINDER -> "Recordatorio"
+                EntryType.NOTE -> binding.root.context.getString(R.string.type_note)
+                EntryType.TASK -> binding.root.context.getString(R.string.type_task)
+                EntryType.REMINDER -> binding.root.context.getString(R.string.type_reminder)
             }
 
             when (entry.type) {
