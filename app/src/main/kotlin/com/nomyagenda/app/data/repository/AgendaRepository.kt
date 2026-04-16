@@ -1,14 +1,18 @@
 package com.nomyagenda.app.data.repository
 
-import com.nomyagenda.app.data.local.dao.AgendaEventDao
-import com.nomyagenda.app.data.local.entity.AgendaEvent
+import com.nomyagenda.app.data.local.dao.AgendaEntryDao
+import com.nomyagenda.app.data.local.entity.AgendaEntry
 import kotlinx.coroutines.flow.Flow
 
-class AgendaRepository(private val dao: AgendaEventDao) {
+class AgendaRepository(private val dao: AgendaEntryDao) {
 
-    val allEvents: Flow<List<AgendaEvent>> = dao.getAll()
+    fun getAll(): Flow<List<AgendaEntry>> = dao.getAll()
 
-    suspend fun insert(event: AgendaEvent) = dao.insert(event)
+    fun search(query: String): Flow<List<AgendaEntry>> = dao.search(query)
 
-    suspend fun delete(event: AgendaEvent) = dao.delete(event)
+    suspend fun getById(id: Int): AgendaEntry? = dao.getById(id)
+
+    suspend fun upsert(entry: AgendaEntry) = dao.upsert(entry)
+
+    suspend fun delete(entry: AgendaEntry) = dao.delete(entry)
 }

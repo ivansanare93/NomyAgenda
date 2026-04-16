@@ -23,6 +23,24 @@
     <string name="delete">Eliminar</string>
     <string name="event_deleted">Evento eliminado</string>
 
+    <!-- Entry types -->
+    <string name="type_note">Nota</string>
+    <string name="type_task">Tarea</string>
+    <string name="type_reminder">Recordatorio</string>
+
+    <!-- Editor hints -->
+    <string name="hint_note_content">Contenido (Markdown)</string>
+    <string name="hint_new_item">Nuevo elemento</string>
+    <string name="hint_due_date">Fecha y hora</string>
+    <string name="hint_tags">Etiquetas (separadas por comas)</string>
+    <string name="hint_category">Categoría (opcional)</string>
+    <string name="add_item">Añadir elemento</string>
+    <string name="editor_title">Editar entrada</string>
+    <string name="entry_saved">Guardado</string>
+    <string name="error_title_required">El título es obligatorio</string>
+    <string name="search_hint">Buscar por título, contenido o etiqueta…</string>
+    <string name="add_entry">Añadir entrada</string>
+
     <!-- Placeholders -->
     <string name="contacts_placeholder">Contactos — próximamente</string>
     <string name="settings_placeholder">Ajustes — próximamente</string>

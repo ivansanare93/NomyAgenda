@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.nomyagenda.app.data.local.dao.AgendaEventDao
-import com.nomyagenda.app.data.local.entity.AgendaEvent
+import androidx.room.TypeConverters
+import com.nomyagenda.app.data.local.dao.AgendaEntryDao
+import com.nomyagenda.app.data.local.entity.AgendaEntry
+import com.nomyagenda.app.data.local.entity.Converters
 
-@Database(entities = [AgendaEvent::class], version = 1, exportSchema = false)
+@Database(entities = [AgendaEntry::class], version = 2, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class NomyAgendaDatabase : RoomDatabase() {
 
-    abstract fun agendaEventDao(): AgendaEventDao
+    abstract fun agendaEntryDao(): AgendaEntryDao
 
     companion object {
         @Volatile
@@ -22,7 +25,9 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
                     context.applicationContext,
                     NomyAgendaDatabase::class.java,
                     "nomy_agenda_db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

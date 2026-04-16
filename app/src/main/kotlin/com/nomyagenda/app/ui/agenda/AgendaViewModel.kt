@@ -1,28 +1,31 @@
 package com.nomyagenda.app.ui.agenda
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import com.nomyagenda.app.data.local.entity.AgendaEvent
+import androidx.lifecycle.*
+import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.repository.AgendaRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
 
-    val events: LiveData<List<AgendaEvent>> = repository.allEvents.asLiveData()
+    private val _searchQuery = MutableStateFlow("")
 
-    fun addEvent(event: AgendaEvent) {
-        viewModelScope.launch {
-            repository.insert(event)
+    val entries: LiveData<List<AgendaEntry>> = _searchQuery
+        .debounce(300)
+        .flatMapLatest { q ->
+            if (q.isBlank()) repository.getAll() else repository.search(q)
         }
+        .asLiveData()
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
-    fun deleteEvent(event: AgendaEvent) {
-        viewModelScope.launch {
-            repository.delete(event)
-        }
+    fun deleteEntry(entry: AgendaEntry) {
+        viewModelScope.launch { repository.delete(entry) }
     }
 }
 
