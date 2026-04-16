@@ -1,23 +1,18 @@
 package com.nomyagenda.app.ui.agenda
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.datepicker.MaterialDatePicker
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
-import com.nomyagenda.app.data.local.entity.AgendaEvent
+import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.repository.AgendaRepository
-import com.nomyagenda.app.databinding.DialogAddEventBinding
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class AgendaFragment : Fragment() {
 
@@ -26,17 +21,12 @@ class AgendaFragment : Fragment() {
 
     private val viewModel: AgendaViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
-        AgendaViewModelFactory(AgendaRepository(app.database.agendaEventDao()))
+        AgendaViewModelFactory(AgendaRepository(app.database.agendaEntryDao()))
     }
 
     private lateinit var adapter: AgendaAdapter
-    private var selectedDateMillis: Long = System.currentTimeMillis()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAgendaBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,56 +34,35 @@ class AgendaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = AgendaAdapter { event -> confirmDeleteEvent(event) }
+        adapter = AgendaAdapter(
+            onClick = { entry -> openEditor(entry.id) },
+            onLongClick = { entry -> confirmDelete(entry) }
+        )
         binding.recyclerAgenda.adapter = adapter
 
-        viewModel.events.observe(viewLifecycleOwner) { events ->
-            adapter.submitList(events)
-            binding.textEmptyAgenda.visibility =
-                if (events.isEmpty()) View.VISIBLE else View.GONE
+        viewModel.entries.observe(viewLifecycleOwner) { entries ->
+            adapter.submitList(entries)
+            binding.textEmptyAgenda.visibility = if (entries.isEmpty()) View.VISIBLE else View.GONE
         }
 
-        binding.fabAddEvent.setOnClickListener { showAddEventDialog() }
-    }
-
-    private fun showAddEventDialog() {
-        selectedDateMillis = System.currentTimeMillis()
-        val dialogBinding = DialogAddEventBinding.inflate(layoutInflater)
-        dialogBinding.editEventDate.setText(formatDate(selectedDateMillis))
-        dialogBinding.editEventDate.setOnClickListener {
-            showDatePicker { millis ->
-                selectedDateMillis = millis
-                dialogBinding.editEventDate.setText(formatDate(millis))
-            }
+        binding.editSearch.addTextChangedListener { text ->
+            viewModel.setSearchQuery(text?.toString() ?: "")
         }
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.add_event)
-            .setView(dialogBinding.root)
-            .setPositiveButton(R.string.save) { _, _ ->
-                val title = dialogBinding.editEventTitle.text?.toString()?.trim()
-                if (!title.isNullOrEmpty()) {
-                    viewModel.addEvent(AgendaEvent(title = title, dateTimeMillis = selectedDateMillis))
-                }
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
+
+        binding.fabAddEvent.setOnClickListener { openEditor(0) }
     }
 
-    private fun showDatePicker(onDateSelected: (Long) -> Unit) {
-        val picker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(R.string.select_date)
-            .setSelection(selectedDateMillis)
-            .build()
-        picker.addOnPositiveButtonClickListener { millis -> onDateSelected(millis) }
-        picker.show(parentFragmentManager, "date_picker")
+    private fun openEditor(entryId: Int) {
+        val action = AgendaFragmentDirections.actionAgendaFragmentToEntryEditorFragment(entryId)
+        findNavController().navigate(action)
     }
 
-    private fun confirmDeleteEvent(event: AgendaEvent) {
+    private fun confirmDelete(entry: AgendaEntry) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.delete_event)
             .setMessage(R.string.delete_event_confirm)
             .setPositiveButton(R.string.delete) { _, _ ->
-                viewModel.deleteEvent(event)
+                viewModel.deleteEntry(entry)
                 Snackbar.make(binding.root, R.string.event_deleted, Snackbar.LENGTH_SHORT).show()
             }
             .setNegativeButton(R.string.cancel, null)
@@ -103,12 +72,5 @@ class AgendaFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        // Reused across calls; safe because all usages are on the main thread
-        private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
-        fun formatDate(millis: Long): String = DATE_FORMAT.format(Date(millis))
     }
 }

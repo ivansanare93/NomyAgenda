@@ -9,7 +9,11 @@
         android:id="@+id/agendaFragment"
         android:name="com.nomyagenda.app.ui.agenda.AgendaFragment"
         android:label="@string/nav_agenda"
-        tools:layout="@layout/fragment_agenda" />
+        tools:layout="@layout/fragment_agenda">
+        <action
+            android:id="@+id/action_agendaFragment_to_entryEditorFragment"
+            app:destination="@id/entryEditorFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/contactsFragment"
@@ -22,5 +26,15 @@
         android:name="com.nomyagenda.app.ui.settings.SettingsFragment"
         android:label="@string/nav_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/entryEditorFragment"
+        android:name="com.nomyagenda.app.ui.editor.EntryEditorFragment"
+        android:label="@string/editor_title">
+        <argument
+            android:name="entryId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 
 </navigation>
