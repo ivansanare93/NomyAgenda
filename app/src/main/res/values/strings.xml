@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">NomyAgenda</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_agenda">Agenda</string>
+    <string name="nav_contacts">Contactos</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Agenda -->
+    <string name="add_event">Añadir evento</string>
+    <string name="agenda_empty">No hay eventos programados</string>
+
+    <!-- Placeholders -->
+    <string name="contacts_placeholder">Contactos — próximamente</string>
+    <string name="settings_placeholder">Ajustes — próximamente</string>
+</resources>
