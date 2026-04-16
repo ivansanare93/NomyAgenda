@@ -64,7 +64,7 @@ class AgendaFragment : Fragment() {
         val basePadding = resources.getDimensionPixelSize(R.dimen.spacing_xlarge)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            val totalOffset = maxOf(navBarHeight, bottomNavView?.height ?: 0)
+            val totalOffset = maxOf(navBarHeight, bottomNavView?.height ?: navBarHeight)
 
             binding.fabAddEvent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = baseMargin + totalOffset
