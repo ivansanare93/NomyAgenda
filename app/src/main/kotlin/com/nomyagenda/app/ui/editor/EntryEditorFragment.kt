@@ -49,6 +49,8 @@ class EntryEditorFragment : Fragment() {
 
         markwon = Markwon.create(requireContext())
 
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+
         checklistAdapter = ChecklistAdapter(checklistItems) { /* updated */ }
         binding.recyclerChecklist.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerChecklist.adapter = checklistAdapter
