@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.agendaFragment, R.id.contactsFragment, R.id.settingsFragment)
+            setOf(R.id.agendaFragment, R.id.settingsFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)

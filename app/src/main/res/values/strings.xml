@@ -3,7 +3,6 @@
 
     <!-- Bottom Navigation -->
     <string name="nav_agenda">Agenda</string>
-    <string name="nav_contacts">Contactos</string>
     <string name="nav_settings">Ajustes</string>
 
     <!-- Agenda -->
@@ -43,6 +42,5 @@
     <string name="add_entry">Añadir entrada</string>
 
     <!-- Placeholders -->
-    <string name="contacts_placeholder">Contactos — próximamente</string>
     <string name="settings_placeholder">Ajustes — próximamente</string>
 </resources>
