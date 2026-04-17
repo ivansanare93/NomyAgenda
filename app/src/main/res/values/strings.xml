@@ -41,6 +41,9 @@
     <string name="search_hint">Buscar por título, contenido o etiqueta…</string>
     <string name="add_entry">Añadir entrada</string>
 
+    <string name="note_mode_edit">Editar</string>
+    <string name="note_mode_preview">Vista previa</string>
+
     <!-- Placeholders -->
     <string name="settings_placeholder">Ajustes — próximamente</string>
 </resources>

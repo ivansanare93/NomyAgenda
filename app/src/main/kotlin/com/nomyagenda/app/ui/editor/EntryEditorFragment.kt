@@ -17,6 +17,7 @@ import com.nomyagenda.app.data.local.entity.ChecklistItem
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentEntryEditorBinding
+import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,6 +34,7 @@ class EntryEditorFragment : Fragment() {
     }
 
     private lateinit var checklistAdapter: ChecklistAdapter
+    private lateinit var markwon: Markwon
     private val checklistItems = mutableListOf<ChecklistItem>()
     private var selectedDueAt: Long? = null
     private var currentType: EntryType = EntryType.NOTE
@@ -45,6 +47,8 @@ class EntryEditorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        markwon = Markwon.create(requireContext())
+
         checklistAdapter = ChecklistAdapter(checklistItems) { /* updated */ }
         binding.recyclerChecklist.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerChecklist.adapter = checklistAdapter
@@ -52,6 +56,16 @@ class EntryEditorFragment : Fragment() {
         binding.chipNote.setOnClickListener { setType(EntryType.NOTE) }
         binding.chipTask.setOnClickListener { setType(EntryType.TASK) }
         binding.chipReminder.setOnClickListener { setType(EntryType.REMINDER) }
+
+        binding.btnNoteEdit.isChecked = true
+        binding.toggleNoteMode.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btn_note_edit -> showNoteEditMode()
+                    R.id.btn_note_preview -> showNotePreviewMode()
+                }
+            }
+        }
 
         binding.buttonAddChecklistItem.setOnClickListener {
             val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
@@ -102,6 +116,23 @@ class EntryEditorFragment : Fragment() {
         binding.layoutNoteContent.visibility = if (type == EntryType.NOTE) View.VISIBLE else View.GONE
         binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
         binding.layoutReminderContent.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
+        if (type == EntryType.NOTE) {
+            // Reset to edit mode when switching to NOTE type
+            binding.btnNoteEdit.isChecked = true
+            showNoteEditMode()
+        }
+    }
+
+    private fun showNoteEditMode() {
+        binding.inputLayoutNoteContent.visibility = View.VISIBLE
+        binding.cardNotePreview.visibility = View.GONE
+    }
+
+    private fun showNotePreviewMode() {
+        val markdown = binding.editNoteContent.text?.toString() ?: ""
+        markwon.setMarkdown(binding.textNotePreview, markdown)
+        binding.inputLayoutNoteContent.visibility = View.GONE
+        binding.cardNotePreview.visibility = View.VISIBLE
     }
 
     private fun showDateTimePicker() {

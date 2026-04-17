@@ -12,6 +12,7 @@ import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
 import com.nomyagenda.app.ui.editor.ChecklistManager
+import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -20,6 +21,13 @@ class AgendaAdapter(
     private val onClick: (AgendaEntry) -> Unit,
     private val onLongClick: (AgendaEntry) -> Unit
 ) : ListAdapter<AgendaEntry, AgendaAdapter.EntryViewHolder>(DIFF_CALLBACK) {
+
+    private lateinit var markwon: Markwon
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        markwon = Markwon.create(recyclerView.context)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {
         val binding = ItemAgendaEntryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -54,8 +62,12 @@ class AgendaAdapter(
 
             when (entry.type) {
                 EntryType.NOTE -> {
-                    binding.textEntryPreview.visibility = if (entry.content.isNotBlank()) View.VISIBLE else View.GONE
-                    binding.textEntryPreview.text = entry.content.lines().firstOrNull()?.take(80) ?: ""
+                    if (entry.content.isNotBlank()) {
+                        binding.textEntryPreview.visibility = View.VISIBLE
+                        markwon.setMarkdown(binding.textEntryPreview, entry.content.take(PREVIEW_MAX_CHARS))
+                    } else {
+                        binding.textEntryPreview.visibility = View.GONE
+                    }
                 }
                 EntryType.TASK -> {
                     val items = ChecklistManager.fromJson(entry.checklistJson)
@@ -64,8 +76,12 @@ class AgendaAdapter(
                     binding.textEntryPreview.text = "$done/${items.size} completadas"
                 }
                 EntryType.REMINDER -> {
-                    binding.textEntryPreview.visibility = if (entry.content.isNotBlank()) View.VISIBLE else View.GONE
-                    binding.textEntryPreview.text = entry.content.lines().firstOrNull()?.take(80) ?: ""
+                    if (entry.content.isNotBlank()) {
+                        binding.textEntryPreview.visibility = View.VISIBLE
+                        markwon.setMarkdown(binding.textEntryPreview, entry.content.take(PREVIEW_MAX_CHARS))
+                    } else {
+                        binding.textEntryPreview.visibility = View.GONE
+                    }
                 }
             }
 
@@ -97,6 +113,7 @@ class AgendaAdapter(
 
     companion object {
         private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        private const val PREVIEW_MAX_CHARS = 200
 
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AgendaEntry>() {
             override fun areItemsTheSame(oldItem: AgendaEntry, newItem: AgendaEntry) = oldItem.id == newItem.id
