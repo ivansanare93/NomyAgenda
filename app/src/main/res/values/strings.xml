@@ -46,4 +46,16 @@
 
     <!-- Placeholders -->
     <string name="settings_placeholder">Ajustes — próximamente</string>
+
+    <!-- Settings -->
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_theme_system">Sistema</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_es">Español</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_system">Sistema</string>
+    <string name="settings_notifications">Notificaciones</string>
+    <string name="settings_notifications_desc">Activar recordatorios programados</string>
 </resources>
