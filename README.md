@@ -24,13 +24,18 @@ Cada entrada puede ser de uno de estos tres tipos:
 
 | Tipo | Descripción |
 |------|-------------|
-| **Nota** | Texto libre (compatible con Markdown). |
+| **Nota** | Texto libre con **previsualización Markdown** formateada. |
 | **Tarea** | Checklist interactivo: añade y marca elementos como completados. |
 | **Recordatorio** | Texto con fecha y hora; dispara una notificación en el momento indicado. |
 
 Campos adicionales disponibles en todos los tipos:
 - **Etiquetas** (separadas por comas) para clasificación libre.
 - **Categoría** (opcional) para agrupar entradas.
+
+### 📝 Previsualización Markdown
+- Las notas se renderizan con formato usando la librería **Markwon**.
+- Soporte para negrita, cursiva, encabezados, listas, bloques de código y más.
+- La previsualización se muestra automáticamente al visualizar una nota.
 
 ### 🔔 Notificaciones y recordatorios
 - Canal de notificaciones dedicado (`nomy_reminders`).
@@ -54,6 +59,7 @@ Campos adicionales disponibles en todos los tipos:
 | Base de datos | Room (SQLite) |
 | Navegación | Navigation Component (Safe Args) |
 | UI | Material Design 3, ViewBinding |
+| Renderizado Markdown | Markwon |
 | Concurrencia | Coroutines |
 | SDK mínimo | Android 7.0 (API 24) |
 | SDK objetivo | Android 14 (API 34) |
@@ -63,9 +69,7 @@ Campos adicionales disponibles en todos los tipos:
 
 ## 🚀 Próximas funcionalidades
 
-- [ ] **Módulo de Contactos** — Gestión de contactos personales asociados a eventos o recordatorios.
 - [ ] **Módulo de Ajustes** — Configuración de la app: tema (claro/oscuro), idioma, preferencias de notificación.
-- [ ] **Renderizado Markdown** — Previsualización formateada del contenido de las notas.
 - [ ] **Filtro por tipo y categoría** — Filtrar la lista de agenda por tipo de entrada (nota/tarea/recordatorio) o categoría.
 - [ ] **Ordenación personalizada** — Ordenar entradas por fecha de creación, fecha de vencimiento o categoría.
 - [ ] **Exportación / importación** — Respaldar y restaurar entradas en formato JSON o CSV.
@@ -87,7 +91,6 @@ app/src/main/kotlin/com/nomyagenda/app/
 ├── notifications/         # NotificationHelper, ReminderReceiver
 ├── ui/
 │   ├── agenda/            # AgendaFragment, AgendaViewModel, AgendaAdapter
-│   ├── contacts/          # ContactsFragment (próximamente)
 │   ├── editor/            # EntryEditorFragment, EntryEditorViewModel, ChecklistAdapter
 │   └── settings/          # SettingsFragment (próximamente)
 ├── MainActivity.kt
