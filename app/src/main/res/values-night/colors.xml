@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Agenda section – dark palette -->
+    <color name="agenda_background">#1C1B1F</color>
+    <color name="agenda_header_bg">#4F378B</color>
+    <color name="agenda_header_date_text">#CCFFFFFF</color>
+
+    <color name="note_card_bg">#2D2040</color>
+    <color name="note_accent">#B39DDB</color>
+
+    <color name="task_card_bg">#1A2248</color>
+    <color name="task_accent">#9FA8DA</color>
+
+    <color name="reminder_card_bg">#2D1525</color>
+    <color name="reminder_accent">#F48FB1</color>
+
+</resources>
