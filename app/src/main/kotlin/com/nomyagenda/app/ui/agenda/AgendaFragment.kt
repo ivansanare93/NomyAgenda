@@ -31,7 +31,7 @@ class AgendaFragment : Fragment() {
 
     private val viewModel: AgendaViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
-        AgendaViewModelFactory(AgendaRepository(app.database.agendaEntryDao()))
+        AgendaViewModelFactory(AgendaRepository(app.database.agendaEntryDao()), app)
     }
 
     private lateinit var adapter: AgendaAdapter

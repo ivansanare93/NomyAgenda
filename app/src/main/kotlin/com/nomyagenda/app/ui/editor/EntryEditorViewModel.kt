@@ -24,11 +24,15 @@ class EntryEditorViewModel(
 
     fun save(entry: AgendaEntry, onSaved: () -> Unit) {
         viewModelScope.launch {
-            repository.upsert(entry)
-            if (entry.type == EntryType.REMINDER && entry.dueAt != null) {
-                NotificationHelper.scheduleReminder(app, entry)
+            val rowId = repository.upsert(entry)
+            // For new entries (id == 0) Room returns the auto-generated row-id which equals
+            // the new primary key. For updates it returns the existing id as well.
+            val savedId = if (entry.id == 0) rowId.toInt() else entry.id
+            val savedEntry = if (entry.id == 0) entry.copy(id = savedId) else entry
+            if (savedEntry.type == EntryType.REMINDER && savedEntry.dueAt != null) {
+                NotificationHelper.scheduleReminder(app, savedEntry)
             } else {
-                NotificationHelper.cancelReminder(app, entry.id)
+                NotificationHelper.cancelReminder(app, savedId)
             }
             onSaved()
         }

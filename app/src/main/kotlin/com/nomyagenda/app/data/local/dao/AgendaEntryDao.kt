@@ -23,8 +23,11 @@ interface AgendaEntryDao {
     @Query("SELECT * FROM agenda_entries WHERE id = :id")
     suspend fun getById(id: Int): AgendaEntry?
 
+    @Query("SELECT * FROM agenda_entries WHERE type = 'REMINDER' AND dueAt > :after")
+    suspend fun getFutureReminders(after: Long): List<AgendaEntry>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(entry: AgendaEntry)
+    suspend fun upsert(entry: AgendaEntry): Long
 
     @Delete
     suspend fun delete(entry: AgendaEntry)
