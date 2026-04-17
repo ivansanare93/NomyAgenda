@@ -38,8 +38,16 @@
     <string name="editor_title">Editar entrada</string>
     <string name="entry_saved">Guardado</string>
     <string name="error_title_required">El título es obligatorio</string>
-    <string name="search_hint">Buscar por título, contenido o etiqueta…</string>
+    <string name="search_hint">Buscar por título, contenido, etiqueta o categoría…</string>
     <string name="add_entry">Añadir entrada</string>
+
+    <!-- Filter and sort -->
+    <string name="filter_all">Todos</string>
+    <string name="sort_entries">Ordenar entradas</string>
+    <string name="sort_by">Ordenar por</string>
+    <string name="sort_created_at">Fecha de creación</string>
+    <string name="sort_due_date">Fecha de vencimiento</string>
+    <string name="sort_category">Categoría</string>
 
     <string name="note_mode_edit">Editar</string>
     <string name="note_mode_preview">Vista previa</string>

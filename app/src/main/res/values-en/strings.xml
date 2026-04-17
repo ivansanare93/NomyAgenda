@@ -38,8 +38,16 @@
     <string name="editor_title">Edit entry</string>
     <string name="entry_saved">Saved</string>
     <string name="error_title_required">Title is required</string>
-    <string name="search_hint">Search by title, content or tag…</string>
+    <string name="search_hint">Search by title, content, tag or category…</string>
     <string name="add_entry">Add entry</string>
+
+    <!-- Filter and sort -->
+    <string name="filter_all">All</string>
+    <string name="sort_entries">Sort entries</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_created_at">Creation date</string>
+    <string name="sort_due_date">Due date</string>
+    <string name="sort_category">Category</string>
 
     <string name="note_mode_edit">Edit</string>
     <string name="note_mode_preview">Preview</string>

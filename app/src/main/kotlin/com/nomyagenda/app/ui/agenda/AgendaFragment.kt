@@ -16,6 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
+import com.nomyagenda.app.data.local.entity.EntryType
+import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
 import java.text.SimpleDateFormat
@@ -60,6 +62,9 @@ class AgendaFragment : Fragment() {
             viewModel.setSearchQuery(text?.toString() ?: "")
         }
 
+        setupFilterChips()
+        setupSortButton()
+
         binding.fabAddEvent.setOnClickListener { openEditor(0) }
 
         // Ensure FAB stays above the BottomNavigationView and system navigation bar on all devices.
@@ -80,6 +85,38 @@ class AgendaFragment : Fragment() {
         }
         // Re-apply insets once BottomNavigationView is measured in case height was 0 on first dispatch.
         bottomNavView?.doOnLayout { ViewCompat.requestApplyInsets(binding.root) }
+    }
+
+    private fun setupFilterChips() {
+        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+            val filterType = when {
+                checkedIds.contains(R.id.chip_filter_note) -> EntryType.NOTE
+                checkedIds.contains(R.id.chip_filter_task) -> EntryType.TASK
+                checkedIds.contains(R.id.chip_filter_reminder) -> EntryType.REMINDER
+                else -> null
+            }
+            viewModel.setFilterType(filterType)
+        }
+    }
+
+    private fun setupSortButton() {
+        val sortLabels = arrayOf(
+            getString(R.string.sort_due_date),
+            getString(R.string.sort_created_at),
+            getString(R.string.sort_category)
+        )
+        val sortOrders = arrayOf(SortOrder.DUE_DATE, SortOrder.CREATED_AT, SortOrder.CATEGORY)
+
+        binding.btnSort.setOnClickListener {
+            val currentIndex = sortOrders.indexOf(viewModel.currentSortOrder).coerceAtLeast(0)
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.sort_by)
+                .setSingleChoiceItems(sortLabels, currentIndex) { dialog, which ->
+                    viewModel.setSortOrder(sortOrders[which])
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     private fun openEditor(entryId: Int) {

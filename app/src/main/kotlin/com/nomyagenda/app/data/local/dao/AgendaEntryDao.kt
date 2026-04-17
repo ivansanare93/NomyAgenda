@@ -15,6 +15,7 @@ interface AgendaEntryDao {
         WHERE title LIKE '%' || :query || '%'
            OR content LIKE '%' || :query || '%'
            OR tags LIKE '%' || :query || '%'
+           OR category LIKE '%' || :query || '%'
         ORDER BY COALESCE(dueAt, createdAt) ASC
     """)
     fun search(query: String): Flow<List<AgendaEntry>>
