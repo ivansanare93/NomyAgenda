@@ -94,13 +94,95 @@
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
+            <!-- Formatting toolbar -->
+            <HorizontalScrollView
+                android:id="@+id/scroll_format_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginBottom="@dimen/spacing_small">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_bold"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/format_bold"
+                        android:textStyle="bold"
+                        android:contentDescription="@string/format_bold_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_italic"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_italic"
+                        android:textStyle="italic"
+                        android:contentDescription="@string/format_italic_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_strikethrough"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_strikethrough"
+                        android:contentDescription="@string/format_strikethrough_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_heading"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_heading"
+                        android:contentDescription="@string/format_heading_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_bullet"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_bullet"
+                        android:contentDescription="@string/format_bullet_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_numbered"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_numbered"
+                        android:contentDescription="@string/format_numbered_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_quote"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_quote"
+                        android:contentDescription="@string/format_quote_desc" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
             <!-- Edit mode -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_note_content"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_note_content">
+                android:hint="@string/hint_note_content_editor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_note_content"

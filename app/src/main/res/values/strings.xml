@@ -52,6 +52,23 @@
     <string name="note_mode_edit">Editar</string>
     <string name="note_mode_preview">Vista previa</string>
 
+    <!-- Rich-text formatting toolbar -->
+    <string name="format_bold">N</string>
+    <string name="format_bold_desc">Negrita</string>
+    <string name="format_italic">C</string>
+    <string name="format_italic_desc">Cursiva</string>
+    <string name="format_strikethrough">T̶</string>
+    <string name="format_strikethrough_desc">Tachado</string>
+    <string name="format_heading">T1</string>
+    <string name="format_heading_desc">Encabezado</string>
+    <string name="format_bullet">•  Lista</string>
+    <string name="format_bullet_desc">Lista de viñetas</string>
+    <string name="format_numbered">1. Lista</string>
+    <string name="format_numbered_desc">Lista numerada</string>
+    <string name="format_quote">❝ Cita</string>
+    <string name="format_quote_desc">Cita en bloque</string>
+    <string name="hint_note_content_editor">Escribe el contenido de tu nota…</string>
+
     <!-- Placeholders -->
     <string name="settings_placeholder">Ajustes — próximamente</string>
 
