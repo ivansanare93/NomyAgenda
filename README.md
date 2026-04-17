@@ -15,6 +15,8 @@ NomyAgenda es una app de productividad personal que permite gestionar notas, tar
 ### 📋 Agenda
 - Listado de todas las entradas con la fecha de hoy en el encabezado.
 - **Buscador en tiempo real** por título, contenido o etiquetas.
+- **Filtro por tipo** mediante chips (Nota / Tarea / Recordatorio).
+- **Ordenación personalizada** por fecha de vencimiento, fecha de creación o categoría.
 - **Añadir entrada** mediante el botón flotante (FAB).
 - **Eliminar entrada** con pulsación larga y confirmación.
 - Estado vacío con mensaje cuando no hay entradas.
@@ -42,6 +44,14 @@ Campos adicionales disponibles en todos los tipos:
 - Programación de alarmas exactas con `AlarmManager` (`setExactAndAllowWhileIdle`).
 - Compatible con la restricción de alarmas exactas de Android 12+ (`SCHEDULE_EXACT_ALARM`).
 - Cancelación automática de la alarma si se elimina el recordatorio.
+- **Reagendado automático al reiniciar** el dispositivo mediante `BootReceiver` (`BOOT_COMPLETED`).
+- **Aviso anticipado configurable** (sin aviso, 1 hora, 1 día o 1 semana antes).
+
+### ⚙️ Ajustes
+- **Tema**: claro, oscuro o según el sistema.
+- **Idioma**: español, inglés o según el sistema (usando `AppCompatDelegate`).
+- **Notificaciones**: activar o desactivar globalmente.
+- **Aviso anticipado**: seleccionar el tiempo de antelación para recordatorios.
 
 ### 🗄️ Base de datos local
 - Persistencia con **Room** (SQLite).
@@ -69,9 +79,7 @@ Campos adicionales disponibles en todos los tipos:
 
 ## 🚀 Próximas funcionalidades
 
-- [ ] **Módulo de Ajustes** — Configuración de la app: tema (claro/oscuro), idioma, preferencias de notificación.
-- [ ] **Filtro por tipo y categoría** — Filtrar la lista de agenda por tipo de entrada (nota/tarea/recordatorio) o categoría.
-- [ ] **Ordenación personalizada** — Ordenar entradas por fecha de creación, fecha de vencimiento o categoría.
+- [ ] **Filtro por categoría** — Filtrar la lista de agenda por categoría además de por tipo.
 - [ ] **Exportación / importación** — Respaldar y restaurar entradas en formato JSON o CSV.
 - [ ] **Widget para pantalla de inicio** — Visualización rápida de las próximas tareas y recordatorios.
 - [ ] **Sincronización en la nube** — Backup opcional con Google Drive o servidor propio.
@@ -86,13 +94,14 @@ app/src/main/kotlin/com/nomyagenda/app/
 │   ├── local/
 │   │   ├── dao/          # AgendaEntryDao, AgendaEventDao
 │   │   ├── database/     # NomyAgendaDatabase (Room)
-│   │   └── entity/       # AgendaEntry, AgendaEvent, ChecklistItem, EntryType
+│   │   └── entity/       # AgendaEntry, AgendaEvent, ChecklistItem, EntryType, SortOrder
+│   ├── preferences/       # SettingsRepository
 │   └── repository/       # AgendaRepository
-├── notifications/         # NotificationHelper, ReminderReceiver
+├── notifications/         # NotificationHelper, ReminderReceiver, BootReceiver
 ├── ui/
 │   ├── agenda/            # AgendaFragment, AgendaViewModel, AgendaAdapter
-│   ├── editor/            # EntryEditorFragment, EntryEditorViewModel, ChecklistAdapter
-│   └── settings/          # SettingsFragment (próximamente)
+│   ├── editor/            # EntryEditorFragment, EntryEditorViewModel, ChecklistAdapter, ChecklistManager
+│   └── settings/          # SettingsFragment, SettingsViewModel
 ├── MainActivity.kt
 └── NomyAgendaApp.kt
 ```
