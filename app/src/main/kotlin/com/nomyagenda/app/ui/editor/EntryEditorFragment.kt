@@ -67,6 +67,14 @@ class EntryEditorFragment : Fragment() {
             }
         }
 
+        binding.btnFormatBold.setOnClickListener { applyInlineFormat("**") }
+        binding.btnFormatItalic.setOnClickListener { applyInlineFormat("*") }
+        binding.btnFormatStrikethrough.setOnClickListener { applyInlineFormat("~~") }
+        binding.btnFormatHeading.setOnClickListener { applyLinePrefix("# ") }
+        binding.btnFormatBullet.setOnClickListener { applyLinePrefix("- ") }
+        binding.btnFormatNumbered.setOnClickListener { applyLinePrefix("1. ") }
+        binding.btnFormatQuote.setOnClickListener { applyLinePrefix("> ") }
+
         binding.buttonAddChecklistItem.setOnClickListener {
             val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
             if (text.isNotBlank()) {
@@ -124,6 +132,7 @@ class EntryEditorFragment : Fragment() {
     }
 
     private fun showNoteEditMode() {
+        binding.scrollFormatToolbar.visibility = View.VISIBLE
         binding.inputLayoutNoteContent.visibility = View.VISIBLE
         binding.cardNotePreview.visibility = View.GONE
     }
@@ -131,8 +140,35 @@ class EntryEditorFragment : Fragment() {
     private fun showNotePreviewMode() {
         val markdown = binding.editNoteContent.text?.toString() ?: ""
         markwon.setMarkdown(binding.textNotePreview, markdown)
+        binding.scrollFormatToolbar.visibility = View.GONE
         binding.inputLayoutNoteContent.visibility = View.GONE
         binding.cardNotePreview.visibility = View.VISIBLE
+    }
+
+    private fun applyInlineFormat(marker: String) {
+        val editText = binding.editNoteContent
+        val text = editText.text ?: return
+        val start = editText.selectionStart.coerceAtLeast(0)
+        val end = editText.selectionEnd.coerceAtLeast(0)
+        if (start == end) {
+            // No selection: insert markers and place cursor between them
+            text.insert(start, "$marker$marker")
+            editText.setSelection(start + marker.length)
+        } else {
+            // Wrap the selected text with the markers
+            val selected = text.subSequence(start, end).toString()
+            text.replace(start, end, "$marker$selected$marker")
+            editText.setSelection(start + marker.length, start + marker.length + selected.length)
+        }
+    }
+
+    private fun applyLinePrefix(prefix: String) {
+        val editText = binding.editNoteContent
+        val text = editText.text ?: return
+        val cursor = editText.selectionStart.coerceAtLeast(0)
+        val lineStart = (text.lastIndexOf('\n', cursor - 1) + 1).coerceAtLeast(0)
+        text.insert(lineStart, prefix)
+        editText.setSelection(cursor + prefix.length)
     }
 
     private fun showDateTimePicker() {

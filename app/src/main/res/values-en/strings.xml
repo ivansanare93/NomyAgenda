@@ -52,6 +52,23 @@
     <string name="note_mode_edit">Edit</string>
     <string name="note_mode_preview">Preview</string>
 
+    <!-- Rich-text formatting toolbar -->
+    <string name="format_bold">B</string>
+    <string name="format_bold_desc">Bold</string>
+    <string name="format_italic">I</string>
+    <string name="format_italic_desc">Italic</string>
+    <string name="format_strikethrough">S̶</string>
+    <string name="format_strikethrough_desc">Strikethrough</string>
+    <string name="format_heading">H1</string>
+    <string name="format_heading_desc">Heading</string>
+    <string name="format_bullet">•  List</string>
+    <string name="format_bullet_desc">Bullet list</string>
+    <string name="format_numbered">1. List</string>
+    <string name="format_numbered_desc">Numbered list</string>
+    <string name="format_quote">❝ Quote</string>
+    <string name="format_quote_desc">Block quote</string>
+    <string name="hint_note_content_editor">Write the content of your note…</string>
+
     <!-- Placeholders -->
     <string name="settings_placeholder">Settings — coming soon</string>
 
