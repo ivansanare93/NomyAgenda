@@ -1,17 +1,22 @@
 package com.nomyagenda.app.ui.agenda
 
+import android.app.Application
 import androidx.lifecycle.*
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.repository.AgendaRepository
+import com.nomyagenda.app.notifications.NotificationHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
+class AgendaViewModel(
+    private val repository: AgendaRepository,
+    private val app: Application
+) : AndroidViewModel(app) {
 
     private val _searchQuery = MutableStateFlow("")
     private val _filterType = MutableStateFlow<EntryType?>(null)
@@ -47,7 +52,12 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
     val currentSortOrder: SortOrder get() = _sortOrder.value
 
     fun deleteEntry(entry: AgendaEntry) {
-        viewModelScope.launch { repository.delete(entry) }
+        viewModelScope.launch {
+            if (entry.type == EntryType.REMINDER) {
+                NotificationHelper.cancelReminder(app, entry.id)
+            }
+            repository.delete(entry)
+        }
     }
 
     private fun comparatorFor(sortOrder: SortOrder): Comparator<AgendaEntry> = when (sortOrder) {
@@ -78,9 +88,12 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
     }
 }
 
-class AgendaViewModelFactory(private val repository: AgendaRepository) : ViewModelProvider.Factory {
+class AgendaViewModelFactory(
+    private val repository: AgendaRepository,
+    private val app: Application
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return AgendaViewModel(repository) as T
+        return AgendaViewModel(repository, app) as T
     }
 }

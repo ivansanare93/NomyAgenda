@@ -12,7 +12,9 @@ class AgendaRepository(private val dao: AgendaEntryDao) {
 
     suspend fun getById(id: Int): AgendaEntry? = dao.getById(id)
 
-    suspend fun upsert(entry: AgendaEntry) = dao.upsert(entry)
+    suspend fun upsert(entry: AgendaEntry): Long = dao.upsert(entry)
+
+    suspend fun getFutureReminders(after: Long): List<AgendaEntry> = dao.getFutureReminders(after)
 
     suspend fun delete(entry: AgendaEntry) = dao.delete(entry)
 }
