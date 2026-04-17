@@ -80,4 +80,5 @@
     <string name="notification_advance_1d">Vence mañana</string>
     <string name="notification_advance_1w">Vence en 1 semana</string>
     <string name="notification_advance_generic">Próximo recordatorio</string>
+    <string name="notification_default">Recordatorio</string>
 </resources>

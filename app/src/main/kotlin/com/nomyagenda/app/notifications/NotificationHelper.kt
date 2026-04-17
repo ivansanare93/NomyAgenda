@@ -39,7 +39,7 @@ object NotificationHelper {
         val alarmManager = context.getSystemService(AlarmManager::class.java)
 
         // Schedule the main alarm at the exact due time
-        scheduleAlarm(context, alarmManager, entry.id, dueAt, entry.title, entry.content, isAdvance = false)
+        scheduleAlarm(context, alarmManager, entry.id, entry.id, dueAt, entry.title, entry.content, isAdvance = false)
 
         // Schedule the advance alarm if configured and still in the future
         val advanceMinutes = prefs.getInt(SettingsRepository.KEY_ADVANCE_NOTICE, SettingsRepository.ADVANCE_NOTICE_NONE)
@@ -47,7 +47,7 @@ object NotificationHelper {
             val advanceAt = dueAt - advanceMinutes * 60_000L
             if (advanceAt > System.currentTimeMillis()) {
                 val advanceContent = advanceContentText(context, advanceMinutes)
-                scheduleAlarm(context, alarmManager, entry.id + ADVANCE_ID_OFFSET, advanceAt, entry.title, advanceContent, isAdvance = true)
+                scheduleAlarm(context, alarmManager, entry.id, entry.id + ADVANCE_ID_OFFSET, advanceAt, entry.title, advanceContent, isAdvance = true)
             }
         }
     }
@@ -61,6 +61,7 @@ object NotificationHelper {
     private fun scheduleAlarm(
         context: Context,
         alarmManager: AlarmManager,
+        entryId: Int,
         requestCode: Int,
         triggerAt: Long,
         title: String,
@@ -68,7 +69,7 @@ object NotificationHelper {
         isAdvance: Boolean
     ) {
         val intent = Intent(context, ReminderReceiver::class.java).apply {
-            putExtra(ReminderReceiver.EXTRA_ENTRY_ID, requestCode)
+            putExtra(ReminderReceiver.EXTRA_ENTRY_ID, entryId)
             putExtra(ReminderReceiver.EXTRA_TITLE, title)
             putExtra(ReminderReceiver.EXTRA_CONTENT, content)
             putExtra(ReminderReceiver.EXTRA_IS_ADVANCE, isAdvance)

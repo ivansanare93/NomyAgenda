@@ -18,7 +18,7 @@ class ReminderReceiver : BroadcastReceiver() {
         val isAdvance = intent.getBooleanExtra(EXTRA_IS_ADVANCE, false)
 
         val notificationTitle = if (isAdvance) "⏰ $title" else title
-        val notificationText = content.ifBlank { if (isAdvance) context.getString(R.string.notification_advance_generic) else "Recordatorio" }
+        val notificationText = content.ifBlank { if (isAdvance) context.getString(R.string.notification_advance_generic) else context.getString(R.string.notification_default) }
 
         val openIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
