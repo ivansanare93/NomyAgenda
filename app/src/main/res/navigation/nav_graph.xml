@@ -16,12 +16,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/contactsFragment"
-        android:name="com.nomyagenda.app.ui.contacts.ContactsFragment"
-        android:label="@string/nav_contacts"
-        tools:layout="@layout/fragment_contacts" />
-
-    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.nomyagenda.app.ui.settings.SettingsFragment"
         android:label="@string/nav_settings"

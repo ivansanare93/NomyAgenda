@@ -7,11 +7,6 @@
         android:title="@string/nav_agenda" />
 
     <item
-        android:id="@+id/contactsFragment"
-        android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="@string/nav_contacts" />
-
-    <item
         android:id="@+id/settingsFragment"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/nav_settings" />
