@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.nomyagenda.app.data.local.entity.AgendaEntry
+import com.nomyagenda.app.data.preferences.SettingsRepository
 
 object NotificationHelper {
 
@@ -30,6 +31,8 @@ object NotificationHelper {
 
     fun scheduleReminder(context: Context, entry: AgendaEntry) {
         val dueAt = entry.dueAt ?: return
+        val prefs = context.getSharedPreferences(SettingsRepository.PREFS_NAME, Context.MODE_PRIVATE)
+        if (!prefs.getBoolean(SettingsRepository.KEY_NOTIFICATIONS, true)) return
         val intent = Intent(context, ReminderReceiver::class.java).apply {
             putExtra(ReminderReceiver.EXTRA_ENTRY_ID, entry.id)
             putExtra(ReminderReceiver.EXTRA_TITLE, entry.title)
