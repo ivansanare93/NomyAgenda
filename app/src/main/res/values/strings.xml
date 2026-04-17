@@ -66,4 +66,19 @@
     <string name="settings_language_system">Sistema</string>
     <string name="settings_notifications">Notificaciones</string>
     <string name="settings_notifications_desc">Activar recordatorios programados</string>
+
+    <!-- Advance notice -->
+    <string name="settings_advance_notice">Aviso anticipado</string>
+    <string name="settings_advance_notice_desc">Cuándo avisar antes del recordatorio</string>
+    <string name="settings_advance_notice_none">Sin aviso previo</string>
+    <string name="settings_advance_notice_1h">1 hora antes</string>
+    <string name="settings_advance_notice_1d">1 día antes</string>
+    <string name="settings_advance_notice_1w">1 semana antes</string>
+
+    <!-- Advance notification body -->
+    <string name="notification_advance_1h">Vence en 1 hora</string>
+    <string name="notification_advance_1d">Vence mañana</string>
+    <string name="notification_advance_1w">Vence en 1 semana</string>
+    <string name="notification_advance_generic">Próximo recordatorio</string>
+    <string name="notification_default">Recordatorio</string>
 </resources>
