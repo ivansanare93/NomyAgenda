@@ -66,4 +66,18 @@
     <string name="settings_language_system">System</string>
     <string name="settings_notifications">Notifications</string>
     <string name="settings_notifications_desc">Enable scheduled reminders</string>
+
+    <!-- Advance notice -->
+    <string name="settings_advance_notice">Advance notice</string>
+    <string name="settings_advance_notice_desc">When to notify before the reminder</string>
+    <string name="settings_advance_notice_none">No advance notice</string>
+    <string name="settings_advance_notice_1h">1 hour before</string>
+    <string name="settings_advance_notice_1d">1 day before</string>
+    <string name="settings_advance_notice_1w">1 week before</string>
+
+    <!-- Advance notification body -->
+    <string name="notification_advance_1h">Due in 1 hour</string>
+    <string name="notification_advance_1d">Due tomorrow</string>
+    <string name="notification_advance_1w">Due in 1 week</string>
+    <string name="notification_advance_generic">Upcoming reminder</string>
 </resources>

@@ -38,11 +38,16 @@ class SettingsRepository(context: Context) {
         AppCompatDelegate.setApplicationLocales(localeList)
     }
 
+    var advanceNoticeMinutes: Int
+        get() = prefs.getInt(KEY_ADVANCE_NOTICE, ADVANCE_NOTICE_NONE)
+        set(value) = prefs.edit().putInt(KEY_ADVANCE_NOTICE, value).apply()
+
     companion object {
         const val PREFS_NAME = "nomy_settings"
         const val KEY_THEME = "theme_mode"
         const val KEY_LANGUAGE = "language"
         const val KEY_NOTIFICATIONS = "notifications_enabled"
+        const val KEY_ADVANCE_NOTICE = "advance_notice_minutes"
 
         const val THEME_LIGHT = "LIGHT"
         const val THEME_DARK = "DARK"
@@ -51,5 +56,10 @@ class SettingsRepository(context: Context) {
         const val LANGUAGE_ES = "es"
         const val LANGUAGE_EN = "en"
         const val LANGUAGE_SYSTEM = "system"
+
+        const val ADVANCE_NOTICE_NONE = 0
+        const val ADVANCE_NOTICE_1H = 60
+        const val ADVANCE_NOTICE_1D = 1440
+        const val ADVANCE_NOTICE_1W = 10080
     }
 }
