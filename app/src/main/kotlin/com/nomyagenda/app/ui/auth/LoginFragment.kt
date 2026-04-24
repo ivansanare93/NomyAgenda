@@ -2,6 +2,7 @@ package com.nomyagenda.app.ui.auth
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,20 +33,36 @@ class LoginFragment : Fragment() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
+            Log.d(TAG, "Google Sign-In result OK")
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 val idToken = account.idToken
                 if (idToken != null) {
+                    Log.d(TAG, "Google idToken obtained; calling signInWithGoogle")
                     viewModel.signInWithGoogle(idToken)
                 } else {
-                    binding.textError.text = getString(R.string.login_error_google_failed)
+                    Log.w(TAG, "Google Sign-In idToken is null (check google-services.json / SHA-1 config)")
+                    binding.progressLogin.visibility = View.GONE
+                    binding.btnGoogleSignIn.isEnabled = true
+                    binding.textError.text = getString(R.string.login_error_token_null)
                     binding.textError.visibility = View.VISIBLE
                 }
             } catch (e: ApiException) {
-                binding.textError.text = getString(R.string.login_error_google_failed)
+                Log.w(TAG, "Google Sign-In ApiException statusCode=${e.statusCode}: ${e.localizedMessage}")
+                binding.progressLogin.visibility = View.GONE
+                binding.btnGoogleSignIn.isEnabled = true
+                binding.textError.text = getString(
+                    R.string.login_error_google_api,
+                    e.statusCode,
+                    e.localizedMessage ?: ""
+                )
                 binding.textError.visibility = View.VISIBLE
             }
+        } else {
+            Log.d(TAG, "Google Sign-In cancelled or failed resultCode=${result.resultCode}")
+            binding.progressLogin.visibility = View.GONE
+            binding.btnGoogleSignIn.isEnabled = true
         }
     }
 
@@ -81,19 +98,30 @@ class LoginFragment : Fragment() {
                     binding.textError.visibility = View.VISIBLE
                 }
                 is AuthResult.Success -> {
+                    binding.progressLogin.visibility = View.GONE
                     binding.textError.visibility = View.GONE
+                    Log.d(TAG, "Firebase sign-in success uid=${state.user.uid}; navigating to agenda")
+                    val uid = state.user.uid
+                    val activityScope = requireActivity().lifecycleScope
                     val app = requireActivity().application as NomyAgendaApp
-                    lifecycleScope.launch {
-                        app.agendaRepository.syncFromFirestore(state.user.uid)
-                        binding.progressLogin.visibility = View.GONE
-                        findNavController().navigate(R.id.action_loginFragment_to_agendaFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_agendaFragment)
+                    activityScope.launch {
+                        try {
+                            app.agendaRepository.syncFromFirestore(uid)
+                            Log.d(TAG, "syncFromFirestore success uid=$uid")
+                        } catch (e: Exception) {
+                            Log.w(TAG, "syncFromFirestore failed uid=$uid", e)
+                        }
                     }
                 }
             }
         }
 
         binding.btnGoogleSignIn.setOnClickListener {
+            Log.d(TAG, "Starting Google Sign-In flow")
             binding.textError.visibility = View.GONE
+            binding.progressLogin.visibility = View.VISIBLE
+            binding.btnGoogleSignIn.isEnabled = false
             googleSignInLauncher.launch(googleSignInClient.signInIntent)
         }
     }
@@ -101,5 +129,9 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val TAG = "LoginFragment"
     }
 }

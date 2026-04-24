@@ -1,5 +1,6 @@
 package com.nomyagenda.app.ui.auth
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,15 +27,26 @@ class LoginViewModel : ViewModel() {
     fun signInWithGoogle(idToken: String) {
         _authState.value = AuthResult.Loading
         viewModelScope.launch {
+            Log.d(TAG, "Attempting Firebase sign-in with Google credential")
             try {
                 val credential = GoogleAuthProvider.getCredential(idToken, null)
                 val result = auth.signInWithCredential(credential).await()
                 val user = result.user
-                    ?: run { _authState.value = AuthResult.Error("Authentication failed"); return@launch }
+                if (user == null) {
+                    Log.w(TAG, "Firebase sign-in returned null user")
+                    _authState.value = AuthResult.Error("Authentication failed")
+                    return@launch
+                }
+                Log.d(TAG, "Firebase sign-in success uid=${user.uid}")
                 _authState.value = AuthResult.Success(user)
             } catch (e: Exception) {
+                Log.w(TAG, "Firebase sign-in failed: ${e.localizedMessage}", e)
                 _authState.value = AuthResult.Error(e.localizedMessage ?: e.message ?: "Error")
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "LoginViewModel"
     }
 }
