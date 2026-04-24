@@ -40,6 +40,75 @@
 
     </LinearLayout>
 
+    <!-- Calendar week strip -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_calendar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_xsmall">
+
+            <!-- Week navigation row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/spacing_xsmall"
+                android:paddingTop="@dimen/spacing_xsmall">
+
+                <ImageButton
+                    android:id="@+id/btn_prev_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/calendar_prev_week"
+                    android:padding="@dimen/spacing_small"
+                    app:srcCompat="@drawable/ic_chevron_left" />
+
+                <TextView
+                    android:id="@+id/text_week_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAppearance="?attr/textAppearanceLabelMedium"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <ImageButton
+                    android:id="@+id/btn_next_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/calendar_next_week"
+                    android:padding="@dimen/spacing_small"
+                    app:srcCompat="@drawable/ic_chevron_right" />
+
+            </LinearLayout>
+
+            <!-- 7 day cells, added programmatically -->
+            <LinearLayout
+                android:id="@+id/layout_calendar_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <!-- Search bar -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_search"
@@ -52,7 +121,7 @@
         app:boxBackgroundColor="?attr/colorSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:layout_constraintTop_toBottomOf="@id/card_calendar"
         app:startIconDrawable="@android:drawable/ic_menu_search"
         app:startIconTint="?attr/colorPrimary">
 

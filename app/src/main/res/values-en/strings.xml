@@ -71,6 +71,10 @@
     <string name="format_quote_desc">Block quote</string>
     <string name="hint_note_content_editor">Write the content of your note…</string>
 
+    <!-- Calendar week strip -->
+    <string name="calendar_prev_week">Previous week</string>
+    <string name="calendar_next_week">Next week</string>
+
     <!-- Placeholders -->
     <string name="settings_placeholder">Settings — coming soon</string>
 

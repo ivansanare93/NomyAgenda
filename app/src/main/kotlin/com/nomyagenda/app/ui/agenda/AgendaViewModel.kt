@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class AgendaViewModel(
@@ -21,21 +22,51 @@ class AgendaViewModel(
     private val _searchQuery = MutableStateFlow("")
     private val _filterType = MutableStateFlow<EntryType?>(null)
     private val _sortOrder = MutableStateFlow(SortOrder.DUE_DATE)
+    private val _selectedDate = MutableStateFlow<String?>(null)
+
+    private data class Filters(
+        val query: String,
+        val filterType: EntryType?,
+        val sortOrder: SortOrder,
+        val selectedDate: String?
+    )
 
     val entries: LiveData<List<AgendaEntry>> = combine(
         _searchQuery.debounce(300),
         _filterType,
-        _sortOrder
-    ) { query, filterType, sortOrder ->
-        Triple(query, filterType, sortOrder)
-    }.flatMapLatest { (query, filterType, sortOrder) ->
+        _sortOrder,
+        _selectedDate
+    ) { query, filterType, sortOrder, selectedDate ->
+        Filters(query, filterType, sortOrder, selectedDate)
+    }.flatMapLatest { (query, filterType, sortOrder, selectedDate) ->
         val source = if (query.isBlank()) repository.getAll() else repository.search(query)
         source.map { list ->
             list
                 .filter { entry -> filterType == null || entry.type == filterType }
+                .filter { entry ->
+                    if (selectedDate == null) true
+                    else {
+                        val ts = entry.dueAt ?: entry.createdAt
+                        ts.toDateKey() == selectedDate
+                    }
+                }
                 .sortedWith(comparatorFor(sortOrder))
         }
     }.asLiveData()
+
+    /** Set of date keys ("YYYY-MM-DD") for which at least one entry exists (respecting type filter). */
+    val entryDates: LiveData<Set<String>> = _filterType
+        .flatMapLatest { filterType ->
+            repository.getAll().map { list ->
+                list
+                    .filter { entry -> filterType == null || entry.type == filterType }
+                    .map { entry ->
+                        val ts = entry.dueAt ?: entry.createdAt
+                        ts.toDateKey()
+                    }
+                    .toSet()
+            }
+        }.asLiveData()
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
@@ -47,6 +78,10 @@ class AgendaViewModel(
 
     fun setSortOrder(sortOrder: SortOrder) {
         _sortOrder.value = sortOrder
+    }
+
+    fun setSelectedDate(dateKey: String?) {
+        _selectedDate.value = dateKey
     }
 
     val currentSortOrder: SortOrder get() = _sortOrder.value
@@ -84,6 +119,18 @@ class AgendaViewModel(
                     if (cmp != 0) cmp else a.createdAt.compareTo(b.createdAt)
                 }
             }
+        }
+    }
+
+    companion object {
+        fun Long.toDateKey(): String {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = this
+            return "%04d-%02d-%02d".format(
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
         }
     }
 }
