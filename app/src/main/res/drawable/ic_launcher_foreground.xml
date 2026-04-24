@@ -5,25 +5,89 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Calendar outline -->
+    <!-- Party hat body (yellow triangle, sits above calendar) -->
     <path
-        android:fillColor="@color/md_theme_light_onPrimary"
-        android:pathData="M38,30 h32 a4,4 0 0 1 4,4 v36 a4,4 0 0 1 -4,4 H38 a4,4 0 0 1 -4,-4 V34 a4,4 0 0 1 4,-4 z" />
+        android:fillColor="#FFE066"
+        android:pathData="M54,16 L43,42 L65,42 Z" />
+
+    <!-- Party hat stripe (pink trapezoid band) -->
     <path
-        android:fillColor="@color/md_theme_light_primary"
-        android:pathData="M40,32 h28 a2,2 0 0 1 2,2 v34 a2,2 0 0 1 -2,2 H40 a2,2 0 0 1 -2,-2 V34 a2,2 0 0 1 2,-2 z" />
-    <!-- Header bar -->
+        android:fillColor="#FF6BA0"
+        android:pathData="M49,32 L59,32 L62,40 L46,40 Z" />
+
+    <!-- Party hat pom-pom (teal circle at tip) -->
     <path
-        android:fillColor="@color/md_theme_light_primaryContainer"
-        android:pathData="M38,32 h32 v10 H38 z" />
-    <!-- Grid dots (days) -->
+        android:fillColor="#45D9D0"
+        android:pathData="M50,13 a4,4 0 1 0 8,0 a4,4 0 1 0 -8,0" />
+
+    <!-- Calendar body (white rounded rectangle) -->
     <path
-        android:fillColor="@color/md_theme_light_onPrimary"
-        android:pathData="M44,48 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0
-                          M54,48 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0
-                          M64,48 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0
-                          M44,58 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0
-                          M54,58 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0
-                          M64,58 m-2,0 a2,2 0 1 0 4,0 a2,2 0 1 0 -4,0" />
+        android:fillColor="#FFFFFF"
+        android:pathData="M20,42 h68 a6,6 0 0 1 6,6 v40 a6,6 0 0 1 -6,6 H20 a6,6 0 0 1 -6,-6 V48 a6,6 0 0 1 6,-6 z" />
+
+    <!-- Calendar header bar (purple, top-rounded) -->
+    <path
+        android:fillColor="#7C4DFF"
+        android:pathData="M20,42 h68 a6,6 0 0 1 6,6 v12 H14 V48 a6,6 0 0 1 6,-6 z" />
+
+    <!-- Ring peg left (white circle, straddles calendar top) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,39 a3.5,3.5 0 1 0 7,0 a3.5,3.5 0 1 0 -7,0" />
+
+    <!-- Ring peg right (white circle, straddles calendar top) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M61,39 a3.5,3.5 0 1 0 7,0 a3.5,3.5 0 1 0 -7,0" />
+
+    <!-- Left eye (dark circle) -->
+    <path
+        android:fillColor="#2D2D2D"
+        android:pathData="M41,65 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0" />
+
+    <!-- Left eye shine (white dot) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M43,63 a1.5,1.5 0 1 0 3,0 a1.5,1.5 0 1 0 -3,0" />
+
+    <!-- Right eye (dark circle) -->
+    <path
+        android:fillColor="#2D2D2D"
+        android:pathData="M57,65 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0" />
+
+    <!-- Right eye shine (white dot) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M59,63 a1.5,1.5 0 1 0 3,0 a1.5,1.5 0 1 0 -3,0" />
+
+    <!-- Rosy cheek left (soft pink ellipse) -->
+    <path
+        android:fillColor="#FFAABB"
+        android:fillAlpha="0.65"
+        android:pathData="M30,69 a5.5,3.5 0 1 0 11,0 a5.5,3.5 0 1 0 -11,0" />
+
+    <!-- Rosy cheek right (soft pink ellipse) -->
+    <path
+        android:fillColor="#FFAABB"
+        android:fillAlpha="0.65"
+        android:pathData="M67,69 a5.5,3.5 0 1 0 11,0 a5.5,3.5 0 1 0 -11,0" />
+
+    <!-- Happy smile (quadratic bezier arc) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#2D2D2D"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M43,75 Q54,85 65,75" />
+
+    <!-- Star sparkle: yellow (upper right of calendar) -->
+    <path
+        android:fillColor="#FFE066"
+        android:pathData="M83,55 l2,-4.5 l2,4.5 l4.5,2 l-4.5,2 l-2,4.5 l-2,-4.5 l-4.5,-2 z" />
+
+    <!-- Star sparkle: teal (lower left of calendar) -->
+    <path
+        android:fillColor="#45D9D0"
+        android:pathData="M20,74 l1.5,-3.5 l1.5,3.5 l3.5,1.5 l-3.5,1.5 l-1.5,3.5 l-1.5,-3.5 l-3.5,-1.5 z" />
 
 </vector>
