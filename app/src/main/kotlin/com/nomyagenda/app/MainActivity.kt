@@ -1,15 +1,20 @@
 package com.nomyagenda.app
 
 import android.Manifest
+import android.app.AlarmManager
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nomyagenda.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +46,30 @@ class MainActivity : AppCompatActivity() {
                 != PackageManager.PERMISSION_GRANTED
         ) {
             requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
+        // On Android 12 (API 31–32), SCHEDULE_EXACT_ALARM must be granted by the user via
+        // system settings. Without it the OS delays alarms by several minutes.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+        ) {
+            val alarmManager = getSystemService(AlarmManager::class.java)
+            if (!alarmManager.canScheduleExactAlarms()) {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.exact_alarm_rationale_title)
+                    .setMessage(R.string.exact_alarm_rationale_message)
+                    .setPositiveButton(R.string.exact_alarm_rationale_confirm) { _, _ ->
+                        try {
+                            val intent = Intent(
+                                Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+                                Uri.parse("package:$packageName")
+                            )
+                            startActivity(intent)
+                        } catch (_: Exception) { /* settings screen not available */ }
+                    }
+                    .setNegativeButton(R.string.cancel, null)
+                    .show()
+            }
         }
     }
 }
