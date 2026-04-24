@@ -75,6 +75,7 @@ dependencies {
 
     // Markwon — Markdown rendering
     implementation(libs.markwon.core)
+    implementation(libs.markwon.html)
 
     // Testing
     testImplementation(libs.junit)

@@ -69,6 +69,9 @@
     <string name="format_numbered_desc">Lista numerada</string>
     <string name="format_quote">❝ Cita</string>
     <string name="format_quote_desc">Cita en bloque</string>
+    <string name="format_color">🎨 Color</string>
+    <string name="format_color_desc">Color del texto</string>
+    <string name="color_picker_title">Elige un color</string>
     <string name="hint_note_content_editor">Escribe el contenido de tu nota…</string>
 
     <!-- Calendar week strip -->
