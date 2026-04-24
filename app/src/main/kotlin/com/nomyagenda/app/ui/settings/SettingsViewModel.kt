@@ -24,6 +24,7 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun setDecorativeTheme(theme: String) {
+        if (settingsRepo.decorativeTheme == theme) return
         settingsRepo.decorativeTheme = theme
         decorativeTheme.value = theme
         settingsRepo.applyTheme()

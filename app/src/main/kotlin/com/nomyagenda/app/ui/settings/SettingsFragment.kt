@@ -72,7 +72,6 @@ class SettingsFragment : Fragment() {
 
         viewModel.recreateEvent.observe(viewLifecycleOwner) { shouldRecreate ->
             if (shouldRecreate) {
-                viewModel.recreateEvent.value = false
                 requireActivity().recreate()
             }
         }
@@ -96,9 +95,7 @@ class SettingsFragment : Fragment() {
                     R.id.chip_theme_sunset -> SettingsRepository.DECORATIVE_THEME_SUNSET
                     else -> SettingsRepository.DECORATIVE_THEME_DEFAULT
                 }
-                if (theme != viewModel.decorativeTheme.value) {
-                    viewModel.setDecorativeTheme(theme)
-                }
+                viewModel.setDecorativeTheme(theme)
             }
         }
 
