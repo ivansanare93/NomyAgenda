@@ -13,7 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
@@ -172,20 +172,20 @@ class AgendaFragment : Fragment() {
                     dayBinding.textDayNumber.background =
                         ContextCompat.getDrawable(ctx, R.drawable.bg_calendar_day_selected)
                     dayBinding.textDayNumber.setTextColor(
-                        ContextCompat.getColor(ctx, R.color.md_theme_light_onPrimary)
+                        MaterialColors.getColor(dayBinding.root, com.google.android.material.R.attr.colorOnPrimary)
                     )
                 }
                 isToday -> {
                     dayBinding.textDayNumber.background =
                         ContextCompat.getDrawable(ctx, R.drawable.bg_calendar_day_today)
                     dayBinding.textDayNumber.setTextColor(
-                        ContextCompat.getColor(ctx, R.color.md_theme_light_primary)
+                        MaterialColors.getColor(dayBinding.root, com.google.android.material.R.attr.colorPrimary)
                     )
                 }
                 else -> {
                     dayBinding.textDayNumber.background = null
                     dayBinding.textDayNumber.setTextColor(
-                        ContextCompat.getColor(ctx, R.color.md_theme_light_onBackground)
+                        MaterialColors.getColor(dayBinding.root, com.google.android.material.R.attr.colorOnBackground)
                     )
                 }
             }
@@ -248,9 +248,9 @@ class AgendaFragment : Fragment() {
 
     companion object {
         private val HEADER_DATE_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
-        private val DAY_NAME_FORMAT = SimpleDateFormat("EEE", Locale("es"))
-        private val MONTH_YEAR_FORMAT = SimpleDateFormat("MMM yyyy", Locale("es"))
-        private val DAY_MONTH_FORMAT = SimpleDateFormat("d MMM", Locale("es"))
+        private val DAY_NAME_FORMAT = SimpleDateFormat("EEE", Locale.getDefault())
+        private val MONTH_YEAR_FORMAT = SimpleDateFormat("MMM yyyy", Locale.getDefault())
+        private val DAY_MONTH_FORMAT = SimpleDateFormat("d MMM", Locale.getDefault())
 
         /** Returns a new Calendar set to the Monday of the week containing [from]. */
         private fun mondayOf(from: Calendar): Calendar {
