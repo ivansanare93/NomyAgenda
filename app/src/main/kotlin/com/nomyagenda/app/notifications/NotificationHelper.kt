@@ -42,7 +42,7 @@ object NotificationHelper {
         scheduleAlarm(context, alarmManager, entry.id, entry.id, dueAt, entry.title, entry.content, isAdvance = false)
 
         // Schedule the advance alarm if configured and still in the future
-        val advanceMinutes = prefs.getInt(SettingsRepository.KEY_ADVANCE_NOTICE, SettingsRepository.ADVANCE_NOTICE_NONE)
+        val advanceMinutes = entry.advanceNoticeMinutes
         if (advanceMinutes > 0) {
             val advanceAt = dueAt - advanceMinutes * 60_000L
             if (advanceAt > System.currentTimeMillis()) {

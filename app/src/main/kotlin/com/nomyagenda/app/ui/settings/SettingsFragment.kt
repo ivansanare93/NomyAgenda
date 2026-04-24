@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.nomyagenda.app.R
@@ -56,37 +55,6 @@ class SettingsFragment : Fragment() {
             if (binding.switchNotifications.isChecked != enabled) {
                 binding.switchNotifications.isChecked = enabled
             }
-        }
-
-        // Advance notice dropdown
-        val advanceOptions = listOf(
-            SettingsRepository.ADVANCE_NOTICE_NONE to getString(R.string.settings_advance_notice_none),
-            SettingsRepository.ADVANCE_NOTICE_1H  to getString(R.string.settings_advance_notice_1h),
-            SettingsRepository.ADVANCE_NOTICE_1D  to getString(R.string.settings_advance_notice_1d),
-            SettingsRepository.ADVANCE_NOTICE_1W  to getString(R.string.settings_advance_notice_1w)
-        )
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, advanceOptions.map { it.second })
-
-        // Set the initial text before attaching the adapter so the internal filter starts clean.
-        // This is critical after Activity recreation (theme/language change): if setText() is
-        // called after setAdapter(), the AutoCompleteTextView filter becomes stale and the
-        // dropdown no longer opens on subsequent taps.
-        val initialMinutes = viewModel.advanceNoticeMinutes.value ?: SettingsRepository.ADVANCE_NOTICE_NONE
-        val initialLabel = advanceOptions.firstOrNull { it.first == initialMinutes }?.second ?: advanceOptions[0].second
-        binding.spinnerAdvanceNotice.setText(initialLabel, false)
-        binding.spinnerAdvanceNotice.setAdapter(adapter)
-
-        viewModel.advanceNoticeMinutes.observe(viewLifecycleOwner) { minutes ->
-            val label = advanceOptions.firstOrNull { it.first == minutes }?.second ?: advanceOptions[0].second
-            if (binding.spinnerAdvanceNotice.text.toString() != label) {
-                // Always re-set the adapter after setText to reset the filter state.
-                binding.spinnerAdvanceNotice.setText(label, false)
-                binding.spinnerAdvanceNotice.setAdapter(adapter)
-            }
-        }
-
-        binding.spinnerAdvanceNotice.setOnItemClickListener { _, _, position, _ ->
-            viewModel.setAdvanceNoticeMinutes(advanceOptions[position].first)
         }
 
         binding.toggleTheme.addOnButtonCheckedListener { _, checkedId, isChecked ->

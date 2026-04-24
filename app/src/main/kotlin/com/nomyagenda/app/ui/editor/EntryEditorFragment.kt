@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +16,7 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.ChecklistItem
 import com.nomyagenda.app.data.local.entity.EntryType
+import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentEntryEditorBinding
 import io.noties.markwon.Markwon
@@ -38,6 +40,16 @@ class EntryEditorFragment : Fragment() {
     private val checklistItems = mutableListOf<ChecklistItem>()
     private var selectedDueAt: Long? = null
     private var currentType: EntryType = EntryType.NOTE
+    private var selectedAdvanceNoticeMinutes: Int = SettingsRepository.ADVANCE_NOTICE_NONE
+
+    private val advanceOptions by lazy {
+        listOf(
+            SettingsRepository.ADVANCE_NOTICE_NONE to getString(R.string.settings_advance_notice_none),
+            SettingsRepository.ADVANCE_NOTICE_1H  to getString(R.string.settings_advance_notice_1h),
+            SettingsRepository.ADVANCE_NOTICE_1D  to getString(R.string.settings_advance_notice_1d),
+            SettingsRepository.ADVANCE_NOTICE_1W  to getString(R.string.settings_advance_notice_1w)
+        )
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentEntryEditorBinding.inflate(inflater, container, false)
@@ -88,6 +100,13 @@ class EntryEditorFragment : Fragment() {
 
         binding.editDueDate.setOnClickListener { showDateTimePicker() }
 
+        val advanceAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, advanceOptions.map { it.second })
+        binding.spinnerAdvanceNotice.setText(advanceOptions[0].second, false)
+        binding.spinnerAdvanceNotice.setAdapter(advanceAdapter)
+        binding.spinnerAdvanceNotice.setOnItemClickListener { _, _, position, _ ->
+            selectedAdvanceNoticeMinutes = advanceOptions[position].first
+        }
+
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
 
         if (args.entryId > 0) {
@@ -111,6 +130,13 @@ class EntryEditorFragment : Fragment() {
                         selectedDueAt = dueAt
                         binding.editDueDate.setText(DATE_FORMAT.format(Date(dueAt)))
                     }
+                    selectedAdvanceNoticeMinutes = entry.advanceNoticeMinutes
+                    val label = advanceOptions.firstOrNull { it.first == entry.advanceNoticeMinutes }?.second
+                        ?: advanceOptions[0].second
+                    binding.spinnerAdvanceNotice.setText(label, false)
+                    binding.spinnerAdvanceNotice.setAdapter(
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, advanceOptions.map { it.second })
+                    )
                 }
             }
             binding.editTags.setText(entry.tags)
@@ -209,6 +235,7 @@ class EntryEditorFragment : Fragment() {
             },
             checklistJson = if (currentType == EntryType.TASK) ChecklistManager.toJson(checklistAdapter.getItems()) else "[]",
             dueAt = if (currentType == EntryType.REMINDER) selectedDueAt else null,
+            advanceNoticeMinutes = if (currentType == EntryType.REMINDER) selectedAdvanceNoticeMinutes else 0,
             tags = tags,
             category = category
         )

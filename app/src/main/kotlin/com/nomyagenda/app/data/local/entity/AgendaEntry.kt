@@ -11,6 +11,7 @@ data class AgendaEntry(
     val content: String = "",
     val checklistJson: String = "[]",
     val dueAt: Long? = null,
+    val advanceNoticeMinutes: Int = 0,
     val tags: String = "",
     val category: String = "",
     val createdAt: Long = System.currentTimeMillis()
