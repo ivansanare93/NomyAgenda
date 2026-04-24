@@ -177,6 +177,15 @@
                         android:text="@string/format_quote"
                         android:contentDescription="@string/format_quote_desc" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_format_color"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:text="@string/format_color"
+                        android:contentDescription="@string/format_color_desc" />
+
                 </LinearLayout>
 
             </HorizontalScrollView>

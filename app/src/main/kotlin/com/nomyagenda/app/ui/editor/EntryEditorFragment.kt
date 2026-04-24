@@ -2,10 +2,15 @@ package com.nomyagenda.app.ui.editor
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
+import android.widget.GridLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +25,7 @@ import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentEntryEditorBinding
 import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,7 +66,9 @@ class EntryEditorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        markwon = Markwon.create(requireContext())
+        markwon = Markwon.builder(requireContext())
+            .usePlugin(HtmlPlugin.create())
+            .build()
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
@@ -88,6 +96,7 @@ class EntryEditorFragment : Fragment() {
         binding.btnFormatBullet.setOnClickListener { applyLinePrefix("- ") }
         binding.btnFormatNumbered.setOnClickListener { applyLinePrefix("1. ") }
         binding.btnFormatQuote.setOnClickListener { applyLinePrefix("> ") }
+        binding.btnFormatColor.setOnClickListener { showColorPicker() }
 
         binding.buttonAddChecklistItem.setOnClickListener {
             val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
@@ -198,6 +207,60 @@ class EntryEditorFragment : Fragment() {
         editText.setSelection(cursor + prefix.length)
     }
 
+    private fun showColorPicker() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_color_picker, null)
+        val grid = dialogView.findViewById<GridLayout>(R.id.grid_colors)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.color_picker_title)
+            .setView(dialogView)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+
+        COLOR_PALETTE.forEach { hexColor ->
+            val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
+            val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
+
+            val circle = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.parseColor(hexColor))
+            }
+
+            val swatch = FrameLayout(requireContext()).apply {
+                background = circle
+                layoutParams = GridLayout.LayoutParams().apply {
+                    width = size
+                    height = size
+                    setMargins(margin, margin, margin, margin)
+                }
+                setOnClickListener {
+                    applyTextColor(hexColor)
+                    dialog.dismiss()
+                }
+            }
+            grid.addView(swatch)
+        }
+
+        dialog.show()
+    }
+
+    private fun applyTextColor(hexColor: String) {
+        val editText = binding.editNoteContent
+        val text = editText.text ?: return
+        val start = editText.selectionStart.coerceAtLeast(0)
+        val end = editText.selectionEnd.coerceAtLeast(0)
+        val openTag = "<font color=\"$hexColor\">"
+        val closeTag = "</font>"
+        if (start == end) {
+            text.insert(start, "$openTag$closeTag")
+            editText.setSelection(start + openTag.length)
+        } else {
+            val selected = text.subSequence(start, end).toString()
+            text.replace(start, end, "$openTag$selected$closeTag")
+            editText.setSelection(start + openTag.length, start + openTag.length + selected.length)
+        }
+    }
+
     private fun showDateTimePicker() {
         val cal = Calendar.getInstance().apply {
             selectedDueAt?.let { timeInMillis = it }
@@ -253,5 +316,18 @@ class EntryEditorFragment : Fragment() {
 
     companion object {
         private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+
+        private val COLOR_PALETTE = listOf(
+            "#E53935",
+            "#E91E63",
+            "#9C27B0",
+            "#3F51B5",
+            "#2196F3",
+            "#009688",
+            "#4CAF50",
+            "#FF9800",
+            "#FF5722",
+            "#795548"
+        )
     }
 }
