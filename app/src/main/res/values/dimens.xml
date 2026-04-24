@@ -13,4 +13,5 @@
 
     <dimen name="color_swatch_size">40dp</dimen>
     <dimen name="color_swatch_margin">6dp</dimen>
+    <dimen name="color_swatch_stroke_width">3dp</dimen>
 </resources>
