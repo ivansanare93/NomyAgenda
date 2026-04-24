@@ -33,6 +33,7 @@
     <string name="hint_note_content">Content (Markdown)</string>
     <string name="hint_new_item">New item</string>
     <string name="hint_due_date">Date and time</string>
+    <string name="hint_advance_notice">Advance notice</string>
     <string name="hint_tags">Tags (comma-separated)</string>
     <string name="hint_category">Category (optional)</string>
     <string name="add_item">Add item</string>
