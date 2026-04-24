@@ -13,6 +13,7 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     val decorativeTheme = MutableLiveData(settingsRepo.decorativeTheme)
     val language = MutableLiveData(settingsRepo.language)
     val notificationsEnabled = MutableLiveData(settingsRepo.notificationsEnabled)
+    val appBackground = MutableLiveData(settingsRepo.appBackground)
 
     /** true when the activity must recreate itself to apply a new decorative theme. */
     val recreateEvent = MutableLiveData(false)
@@ -40,5 +41,13 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     fun setNotificationsEnabled(enabled: Boolean) {
         settingsRepo.notificationsEnabled = enabled
         notificationsEnabled.value = enabled
+    }
+
+    fun setAppBackground(bg: String) {
+        if (settingsRepo.appBackground == bg) return
+        settingsRepo.appBackground = bg
+        appBackground.value = bg
+        settingsRepo.applyTheme()
+        recreateEvent.value = true
     }
 }

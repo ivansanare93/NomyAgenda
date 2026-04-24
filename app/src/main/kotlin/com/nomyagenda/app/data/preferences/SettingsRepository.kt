@@ -24,11 +24,16 @@ class SettingsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_NOTIFICATIONS, true)
         set(value) = prefs.edit().putBoolean(KEY_NOTIFICATIONS, value).apply()
 
+    var appBackground: String
+        get() = prefs.getString(KEY_APP_BACKGROUND, APP_BACKGROUND_NONE) ?: APP_BACKGROUND_NONE
+        set(value) = prefs.edit().putString(KEY_APP_BACKGROUND, value).apply()
+
     fun applyTheme() {
-        // Thematic (non-default) themes use fixed light colours, so force light mode.
-        // When the default theme is active, honour the stored day/night preference.
+        // Thematic (non-default) themes and illustrated backgrounds use fixed light colours,
+        // so force light mode. When neither is active, honour the stored day/night preference.
         val mode = when {
             decorativeTheme != DECORATIVE_THEME_DEFAULT -> AppCompatDelegate.MODE_NIGHT_NO
+            appBackground != APP_BACKGROUND_NONE -> AppCompatDelegate.MODE_NIGHT_NO
             else -> when (themeMode) {
                 THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
                 THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
@@ -53,6 +58,7 @@ class SettingsRepository(context: Context) {
         const val KEY_DECORATIVE_THEME = "decorative_theme"
         const val KEY_LANGUAGE = "language"
         const val KEY_NOTIFICATIONS = "notifications_enabled"
+        const val KEY_APP_BACKGROUND = "app_background"
 
         const val THEME_LIGHT = "LIGHT"
         const val THEME_DARK = "DARK"
@@ -62,6 +68,13 @@ class SettingsRepository(context: Context) {
         const val DECORATIVE_THEME_OCEAN = "OCEAN"
         const val DECORATIVE_THEME_FOREST = "FOREST"
         const val DECORATIVE_THEME_SUNSET = "SUNSET"
+
+        const val APP_BACKGROUND_NONE = "NONE"
+        const val APP_BACKGROUND_FLORAL = "FLORAL"
+        const val APP_BACKGROUND_STARS = "STARS"
+        const val APP_BACKGROUND_GEOMETRIC = "GEOMETRIC"
+        const val APP_BACKGROUND_DOTS = "DOTS"
+        const val APP_BACKGROUND_LEAVES = "LEAVES"
 
         const val LANGUAGE_ES = "es"
         const val LANGUAGE_EN = "en"
