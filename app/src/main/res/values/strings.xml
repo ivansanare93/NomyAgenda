@@ -134,6 +134,8 @@
     <string name="login_subtitle">Tus entradas sincronizadas en todos tus dispositivos</string>
     <string name="login_btn_google">Continuar con Google</string>
     <string name="login_error_google_failed">No se pudo iniciar sesión con Google. Inténtalo de nuevo.</string>
+    <string name="login_error_token_null">No se pudo obtener el token de Google. Verifica la configuración.</string>
+    <string name="login_error_google_api">Error de Google API (código %1$d): %2$s</string>
 
     <!-- Settings — Account -->
     <string name="settings_account">Cuenta</string>
