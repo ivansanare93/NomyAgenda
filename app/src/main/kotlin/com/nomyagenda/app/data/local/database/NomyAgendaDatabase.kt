@@ -9,7 +9,7 @@ import com.nomyagenda.app.data.local.dao.AgendaEntryDao
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.Converters
 
-@Database(entities = [AgendaEntry::class], version = 3, exportSchema = false)
+@Database(entities = [AgendaEntry::class], version = 4, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NomyAgendaDatabase : RoomDatabase() {
 

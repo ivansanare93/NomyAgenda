@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -48,6 +49,7 @@ class EntryEditorFragment : Fragment() {
     private var selectedDueAt: Long? = null
     private var currentType: EntryType = EntryType.NOTE
     private var selectedAdvanceNoticeMinutes: Int = SettingsRepository.ADVANCE_NOTICE_NONE
+    private var selectedColor: String = ""
 
     private val advanceOptions by lazy {
         listOf(
@@ -119,6 +121,8 @@ class EntryEditorFragment : Fragment() {
 
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
 
+        setupEntryColorPicker()
+
         if (args.entryId > 0) {
             viewModel.load(args.entryId)
         }
@@ -148,7 +152,9 @@ class EntryEditorFragment : Fragment() {
                 }
             }
             binding.editTags.setText(entry.tags)
-            binding.editCategory.setText(entry.category)
+            if (entry.color.isNotEmpty()) {
+                selectEntryColor(entry.color)
+            }
         }
     }
 
@@ -205,6 +211,72 @@ class EntryEditorFragment : Fragment() {
         val lineStart = (text.lastIndexOf('\n', cursor - 1) + 1).coerceAtLeast(0)
         text.insert(lineStart, prefix)
         editText.setSelection(cursor + prefix.length)
+    }
+
+    private fun setupEntryColorPicker() {
+        val container = binding.colorSwatchesContainer
+        val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
+        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+
+        // "No color" swatch (transparent with a border)
+        val noneDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+            setStroke(strokeWidth, Color.LTGRAY)
+        }
+        val noneSwatch = FrameLayout(requireContext()).apply {
+            tag = ""
+            background = noneDrawable
+            layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
+                setMargins(margin, margin, margin, margin)
+            }
+            setOnClickListener { selectEntryColor("") }
+        }
+        container.addView(noneSwatch)
+
+        // Colour swatches
+        COLOR_PALETTE.forEach { hexColor ->
+            val swatch = FrameLayout(requireContext()).apply {
+                tag = hexColor
+                background = GradientDrawable().apply {
+                    shape = GradientDrawable.OVAL
+                    setColor(Color.parseColor(hexColor))
+                }
+                layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
+                    setMargins(margin, margin, margin, margin)
+                }
+                setOnClickListener { selectEntryColor(hexColor) }
+            }
+            container.addView(swatch)
+        }
+
+        // Reflect initial state (no color selected)
+        updateSwatchSelection(container, "")
+    }
+
+    private fun selectEntryColor(hexColor: String) {
+        selectedColor = hexColor
+        updateSwatchSelection(binding.colorSwatchesContainer, hexColor)
+    }
+
+    private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+        for (i in 0 until container.childCount) {
+            val swatch = container.getChildAt(i) as? FrameLayout ?: continue
+            val swatchColor = swatch.tag as? String ?: ""
+            val isSelected = swatchColor == hexColor
+            swatch.background = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                if (swatchColor.isEmpty()) {
+                    setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                    setStroke(strokeWidth, if (isSelected) Color.BLACK else Color.LTGRAY)
+                } else {
+                    setColor(Color.parseColor(swatchColor))
+                    if (isSelected) setStroke(strokeWidth, Color.WHITE)
+                }
+            }
+        }
     }
 
     private fun showColorPicker() {
@@ -284,7 +356,6 @@ class EntryEditorFragment : Fragment() {
         binding.inputLayoutTitle.error = null
 
         val tags = binding.editTags.text?.toString()?.trim() ?: ""
-        val category = binding.editCategory.text?.toString()?.trim() ?: ""
 
         val entry = AgendaEntry(
             id = args.entryId.takeIf { it > 0 } ?: 0,
@@ -298,7 +369,7 @@ class EntryEditorFragment : Fragment() {
             dueAt = if (currentType == EntryType.REMINDER) selectedDueAt else null,
             advanceNoticeMinutes = if (currentType == EntryType.REMINDER) selectedAdvanceNoticeMinutes else 0,
             tags = tags,
-            category = category
+            color = selectedColor
         )
 
         viewModel.save(entry) {

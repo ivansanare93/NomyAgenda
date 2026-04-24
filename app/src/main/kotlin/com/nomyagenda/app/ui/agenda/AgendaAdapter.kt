@@ -58,7 +58,11 @@ class AgendaAdapter(
                 EntryType.REMINDER -> R.attr.reminderCardBackground to R.attr.reminderAccentColor
             }
             binding.root.setCardBackgroundColor(context.resolveThemeColor(cardColorAttr))
-            binding.viewAccentStripe.setBackgroundColor(context.resolveThemeColor(accentColorAttr))
+            if (entry.color.isNotEmpty()) {
+                binding.viewAccentStripe.setBackgroundColor(android.graphics.Color.parseColor(entry.color))
+            } else {
+                binding.viewAccentStripe.setBackgroundColor(context.resolveThemeColor(accentColorAttr))
+            }
 
             when (entry.type) {
                 EntryType.NOTE -> {
@@ -99,12 +103,7 @@ class AgendaAdapter(
                 binding.textEntryTags.visibility = View.GONE
             }
 
-            if (entry.category.isNotBlank()) {
-                binding.textEntryCategory.visibility = View.VISIBLE
-                binding.textEntryCategory.text = entry.category
-            } else {
-                binding.textEntryCategory.visibility = View.GONE
-            }
+            binding.textEntryCategory.visibility = View.GONE
 
             binding.root.setOnClickListener { onClick(entry) }
             binding.root.setOnLongClickListener { onLongClick(entry); true }

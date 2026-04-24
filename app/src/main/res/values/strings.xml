@@ -35,6 +35,7 @@
     <string name="hint_due_date">Fecha y hora</string>
     <string name="hint_advance_notice">Aviso anticipado</string>
     <string name="hint_tags">Etiquetas (separadas por comas)</string>
+    <string name="hint_entry_color">Color de la entrada</string>
     <string name="hint_category">Categoría (opcional)</string>
     <string name="add_item">Añadir elemento</string>
     <string name="editor_title">Editar entrada</string>

@@ -14,5 +14,6 @@ data class AgendaEntry(
     val advanceNoticeMinutes: Int = 0,
     val tags: String = "",
     val category: String = "",
+    val color: String = "",
     val createdAt: Long = System.currentTimeMillis()
 )
