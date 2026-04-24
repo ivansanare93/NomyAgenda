@@ -134,6 +134,8 @@
     <string name="login_subtitle">Tus entradas sincronizadas en todos tus dispositivos</string>
     <string name="login_btn_google">Continuar con Google</string>
     <string name="login_error_google_failed">No se pudo iniciar sesión con Google. Inténtalo de nuevo.</string>
+    <string name="login_error_token_null">No se obtuvo el token de Google. Verifica la configuración del proyecto (google-services.json / SHA-1).</string>
+    <string name="login_error_google_api">Error en Google Sign-In (código %1$d): %2$s</string>
     <!-- Placeholder overridden by google-services.json at build time -->
     <string name="default_web_client_id" translatable="false">YOUR_WEB_CLIENT_ID</string>
 
