@@ -99,6 +99,10 @@
     <string name="settings_bg_geometric">Geometric</string>
     <string name="settings_bg_dots">Polka dots</string>
     <string name="settings_bg_leaves">Leaves</string>
+    <string name="settings_bg_butterfly">Butterflies</string>
+    <string name="settings_bg_mandala">Mandalas</string>
+    <string name="settings_bg_mountains">Mountains</string>
+    <string name="settings_bg_waves">Waves</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_es">Español</string>
     <string name="settings_language_en">English</string>

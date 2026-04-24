@@ -120,6 +120,10 @@ class AgendaFragment : Fragment() {
             SettingsRepository.APP_BACKGROUND_GEOMETRIC -> R.drawable.bg_illustration_geometric
             SettingsRepository.APP_BACKGROUND_DOTS -> R.drawable.bg_illustration_dots
             SettingsRepository.APP_BACKGROUND_LEAVES -> R.drawable.bg_illustration_leaves
+            SettingsRepository.APP_BACKGROUND_BUTTERFLY -> R.drawable.bg_illustration_butterfly
+            SettingsRepository.APP_BACKGROUND_MANDALA -> R.drawable.bg_illustration_mandala
+            SettingsRepository.APP_BACKGROUND_MOUNTAINS -> R.drawable.bg_illustration_mountains
+            SettingsRepository.APP_BACKGROUND_WAVES -> R.drawable.bg_illustration_waves
             else -> null
         }
         if (drawableRes != null) {

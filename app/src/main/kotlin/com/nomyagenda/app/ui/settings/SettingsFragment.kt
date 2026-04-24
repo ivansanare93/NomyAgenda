@@ -77,6 +77,10 @@ class SettingsFragment : Fragment() {
                 SettingsRepository.APP_BACKGROUND_GEOMETRIC -> R.id.chip_bg_geometric
                 SettingsRepository.APP_BACKGROUND_DOTS -> R.id.chip_bg_dots
                 SettingsRepository.APP_BACKGROUND_LEAVES -> R.id.chip_bg_leaves
+                SettingsRepository.APP_BACKGROUND_BUTTERFLY -> R.id.chip_bg_butterfly
+                SettingsRepository.APP_BACKGROUND_MANDALA -> R.id.chip_bg_mandala
+                SettingsRepository.APP_BACKGROUND_MOUNTAINS -> R.id.chip_bg_mountains
+                SettingsRepository.APP_BACKGROUND_WAVES -> R.id.chip_bg_waves
                 else -> R.id.chip_bg_none
             }
             val chip = binding.chipGroupBackground.findViewById<View>(chipId)
@@ -138,6 +142,10 @@ class SettingsFragment : Fragment() {
                     R.id.chip_bg_geometric -> SettingsRepository.APP_BACKGROUND_GEOMETRIC
                     R.id.chip_bg_dots -> SettingsRepository.APP_BACKGROUND_DOTS
                     R.id.chip_bg_leaves -> SettingsRepository.APP_BACKGROUND_LEAVES
+                    R.id.chip_bg_butterfly -> SettingsRepository.APP_BACKGROUND_BUTTERFLY
+                    R.id.chip_bg_mandala -> SettingsRepository.APP_BACKGROUND_MANDALA
+                    R.id.chip_bg_mountains -> SettingsRepository.APP_BACKGROUND_MOUNTAINS
+                    R.id.chip_bg_waves -> SettingsRepository.APP_BACKGROUND_WAVES
                     else -> SettingsRepository.APP_BACKGROUND_NONE
                 }
                 viewModel.setAppBackground(bg)

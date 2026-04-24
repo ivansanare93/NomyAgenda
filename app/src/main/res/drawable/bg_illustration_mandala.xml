@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background fill -->
+    <path
+        android:fillColor="#FFFBEF"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!--
+        Mandala template (origin = mandala centre):
+          8 petals: leaf shape M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z
+                    each in a rotation group at 0,45,90,...,315 degrees
+          Inner dot ring: 8 dots (r=2) at radius 15, angles 0..315°
+          Outer ring   : stroke circle r=19
+          Centre dot   : filled circle r=4
+    -->
+
+    <!-- ── Mandala 1: (55, 80) scale 1.0 ── -->
+    <group android:translateX="55" android:translateY="80">
+        <!-- 8 petals -->
+        <group android:rotation="0"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <!-- inner dot ring (r=15): positions at 0,45,90,135,180,225,270,315° -->
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <!-- outer ring (stroke only) -->
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#A87030"
+            android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <!-- centre dot -->
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 2: (285, 55) scale 0.8 ── -->
+    <group android:translateX="285" android:translateY="55" android:scaleX="0.8" android:scaleY="0.8">
+        <group android:rotation="0"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 3: (160, 215) scale 1.15 ── -->
+    <group android:translateX="160" android:translateY="215" android:scaleX="1.15" android:scaleY="1.15">
+        <group android:rotation="22.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="67.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="112.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="157.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="202.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="247.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="292.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="337.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <!-- also rotate 0° petals behind to make a 16-petal mandala -->
+        <group android:rotation="0"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 4: (335, 305) scale 0.9 ── -->
+    <group android:translateX="335" android:translateY="305" android:scaleX="0.9" android:scaleY="0.9">
+        <group android:rotation="0"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 5: (65, 415) scale 0.85 ── -->
+    <group android:translateX="65" android:translateY="415" android:scaleX="0.85" android:scaleY="0.85">
+        <group android:rotation="0"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 6: (230, 485) scale 1.1 ── -->
+    <group android:translateX="230" android:translateY="485" android:scaleX="1.1" android:scaleY="1.1">
+        <group android:rotation="22.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="67.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="112.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="157.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="202.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="247.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="292.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="337.5"><path android:fillColor="#DDB845" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="0"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#C89028" android:pathData="M0,-9 C2,-6 2,6 0,9 C-2,6 -2,-6 0,-9 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 7: (100, 615) scale 0.75 ── -->
+    <group android:translateX="100" android:translateY="615" android:scaleX="0.75" android:scaleY="0.75">
+        <group android:rotation="0"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 8: (315, 620) scale 0.95 ── -->
+    <group android:translateX="315" android:translateY="620" android:scaleX="0.95" android:scaleY="0.95">
+        <group android:rotation="0"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#C89A30" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+    <!-- ── Mandala 9: (185, 715) scale 0.8 ── -->
+    <group android:translateX="185" android:translateY="715" android:scaleX="0.8" android:scaleY="0.8">
+        <group android:rotation="0"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="45"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="90"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="135"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="180"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="225"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="270"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <group android:rotation="315"><path android:fillColor="#D4A843" android:pathData="M0,-12 C3,-8 3,8 0,12 C-3,8 -3,-8 0,-12 Z" /></group>
+        <path android:fillColor="#A87030"
+            android:pathData="M-2,-15 A2,2 0 1 1 2,-15 A2,2 0 1 1 -2,-15 Z M8.6,-10.6 A2,2 0 1 1 12.6,-10.6 A2,2 0 1 1 8.6,-10.6 Z M13,0 A2,2 0 1 1 17,0 A2,2 0 1 1 13,0 Z M8.6,10.6 A2,2 0 1 1 12.6,10.6 A2,2 0 1 1 8.6,10.6 Z M-2,15 A2,2 0 1 1 2,15 A2,2 0 1 1 -2,15 Z M-12.6,10.6 A2,2 0 1 1 -8.6,10.6 A2,2 0 1 1 -12.6,10.6 Z M-17,0 A2,2 0 1 1 -13,0 A2,2 0 1 1 -17,0 Z M-12.6,-10.6 A2,2 0 1 1 -8.6,-10.6 A2,2 0 1 1 -12.6,-10.6 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#A87030" android:strokeWidth="0.8"
+            android:pathData="M-19,0 A19,19 0 1 1 19,0 A19,19 0 1 1 -19,0 Z" />
+        <path android:fillColor="#5A3810" android:pathData="M-4,0 A4,4 0 1 1 4,0 A4,4 0 1 1 -4,0 Z" />
+    </group>
+
+</vector>

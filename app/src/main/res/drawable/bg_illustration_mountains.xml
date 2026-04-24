@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Sky background -->
+    <path
+        android:fillColor="#EFF8FF"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Sun glow (outer halo) -->
+    <path
+        android:fillColor="#FCEEA0"
+        android:pathData="M263,72 A50,50 0 1 1 363,72 A50,50 0 1 1 263,72 Z" />
+
+    <!-- Sun (main disc) -->
+    <path
+        android:fillColor="#F8D840"
+        android:pathData="M275,72 A38,38 0 1 1 351,72 A38,38 0 1 1 275,72 Z" />
+
+    <!-- Distant mountain range (light blue-grey, back layer) -->
+    <path
+        android:fillColor="#B8D4E8"
+        android:pathData="M0,720 L0,430 L45,390 L90,420 L130,368 L175,405 L215,362 L260,398 L300,358 L345,392 L360,370 L360,720 Z" />
+
+    <!-- Middle mountain range (medium blue-green) -->
+    <path
+        android:fillColor="#7CBBA0"
+        android:pathData="M0,720 L0,530 L40,495 L85,530 L125,478 L170,515 L215,472 L260,508 L305,462 L350,497 L360,478 L360,720 Z" />
+
+    <!-- Front mountain range (darker green) -->
+    <path
+        android:fillColor="#4A8A60"
+        android:pathData="M0,720 L0,645 L35,623 L70,648 L110,613 L150,638 L185,616 L225,643 L265,620 L305,646 L340,626 L360,638 L360,720 Z" />
+
+    <!-- Pine tree silhouettes along the front ridgeline -->
+    <path
+        android:fillColor="#305040"
+        android:pathData="M35,623 L28,638 L42,638 Z M70,648 L63,663 L77,663 Z M110,613 L103,628 L117,628 Z M150,638 L143,653 L157,653 Z M185,616 L178,631 L192,631 Z M225,643 L218,658 L232,658 Z M265,620 L258,635 L272,635 Z M305,646 L298,661 L312,661 Z M340,626 L333,641 L347,641 Z" />
+
+    <!-- Cloud 1 (left side, upper sky) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,118 A12,12 0 1 1 42,118 A12,12 0 1 1 18,118 Z M34,108 A14,14 0 1 1 62,108 A14,14 0 1 1 34,108 Z M54,114 A11,11 0 1 1 76,114 A11,11 0 1 1 54,114 Z M15,122 L78,122 L78,130 L15,130 Z" />
+
+    <!-- Cloud 2 (centre-right) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M205,92 A10,10 0 1 1 225,92 A10,10 0 1 1 205,92 Z M218,83 A12,12 0 1 1 242,83 A12,12 0 1 1 218,83 Z M234,89 A9,9 0 1 1 252,89 A9,9 0 1 1 234,89 Z M202,95 L254,95 L254,102 L202,102 Z" />
+
+    <!-- Birds (three V-stroke shapes) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#1A4060"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M55,155 C60,149 65,149 70,155 M88,138 C93,132 98,132 103,138 M118,150 C123,144 128,144 133,150" />
+
+</vector>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Sky/sea background -->
+    <path
+        android:fillColor="#EAF7FF"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Wave band 1 – lightest, upper area -->
+    <path
+        android:fillColor="#A8DCF0"
+        android:pathData="M0,180 C45,160 90,200 135,180 C180,160 225,200 270,180 C300,168 330,175 360,170 L360,220 C325,230 290,210 255,225 C210,240 165,200 120,225 C75,240 35,215 0,230 Z" />
+
+    <!-- Wave band 2 -->
+    <path
+        android:fillColor="#70C0E0"
+        android:pathData="M0,300 C50,280 100,320 150,300 C200,280 250,320 300,300 C325,290 345,295 360,290 L360,355 C340,360 310,345 275,355 C230,368 185,330 140,355 C95,368 50,340 0,360 Z" />
+
+    <!-- Wave band 3 -->
+    <path
+        android:fillColor="#40A8D0"
+        android:pathData="M0,420 C55,400 110,440 165,420 C220,400 275,440 330,420 L360,415 L360,490 C305,495 250,462 195,488 C140,505 80,470 0,500 Z" />
+
+    <!-- Wave band 4 – darkest, foreground -->
+    <path
+        android:fillColor="#1890B8"
+        android:pathData="M0,560 C60,540 120,580 180,560 C240,540 300,580 360,560 L360,720 L0,720 Z" />
+
+    <!-- Foam highlights on wave 2 -->
+    <path
+        android:fillColor="#D8F2FC"
+        android:pathData="M20,298 A5,3 0 1 1 30,298 A5,3 0 1 1 20,298 Z M80,282 A6,3 0 1 1 92,282 A6,3 0 1 1 80,282 Z M160,298 A5,3 0 1 1 170,298 A5,3 0 1 1 160,298 Z M240,282 A7,3 0 1 1 254,282 A7,3 0 1 1 240,282 Z M315,291 A5,3 0 1 1 325,291 A5,3 0 1 1 315,291 Z" />
+
+    <!-- Foam highlights on wave 3 -->
+    <path
+        android:fillColor="#C0E8F8"
+        android:pathData="M40,418 A6,3 0 1 1 52,418 A6,3 0 1 1 40,418 Z M125,402 A5,3 0 1 1 135,402 A5,3 0 1 1 125,402 Z M210,416 A7,3 0 1 1 224,416 A7,3 0 1 1 210,416 Z M295,404 A5,3 0 1 1 305,404 A5,3 0 1 1 295,404 Z" />
+
+    <!-- Bubbles between wave bands -->
+    <path
+        android:fillColor="#B0D8F0"
+        android:pathData="M60,268 A4,4 0 1 1 68,268 A4,4 0 1 1 60,268 Z M190,252 A3,3 0 1 1 196,252 A3,3 0 1 1 190,252 Z M330,260 A4,4 0 1 1 338,260 A4,4 0 1 1 330,260 Z M105,388 A3,3 0 1 1 111,388 A3,3 0 1 1 105,388 Z M265,372 A4,4 0 1 1 273,372 A4,4 0 1 1 265,372 Z M350,382 A3,3 0 1 1 356,382 A3,3 0 1 1 350,382 Z M30,510 A3,3 0 1 1 36,510 A3,3 0 1 1 30,510 Z M175,498 A4,4 0 1 1 183,498 A4,4 0 1 1 175,498 Z M310,505 A3,3 0 1 1 316,505 A3,3 0 1 1 310,505 Z" />
+
+    <!-- Fish 1 – (140, 265), swimming right -->
+    <group android:translateX="140" android:translateY="265">
+        <!-- body -->
+        <path android:fillColor="#1060A0"
+            android:pathData="M0,-5 C18,-5 18,5 0,5 C-5,5 -8,0 -5,-5 Z" />
+        <!-- tail -->
+        <path android:fillColor="#1060A0"
+            android:pathData="M-5,-5 L-14,-10 L-14,10 L-5,5 Z" />
+        <!-- eye -->
+        <path android:fillColor="#FFFFFF"
+            android:pathData="M10,-1 A2,2 0 1 1 14,-1 A2,2 0 1 1 10,-1 Z" />
+        <!-- fin -->
+        <path android:fillColor="#0D4E88"
+            android:pathData="M2,-5 C5,-12 10,-10 8,-5 Z" />
+    </group>
+
+    <!-- Fish 2 – (250, 390), swimming left (mirrored) -->
+    <group android:translateX="250" android:translateY="390">
+        <!-- body -->
+        <path android:fillColor="#0A5090"
+            android:pathData="M0,-5 C-18,-5 -18,5 0,5 C5,5 8,0 5,-5 Z" />
+        <!-- tail -->
+        <path android:fillColor="#0A5090"
+            android:pathData="M5,-5 L14,-10 L14,10 L5,5 Z" />
+        <!-- eye -->
+        <path android:fillColor="#FFFFFF"
+            android:pathData="M-14,-1 A2,2 0 1 1 -10,-1 A2,2 0 1 1 -14,-1 Z" />
+        <!-- fin -->
+        <path android:fillColor="#083E70"
+            android:pathData="M-2,-5 C-5,-12 -10,-10 -8,-5 Z" />
+    </group>
+
+    <!-- Fish 3 – (75, 470), swimming right, smaller -->
+    <group android:translateX="75" android:translateY="470" android:scaleX="0.8" android:scaleY="0.8">
+        <path android:fillColor="#1060A0"
+            android:pathData="M0,-5 C18,-5 18,5 0,5 C-5,5 -8,0 -5,-5 Z" />
+        <path android:fillColor="#1060A0"
+            android:pathData="M-5,-5 L-14,-10 L-14,10 L-5,5 Z" />
+        <path android:fillColor="#FFFFFF"
+            android:pathData="M10,-1 A2,2 0 1 1 14,-1 A2,2 0 1 1 10,-1 Z" />
+        <path android:fillColor="#0D4E88"
+            android:pathData="M2,-5 C5,-12 10,-10 8,-5 Z" />
+    </group>
+
+    <!-- Fish 4 – (320, 480), swimming left -->
+    <group android:translateX="320" android:translateY="480" android:scaleX="0.85" android:scaleY="0.85">
+        <path android:fillColor="#0A5090"
+            android:pathData="M0,-5 C-18,-5 -18,5 0,5 C5,5 8,0 5,-5 Z" />
+        <path android:fillColor="#0A5090"
+            android:pathData="M5,-5 L14,-10 L14,10 L5,5 Z" />
+        <path android:fillColor="#FFFFFF"
+            android:pathData="M-14,-1 A2,2 0 1 1 -10,-1 A2,2 0 1 1 -14,-1 Z" />
+        <path android:fillColor="#083E70"
+            android:pathData="M-2,-5 C-5,-12 -10,-10 -8,-5 Z" />
+    </group>
+
+</vector>
