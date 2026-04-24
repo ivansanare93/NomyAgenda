@@ -81,7 +81,9 @@ class SettingsViewModel(
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
             try {
                 GoogleSignIn.getClient(getApplication(), gso).signOut().await()
-            } catch (_: Exception) { }
+            } catch (e: Exception) {
+                android.util.Log.w("SettingsViewModel", "Google sign-out failed", e)
+            }
             signOutEvent.value = true
         }
     }
