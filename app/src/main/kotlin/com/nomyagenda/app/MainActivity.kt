@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Dynamically choose start destination based on auth state so there is no login-screen
+        // Dynamically choose start destination based on auth state so there is no login screen
         // flash when the user is already signed in.
         val currentUser = FirebaseAuth.getInstance().currentUser
         val navInflater = navController.navInflater

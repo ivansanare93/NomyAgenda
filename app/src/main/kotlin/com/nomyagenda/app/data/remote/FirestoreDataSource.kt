@@ -45,6 +45,8 @@ class FirestoreDataSource {
     }
 
     private fun AgendaEntry.toMap(): Map<String, Any?> = mapOf(
+        // Note: `firebaseId` is intentionally excluded — it is the Firestore document ID,
+        // not a field stored inside the document.
         "title" to title,
         "type" to type.name,
         "content" to content,

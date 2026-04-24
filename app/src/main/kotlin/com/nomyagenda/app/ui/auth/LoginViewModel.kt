@@ -27,7 +27,9 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val result = auth.signInWithEmailAndPassword(email, password).await()
-                _authState.value = AuthResult.Success(result.user!!)
+                val user = result.user
+                    ?: run { _authState.value = AuthResult.Error("Authentication failed"); return@launch }
+                _authState.value = AuthResult.Success(user)
             } catch (e: Exception) {
                 _authState.value = AuthResult.Error(e.localizedMessage ?: e.message ?: "Error")
             }
@@ -39,7 +41,9 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val result = auth.createUserWithEmailAndPassword(email, password).await()
-                _authState.value = AuthResult.Success(result.user!!)
+                val user = result.user
+                    ?: run { _authState.value = AuthResult.Error("Account creation failed"); return@launch }
+                _authState.value = AuthResult.Success(user)
             } catch (e: Exception) {
                 _authState.value = AuthResult.Error(e.localizedMessage ?: e.message ?: "Error")
             }

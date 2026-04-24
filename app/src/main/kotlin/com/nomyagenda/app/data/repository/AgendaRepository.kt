@@ -64,6 +64,7 @@ class AgendaRepository(
                 if (existing != null) {
                     dao.upsert(remoteEntry.copy(id = existing.id))
                 } else {
+                    // id = 0 tells Room to auto-generate the primary key on insert
                     dao.upsert(remoteEntry.copy(id = 0))
                 }
             }
