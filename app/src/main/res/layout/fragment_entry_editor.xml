@@ -142,15 +142,6 @@
                         android:contentDescription="@string/format_italic_desc" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_format_strikethrough"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xsmall"
-                        android:text="@string/format_strikethrough"
-                        android:contentDescription="@string/format_strikethrough_desc" />
-
-                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_format_heading"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
@@ -282,7 +273,7 @@
 
         </LinearLayout>
 
-        <!-- REMINDER content -->
+        <!-- REMINDER content (date picker only; text content uses the NOTE editor above) -->
         <LinearLayout
             android:id="@+id/layout_reminder_content"
             android:layout_width="match_parent"
@@ -295,23 +286,6 @@
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_note_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_reminder_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:minLines="3"
-                    android:gravity="top" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
                 android:hint="@string/hint_due_date"
                 app:startIconDrawable="@android:drawable/ic_menu_recent_history">
 
