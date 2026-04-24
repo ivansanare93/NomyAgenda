@@ -99,4 +99,8 @@
     <string name="notification_advance_1w">Due in 1 week</string>
     <string name="notification_advance_generic">Upcoming reminder</string>
     <string name="notification_default">Reminder</string>
+    <!-- Exact alarm permission rationale -->
+    <string name="exact_alarm_rationale_title">Permission required</string>
+    <string name="exact_alarm_rationale_message">To deliver reminders at exactly the time you set, NomyAgenda needs permission to schedule exact alarms. Without it, the system may delay notifications by several minutes.</string>
+    <string name="exact_alarm_rationale_confirm">Go to settings</string>
 </resources>

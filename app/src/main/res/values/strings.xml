@@ -99,4 +99,8 @@
     <string name="notification_advance_1w">Vence en 1 semana</string>
     <string name="notification_advance_generic">Próximo recordatorio</string>
     <string name="notification_default">Recordatorio</string>
+    <!-- Exact alarm permission rationale -->
+    <string name="exact_alarm_rationale_title">Permiso necesario</string>
+    <string name="exact_alarm_rationale_message">Para que los recordatorios lleguen exactamente a la hora fijada, NomyAgenda necesita permiso para programar alarmas exactas. Sin este permiso, el sistema puede retrasar los avisos varios minutos.</string>
+    <string name="exact_alarm_rationale_confirm">Ir a ajustes</string>
 </resources>

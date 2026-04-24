@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nomyagenda.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -54,11 +55,20 @@ class MainActivity : AppCompatActivity() {
         ) {
             val alarmManager = getSystemService(AlarmManager::class.java)
             if (!alarmManager.canScheduleExactAlarms()) {
-                val intent = Intent(
-                    Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
-                    Uri.parse("package:$packageName")
-                )
-                startActivity(intent)
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.exact_alarm_rationale_title)
+                    .setMessage(R.string.exact_alarm_rationale_message)
+                    .setPositiveButton(R.string.exact_alarm_rationale_confirm) { _, _ ->
+                        try {
+                            val intent = Intent(
+                                Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+                                Uri.parse("package:$packageName")
+                            )
+                            startActivity(intent)
+                        } catch (_: Exception) { /* settings screen not available */ }
+                    }
+                    .setNegativeButton(R.string.cancel, null)
+                    .show()
             }
         }
     }
