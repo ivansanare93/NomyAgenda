@@ -23,6 +23,9 @@ interface AgendaEntryDao {
     @Query("SELECT * FROM agenda_entries WHERE id = :id")
     suspend fun getById(id: Int): AgendaEntry?
 
+    @Query("SELECT * FROM agenda_entries WHERE firebaseId = :firebaseId LIMIT 1")
+    suspend fun getByFirebaseId(firebaseId: String): AgendaEntry?
+
     @Query("SELECT * FROM agenda_entries WHERE type = 'REMINDER' AND dueAt > :after")
     suspend fun getFutureReminders(after: Long): List<AgendaEntry>
 
@@ -31,4 +34,7 @@ interface AgendaEntryDao {
 
     @Delete
     suspend fun delete(entry: AgendaEntry)
+
+    @Query("DELETE FROM agenda_entries")
+    suspend fun deleteAll()
 }

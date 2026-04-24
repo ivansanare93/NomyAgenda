@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -76,6 +77,12 @@ dependencies {
     // Markwon — Markdown rendering
     implementation(libs.markwon.core)
     implementation(libs.markwon.html)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     // Testing
     testImplementation(libs.junit)

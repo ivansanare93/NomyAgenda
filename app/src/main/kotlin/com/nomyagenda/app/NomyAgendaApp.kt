@@ -3,12 +3,22 @@ package com.nomyagenda.app
 import android.app.Application
 import com.nomyagenda.app.data.local.database.NomyAgendaDatabase
 import com.nomyagenda.app.data.preferences.SettingsRepository
+import com.nomyagenda.app.data.remote.FirestoreDataSource
+import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.notifications.NotificationHelper
 
 class NomyAgendaApp : Application() {
 
     val database: NomyAgendaDatabase by lazy {
         NomyAgendaDatabase.getDatabase(this)
+    }
+
+    val firestoreDataSource: FirestoreDataSource by lazy {
+        FirestoreDataSource()
+    }
+
+    val agendaRepository: AgendaRepository by lazy {
+        AgendaRepository(database.agendaEntryDao(), firestoreDataSource)
     }
 
     override fun onCreate() {
