@@ -17,6 +17,10 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     /** true when the activity must recreate itself to apply a new decorative theme. */
     val recreateEvent = MutableLiveData(false)
 
+    fun consumeRecreateEvent() {
+        recreateEvent.value = false
+    }
+
     fun setTheme(mode: String) {
         settingsRepo.themeMode = mode
         themeMode.value = mode

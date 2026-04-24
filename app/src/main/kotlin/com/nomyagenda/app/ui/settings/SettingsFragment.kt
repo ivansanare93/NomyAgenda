@@ -72,6 +72,7 @@ class SettingsFragment : Fragment() {
 
         viewModel.recreateEvent.observe(viewLifecycleOwner) { shouldRecreate ->
             if (shouldRecreate) {
+                viewModel.consumeRecreateEvent()
                 requireActivity().recreate()
             }
         }
