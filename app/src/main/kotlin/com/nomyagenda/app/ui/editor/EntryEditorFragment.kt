@@ -71,7 +71,6 @@ class EntryEditorFragment : Fragment() {
 
         binding.btnFormatBold.setOnClickListener { applyInlineFormat("**") }
         binding.btnFormatItalic.setOnClickListener { applyInlineFormat("*") }
-        binding.btnFormatStrikethrough.setOnClickListener { applyInlineFormat("~~") }
         binding.btnFormatHeading.setOnClickListener { applyLinePrefix("# ") }
         binding.btnFormatBullet.setOnClickListener { applyLinePrefix("- ") }
         binding.btnFormatNumbered.setOnClickListener { applyLinePrefix("1. ") }
@@ -106,7 +105,7 @@ class EntryEditorFragment : Fragment() {
                     checklistAdapter.notifyDataSetChanged()
                 }
                 EntryType.REMINDER -> {
-                    binding.editReminderContent.setText(entry.content)
+                    binding.editNoteContent.setText(entry.content)
                     entry.dueAt?.let { dueAt ->
                         selectedDueAt = dueAt
                         binding.editDueDate.setText(DATE_FORMAT.format(Date(dueAt)))
@@ -123,10 +122,10 @@ class EntryEditorFragment : Fragment() {
         binding.chipNote.isChecked = type == EntryType.NOTE
         binding.chipTask.isChecked = type == EntryType.TASK
         binding.chipReminder.isChecked = type == EntryType.REMINDER
-        binding.layoutNoteContent.visibility = if (type == EntryType.NOTE) View.VISIBLE else View.GONE
+        binding.layoutNoteContent.visibility = if (type == EntryType.NOTE || type == EntryType.REMINDER) View.VISIBLE else View.GONE
         binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
         binding.layoutReminderContent.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
-        if (type == EntryType.NOTE) {
+        if (type == EntryType.NOTE || type == EntryType.REMINDER) {
             // Reset to edit mode when switching to NOTE type
             binding.btnNoteEdit.isChecked = true
             showNoteEditMode()
@@ -203,8 +202,7 @@ class EntryEditorFragment : Fragment() {
             title = title,
             type = currentType,
             content = when (currentType) {
-                EntryType.NOTE -> binding.editNoteContent.text?.toString()?.trim() ?: ""
-                EntryType.REMINDER -> binding.editReminderContent.text?.toString()?.trim() ?: ""
+                EntryType.NOTE, EntryType.REMINDER -> binding.editNoteContent.text?.toString()?.trim() ?: ""
                 EntryType.TASK -> ""
             },
             checklistJson = if (currentType == EntryType.TASK) ChecklistManager.toJson(checklistAdapter.getItems()) else "[]",
