@@ -37,6 +37,7 @@ class EntryEditorFragment : Fragment() {
 
     private lateinit var checklistAdapter: ChecklistAdapter
     private lateinit var markwon: Markwon
+    private lateinit var advanceNoticeAdapter: ArrayAdapter<String>
     private val checklistItems = mutableListOf<ChecklistItem>()
     private var selectedDueAt: Long? = null
     private var currentType: EntryType = EntryType.NOTE
@@ -101,6 +102,7 @@ class EntryEditorFragment : Fragment() {
         binding.editDueDate.setOnClickListener { showDateTimePicker() }
 
         val advanceAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, advanceOptions.map { it.second })
+        advanceNoticeAdapter = advanceAdapter
         binding.spinnerAdvanceNotice.setText(advanceOptions[0].second, false)
         binding.spinnerAdvanceNotice.setAdapter(advanceAdapter)
         binding.spinnerAdvanceNotice.setOnItemClickListener { _, _, position, _ ->
@@ -134,9 +136,7 @@ class EntryEditorFragment : Fragment() {
                     val label = advanceOptions.firstOrNull { it.first == entry.advanceNoticeMinutes }?.second
                         ?: advanceOptions[0].second
                     binding.spinnerAdvanceNotice.setText(label, false)
-                    binding.spinnerAdvanceNotice.setAdapter(
-                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, advanceOptions.map { it.second })
-                    )
+                    binding.spinnerAdvanceNotice.setAdapter(advanceNoticeAdapter)
                 }
             }
             binding.editTags.setText(entry.tags)
