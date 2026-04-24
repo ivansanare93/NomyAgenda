@@ -17,6 +17,10 @@
         android:localeConfig="@xml/locales_config"
         android:theme="@style/Theme.NomyAgenda">
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -6,10 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.repository.AgendaRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class SettingsViewModel(
     app: Application,
@@ -75,6 +78,12 @@ class SettingsViewModel(
         viewModelScope.launch {
             agendaRepository.deleteAll()
             FirebaseAuth.getInstance().signOut()
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+            try {
+                GoogleSignIn.getClient(getApplication(), gso).signOut().await()
+            } catch (e: Exception) {
+                android.util.Log.w("SettingsViewModel", "Google sign-out failed", e)
+            }
             signOutEvent.value = true
         }
     }

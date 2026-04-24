@@ -16,4 +16,6 @@
     <dimen name="color_swatch_stroke_width">3dp</dimen>
 
     <dimen name="login_min_height">600dp</dimen>
+    <dimen name="login_title_text_size">48sp</dimen>
+    <dimen name="login_subtitle_text_size">16sp</dimen>
 </resources>
