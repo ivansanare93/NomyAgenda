@@ -132,12 +132,8 @@
     <!-- Login / Auth -->
     <string name="login_title">Sign in</string>
     <string name="login_subtitle">Your entries synced across all your devices</string>
-    <string name="login_hint_email">Email address</string>
-    <string name="login_hint_password">Password</string>
-    <string name="login_btn_login">Sign in</string>
-    <string name="login_btn_register">Create account</string>
-    <string name="login_error_email_required">Email is required</string>
-    <string name="login_error_password_required">Password is required</string>
+    <string name="login_btn_google">Continue with Google</string>
+    <string name="login_error_google_failed">Could not sign in with Google. Please try again.</string>
 
     <!-- Settings — Account -->
     <string name="settings_account">Account</string>

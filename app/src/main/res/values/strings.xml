@@ -130,14 +130,12 @@
     <string name="exact_alarm_rationale_confirm">Ir a ajustes</string>
 
     <!-- Login / Auth -->
-    <string name="login_title">Iniciar sesión</string>
+    <string name="login_title">Acceder</string>
     <string name="login_subtitle">Tus entradas sincronizadas en todos tus dispositivos</string>
-    <string name="login_hint_email">Correo electrónico</string>
-    <string name="login_hint_password">Contraseña</string>
-    <string name="login_btn_login">Iniciar sesión</string>
-    <string name="login_btn_register">Crear cuenta</string>
-    <string name="login_error_email_required">El correo es obligatorio</string>
-    <string name="login_error_password_required">La contraseña es obligatoria</string>
+    <string name="login_btn_google">Continuar con Google</string>
+    <string name="login_error_google_failed">No se pudo iniciar sesión con Google. Inténtalo de nuevo.</string>
+    <!-- Placeholder overridden by google-services.json at build time -->
+    <string name="default_web_client_id" translatable="false">YOUR_WEB_CLIENT_ID</string>
 
     <!-- Settings — Account -->
     <string name="settings_account">Cuenta</string>

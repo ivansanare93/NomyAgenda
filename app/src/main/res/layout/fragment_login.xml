@@ -20,52 +20,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textAppearance="?attr/textAppearanceHeadlineLarge"
+            android:textSize="48sp"
+            android:fontFamily="@font/pacifico"
+            android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_subtitle"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:layout_marginBottom="40dp" />
+            android:textSize="16sp"
+            android:fontFamily="@font/nunito"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center"
+            android:layout_marginBottom="56dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_email"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_google_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_hint_email"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:imeOptions="actionNext"
-                android:singleLine="true" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/login_hint_password"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            app:endIconMode="password_toggle"
-            android:layout_marginBottom="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:imeOptions="actionDone"
-                android:singleLine="true" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/login_btn_google"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/text_error"
@@ -77,20 +57,6 @@
             android:layout_marginBottom="12dp"
             tools:text="Error message"
             tools:visibility="visible" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login_btn_login"
-            android:layout_marginBottom="12dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login_btn_register"
-            style="?attr/materialButtonOutlinedStyle" />
 
         <ProgressBar
             android:id="@+id/progress_login"
