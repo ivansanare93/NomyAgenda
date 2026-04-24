@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background fill -->
+    <path
+        android:fillColor="#FFF5FB"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Flowers: petals (4 circles at offset 8, r=5) + center (r=3.5) -->
+    <!-- Flower at (45, 70) scale 1.0 -->
+    <group android:translateX="45" android:translateY="70">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (265, 55) scale 0.8 -->
+    <group
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="265"
+        android:translateY="55">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (155, 175) scale 1.1 -->
+    <group
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:translateX="155"
+        android:translateY="175">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (315, 205) scale 0.9 -->
+    <group
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="315"
+        android:translateY="205">
+        <path
+            android:fillColor="#E0B8D0"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (65, 315) scale 0.85 -->
+    <group
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:translateX="65"
+        android:translateY="315">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (200, 295) scale 1.0 -->
+    <group android:translateX="200" android:translateY="295">
+        <path
+            android:fillColor="#E0B8D0"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (325, 385) scale 0.75 -->
+    <group
+        android:scaleX="0.75"
+        android:scaleY="0.75"
+        android:translateX="325"
+        android:translateY="385">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (80, 445) scale 1.0 -->
+    <group android:translateX="80" android:translateY="445">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (250, 435) scale 0.9 -->
+    <group
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="250"
+        android:translateY="435">
+        <path
+            android:fillColor="#E0B8D0"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (170, 560) scale 1.0 -->
+    <group android:translateX="170" android:translateY="560">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (45, 635) scale 0.85 -->
+    <group
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:translateX="45"
+        android:translateY="635">
+        <path
+            android:fillColor="#E0B8D0"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (300, 595) scale 1.0 -->
+    <group android:translateX="300" android:translateY="595">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+    <!-- Flower at (135, 695) scale 0.9 -->
+    <group
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="135"
+        android:translateY="695">
+        <path
+            android:fillColor="#D8A8C8"
+            android:pathData="M0,-13 A5,5 0 1 1 0,-3 A5,5 0 1 1 0,-13 M8,-5 A5,5 0 1 1 8,5 A5,5 0 1 1 8,-5 M0,3 A5,5 0 1 1 0,13 A5,5 0 1 1 0,3 M-8,-5 A5,5 0 1 1 -8,5 A5,5 0 1 1 -8,-5" />
+        <path
+            android:fillColor="#9A6080"
+            android:pathData="M0,-3.5 A3.5,3.5 0 1 1 0,3.5 A3.5,3.5 0 1 1 0,-3.5" />
+    </group>
+
+</vector>

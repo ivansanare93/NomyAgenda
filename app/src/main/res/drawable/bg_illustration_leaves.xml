@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background fill -->
+    <path
+        android:fillColor="#F2FBF2"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Leaf path at origin: M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z -->
+
+    <!-- Leaf at (60, 70) rotation 0 -->
+    <group android:translateX="60" android:translateY="70">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (270, 45) rotation 30 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="30"
+        android:translateX="270"
+        android:translateY="45">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (150, 165) rotation -20 scale 1.1 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="-20"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:translateX="150"
+        android:translateY="165">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (325, 195) rotation 45 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="45"
+        android:translateX="325"
+        android:translateY="195">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (80, 285) rotation 15 scale 0.85 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="15"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:translateX="80"
+        android:translateY="285">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (205, 315) rotation -35 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="-35"
+        android:translateX="205"
+        android:translateY="315">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (335, 425) rotation 25 scale 0.9 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="25"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="335"
+        android:translateY="425">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (55, 445) rotation -10 scale 1.0 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="-10"
+        android:translateX="55"
+        android:translateY="445">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (220, 505) rotation 40 scale 1.1 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="40"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:translateX="220"
+        android:translateY="505">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (130, 600) rotation -20 scale 0.85 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="-20"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:translateX="130"
+        android:translateY="600">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (305, 565) rotation 10 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="10"
+        android:translateX="305"
+        android:translateY="565">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (50, 655) rotation -30 scale 0.9 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="-30"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="50"
+        android:translateY="655">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (255, 665) rotation 20 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="20"
+        android:translateX="255"
+        android:translateY="665">
+        <path
+            android:fillColor="#82B882"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+    <!-- Leaf at (170, 705) rotation 35 scale 0.8 -->
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:rotation="35"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="170"
+        android:translateY="705">
+        <path
+            android:fillColor="#6AA06A"
+            android:pathData="M0,-13 C9,-7 9,7 0,13 C-9,7 -9,-7 0,-13 Z" />
+    </group>
+
+</vector>

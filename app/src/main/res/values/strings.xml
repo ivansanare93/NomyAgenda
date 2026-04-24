@@ -92,6 +92,13 @@
     <string name="settings_decorative_theme_ocean">Océano</string>
     <string name="settings_decorative_theme_forest">Bosque</string>
     <string name="settings_decorative_theme_sunset">Atardecer</string>
+    <string name="settings_app_background">Fondo ilustrado</string>
+    <string name="settings_bg_none">Sin fondo</string>
+    <string name="settings_bg_floral">Flores</string>
+    <string name="settings_bg_stars">Estrellas</string>
+    <string name="settings_bg_geometric">Geométrico</string>
+    <string name="settings_bg_dots">Lunares</string>
+    <string name="settings_bg_leaves">Hojas</string>
     <string name="settings_language">Idioma</string>
     <string name="settings_language_es">Español</string>
     <string name="settings_language_en">English</string>

@@ -21,6 +21,7 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.local.entity.SortOrder
+import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
 import com.nomyagenda.app.databinding.ItemCalendarDayBinding
@@ -42,6 +43,8 @@ class AgendaFragment : Fragment() {
 
     private lateinit var adapter: AgendaAdapter
 
+    private val settingsRepository by lazy { SettingsRepository(requireContext()) }
+
     // Calendar week strip state
     private var currentWeekStart: Calendar = mondayOf(Calendar.getInstance())
     private var selectedDateKey: String? = null
@@ -54,6 +57,8 @@ class AgendaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        applyIllustrationBackground()
 
         // Show today's date in the header
         binding.textHeaderDate.text = HEADER_DATE_FORMAT.format(Date())
@@ -101,6 +106,30 @@ class AgendaFragment : Fragment() {
         }
         // Re-apply insets once BottomNavigationView is measured in case height was 0 on first dispatch.
         bottomNavView?.doOnLayout { ViewCompat.requestApplyInsets(binding.root) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyIllustrationBackground()
+    }
+
+    private fun applyIllustrationBackground() {
+        val drawableRes = when (settingsRepository.appBackground) {
+            SettingsRepository.APP_BACKGROUND_FLORAL -> R.drawable.bg_illustration_floral
+            SettingsRepository.APP_BACKGROUND_STARS -> R.drawable.bg_illustration_stars
+            SettingsRepository.APP_BACKGROUND_GEOMETRIC -> R.drawable.bg_illustration_geometric
+            SettingsRepository.APP_BACKGROUND_DOTS -> R.drawable.bg_illustration_dots
+            SettingsRepository.APP_BACKGROUND_LEAVES -> R.drawable.bg_illustration_leaves
+            else -> null
+        }
+        if (drawableRes != null) {
+            binding.root.background = ContextCompat.getDrawable(requireContext(), drawableRes)
+        } else {
+            val ta = requireContext().theme.obtainStyledAttributes(intArrayOf(R.attr.agendaBackground))
+            val bgColor = ta.getColor(0, 0xFFFFFFFF.toInt())
+            ta.recycle()
+            binding.root.setBackgroundColor(bgColor)
+        }
     }
 
     private fun setupCalendarStrip() {

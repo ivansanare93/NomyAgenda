@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background fill -->
+    <path
+        android:fillColor="#FFFBF0"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Stars: 5-pointed, outer r=10, inner r=4 -->
+    <!-- Path at origin: M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z -->
+
+    <!-- Star at (55, 60) scale 1.0 -->
+    <group android:translateX="55" android:translateY="60">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (275, 50) scale 1.0 -->
+    <group android:translateX="275" android:translateY="50">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (160, 175) scale 1.2 -->
+    <group
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:translateX="160"
+        android:translateY="175">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (320, 240) scale 1.0 -->
+    <group android:translateX="320" android:translateY="240">
+        <path
+            android:fillColor="#D49010"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (75, 325) scale 0.85 -->
+    <group
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:translateX="75"
+        android:translateY="325">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (220, 405) scale 1.0 -->
+    <group android:translateX="220" android:translateY="405">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (120, 545) scale 1.1 -->
+    <group
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:translateX="120"
+        android:translateY="545">
+        <path
+            android:fillColor="#D49010"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Star at (300, 515) scale 1.0 -->
+    <group android:translateX="300" android:translateY="515">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Small star at (35, 155) scale 0.6 -->
+    <group
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:translateX="35"
+        android:translateY="155">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Small star at (185, 95) scale 0.65 -->
+    <group
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="185"
+        android:translateY="95">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Small star at (310, 155) scale 0.6 -->
+    <group
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:translateX="310"
+        android:translateY="155">
+        <path
+            android:fillColor="#D49010"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Small star at (50, 460) scale 0.7 -->
+    <group
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:translateX="50"
+        android:translateY="460">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Small star at (255, 280) scale 0.65 -->
+    <group
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="255"
+        android:translateY="280">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Small star at (170, 645) scale 0.7 -->
+    <group
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:translateX="170"
+        android:translateY="645">
+        <path
+            android:fillColor="#D49010"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Very small stars as sparkle accents -->
+    <!-- Sparkle at (130, 360) scale 0.45 -->
+    <group
+        android:scaleX="0.45"
+        android:scaleY="0.45"
+        android:translateX="130"
+        android:translateY="360">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Sparkle at (285, 385) scale 0.45 -->
+    <group
+        android:scaleX="0.45"
+        android:scaleY="0.45"
+        android:translateX="285"
+        android:translateY="385">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Sparkle at (90, 685) scale 0.5 -->
+    <group
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:translateX="90"
+        android:translateY="685">
+        <path
+            android:fillColor="#E8A820"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+    <!-- Sparkle at (330, 680) scale 0.5 -->
+    <group
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:translateX="330"
+        android:translateY="680">
+        <path
+            android:fillColor="#D49010"
+            android:pathData="M0,-10 L2.35,-3.24 L9.51,-3.09 L3.80,1.24 L5.88,8.09 L0,4 L-5.88,8.09 L-3.80,1.24 L-9.51,-3.09 L-2.35,-3.24 Z" />
+    </group>
+
+</vector>

@@ -70,6 +70,21 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        viewModel.appBackground.observe(viewLifecycleOwner) { bg ->
+            val chipId = when (bg) {
+                SettingsRepository.APP_BACKGROUND_FLORAL -> R.id.chip_bg_floral
+                SettingsRepository.APP_BACKGROUND_STARS -> R.id.chip_bg_stars
+                SettingsRepository.APP_BACKGROUND_GEOMETRIC -> R.id.chip_bg_geometric
+                SettingsRepository.APP_BACKGROUND_DOTS -> R.id.chip_bg_dots
+                SettingsRepository.APP_BACKGROUND_LEAVES -> R.id.chip_bg_leaves
+                else -> R.id.chip_bg_none
+            }
+            val chip = binding.chipGroupBackground.findViewById<View>(chipId)
+            if (chip != null && !binding.chipGroupBackground.checkedChipIds.contains(chipId)) {
+                binding.chipGroupBackground.check(chipId)
+            }
+        }
+
         viewModel.recreateEvent.observe(viewLifecycleOwner) { shouldRecreate ->
             if (shouldRecreate) {
                 viewModel.consumeRecreateEvent()
@@ -113,6 +128,20 @@ class SettingsFragment : Fragment() {
 
         binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setNotificationsEnabled(isChecked)
+        }
+
+        binding.chipGroupBackground.setOnCheckedStateChangeListener { _, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                val bg = when (checkedIds.first()) {
+                    R.id.chip_bg_floral -> SettingsRepository.APP_BACKGROUND_FLORAL
+                    R.id.chip_bg_stars -> SettingsRepository.APP_BACKGROUND_STARS
+                    R.id.chip_bg_geometric -> SettingsRepository.APP_BACKGROUND_GEOMETRIC
+                    R.id.chip_bg_dots -> SettingsRepository.APP_BACKGROUND_DOTS
+                    R.id.chip_bg_leaves -> SettingsRepository.APP_BACKGROUND_LEAVES
+                    else -> SettingsRepository.APP_BACKGROUND_NONE
+                }
+                viewModel.setAppBackground(bg)
+            }
         }
     }
 
