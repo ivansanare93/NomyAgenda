@@ -89,3 +89,4 @@ lint/tmp/
 
 # Kotlin
 .kotlin/
+app/google-services.json
