@@ -75,6 +75,10 @@ class SettingsRepository(context: Context) {
         const val APP_BACKGROUND_GEOMETRIC = "GEOMETRIC"
         const val APP_BACKGROUND_DOTS = "DOTS"
         const val APP_BACKGROUND_LEAVES = "LEAVES"
+        const val APP_BACKGROUND_BUTTERFLY = "BUTTERFLY"
+        const val APP_BACKGROUND_MANDALA = "MANDALA"
+        const val APP_BACKGROUND_MOUNTAINS = "MOUNTAINS"
+        const val APP_BACKGROUND_WAVES = "WAVES"
 
         const val LANGUAGE_ES = "es"
         const val LANGUAGE_EN = "en"

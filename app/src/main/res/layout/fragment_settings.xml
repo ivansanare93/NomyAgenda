@@ -143,6 +143,34 @@
                         android:layout_height="wrap_content"
                         android:text="@string/settings_bg_leaves" />
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_bg_butterfly"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_bg_butterfly" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_bg_mandala"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_bg_mandala" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_bg_mountains"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_bg_mountains" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_bg_waves"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_bg_waves" />
+
                 </com.google.android.material.chip.ChipGroup>
 
             </LinearLayout>

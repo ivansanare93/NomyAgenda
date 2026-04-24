@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background fill -->
+    <path
+        android:fillColor="#FDF0F8"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!--
+        Butterfly template (origin = center between wings):
+          Upper wings : M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z  (mirrored for left)
+          Lower wings : M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z      (mirrored for left)
+          Spots       : circles on each upper and lower wing
+          Body        : narrow teardrop M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 ...
+          Antennae    : stroked bezier curves + filled tips
+    -->
+
+    <!-- Butterfly 1  – centre at (80,100), scale 1.0, no rotation -->
+    <group android:translateX="80" android:translateY="100">
+        <path
+            android:fillColor="#E890D0"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#CC70BC"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 2  – centre at (270,75), scale 0.75, rotation -20° -->
+    <group
+        android:rotation="-20"
+        android:scaleX="0.75"
+        android:scaleY="0.75"
+        android:translateX="270"
+        android:translateY="75">
+        <path
+            android:fillColor="#E878C8"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#B858B0"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 3  – centre at (155,245), scale 1.15, rotation 10° -->
+    <group
+        android:rotation="10"
+        android:scaleX="1.15"
+        android:scaleY="1.15"
+        android:translateX="155"
+        android:translateY="245">
+        <path
+            android:fillColor="#E890D0"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#D478C4"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 4  – centre at (320,330), scale 0.85, rotation 25° -->
+    <group
+        android:rotation="25"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:translateX="320"
+        android:translateY="330">
+        <path
+            android:fillColor="#F0A0D8"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#D480C8"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 5  – centre at (55,440), scale 0.9, rotation -15° -->
+    <group
+        android:rotation="-15"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="55"
+        android:translateY="440">
+        <path
+            android:fillColor="#E890D0"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#CC70BC"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 6  – centre at (225,510), scale 1.0, rotation 5° -->
+    <group android:rotation="5" android:translateX="225" android:translateY="510">
+        <path
+            android:fillColor="#F0A0D8"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#D070BC"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 7  – centre at (95,630), scale 0.8, rotation -10° -->
+    <group
+        android:rotation="-10"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="95"
+        android:translateY="630">
+        <path
+            android:fillColor="#E890D0"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#CC70BC"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+    <!-- Butterfly 8  – centre at (290,640), scale 0.7, rotation 30° -->
+    <group
+        android:rotation="30"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:translateX="290"
+        android:translateY="640">
+        <path
+            android:fillColor="#F0A0D8"
+            android:pathData="M0,-4 C10,-25 35,-20 28,-2 C22,8 10,8 0,-4 Z M0,-4 C-10,-25 -35,-20 -28,-2 C-22,8 -10,8 0,-4 Z" />
+        <path
+            android:fillColor="#D478C4"
+            android:pathData="M0,6 C10,10 24,24 16,30 C8,34 2,20 0,6 Z M0,6 C-10,10 -24,24 -16,30 C-8,34 -2,20 0,6 Z" />
+        <path
+            android:fillColor="#8030A0"
+            android:pathData="M10.5,-8 A3.5,3.5 0 1 1 17.5,-8 A3.5,3.5 0 1 1 10.5,-8 Z M-17.5,-8 A3.5,3.5 0 1 1 -10.5,-8 A3.5,3.5 0 1 1 -17.5,-8 Z M9.5,18 A2.5,2.5 0 1 1 14.5,18 A2.5,2.5 0 1 1 9.5,18 Z M-14.5,18 A2.5,2.5 0 1 1 -9.5,18 A2.5,2.5 0 1 1 -14.5,18 Z" />
+        <path
+            android:fillColor="#50207A"
+            android:pathData="M0,-8 C2,-8 3,0 3,10 C3,15 1,16 0,16 C-1,16 -3,15 -3,10 C-3,0 -2,-8 0,-8 Z" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#7040A8"
+            android:strokeWidth="1.2"
+            android:pathData="M0,-8 C3,-14 7,-20 10,-26 M0,-8 C-3,-14 -7,-20 -10,-26" />
+        <path
+            android:fillColor="#7040A8"
+            android:pathData="M8,-26 A2,2 0 1 1 12,-26 A2,2 0 1 1 8,-26 Z M-12,-26 A2,2 0 1 1 -8,-26 A2,2 0 1 1 -12,-26 Z" />
+    </group>
+
+</vector>
