@@ -12,11 +12,15 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,12 +48,30 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
+        // Dynamically choose start destination based on auth state so there is no login screen
+        // flash when the user is already signed in.
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(R.navigation.nav_graph)
+        if (currentUser != null) {
+            graph.setStartDestination(R.id.agendaFragment)
+        }
+        navController.graph = graph
+
         binding.bottomNavigation.setupWithNavController(navController)
 
         val topLevelDestinations = setOf(R.id.agendaFragment, R.id.settingsFragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNavigation.visibility =
                 if (destination.id in topLevelDestinations) View.VISIBLE else View.GONE
+        }
+
+        // If already signed in, kick off a background sync so entries are up-to-date.
+        if (currentUser != null) {
+            lifecycleScope.launch {
+                (application as NomyAgendaApp).agendaRepository
+                    .syncFromFirestore(currentUser.uid)
+            }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&

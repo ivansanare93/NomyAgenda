@@ -3,8 +3,7 @@ package com.nomyagenda.app.notifications
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.nomyagenda.app.data.local.database.NomyAgendaDatabase
-import com.nomyagenda.app.data.repository.AgendaRepository
+import com.nomyagenda.app.NomyAgendaApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,9 +15,7 @@ class BootReceiver : BroadcastReceiver() {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) return
 
         val pendingResult = goAsync()
-        val repository = AgendaRepository(
-            NomyAgendaDatabase.getDatabase(context).agendaEntryDao()
-        )
+        val repository = (context.applicationContext as NomyAgendaApp).agendaRepository
         CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
             try {
                 val now = System.currentTimeMillis()

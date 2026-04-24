@@ -23,7 +23,6 @@ import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.ChecklistItem
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.preferences.SettingsRepository
-import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentEntryEditorBinding
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
@@ -39,7 +38,7 @@ class EntryEditorFragment : Fragment() {
 
     private val viewModel: EntryEditorViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
-        EntryEditorViewModelFactory(AgendaRepository(app.database.agendaEntryDao()), app)
+        EntryEditorViewModelFactory(app.agendaRepository, app)
     }
 
     private lateinit var checklistAdapter: ChecklistAdapter

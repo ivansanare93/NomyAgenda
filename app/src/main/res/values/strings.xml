@@ -124,4 +124,18 @@
     <string name="exact_alarm_rationale_title">Permiso necesario</string>
     <string name="exact_alarm_rationale_message">Para que los recordatorios lleguen exactamente a la hora fijada, NomyAgenda necesita permiso para programar alarmas exactas. Sin este permiso, el sistema puede retrasar los avisos varios minutos.</string>
     <string name="exact_alarm_rationale_confirm">Ir a ajustes</string>
+
+    <!-- Login / Auth -->
+    <string name="login_title">Iniciar sesión</string>
+    <string name="login_subtitle">Tus entradas sincronizadas en todos tus dispositivos</string>
+    <string name="login_hint_email">Correo electrónico</string>
+    <string name="login_hint_password">Contraseña</string>
+    <string name="login_btn_login">Iniciar sesión</string>
+    <string name="login_btn_register">Crear cuenta</string>
+    <string name="login_error_email_required">El correo es obligatorio</string>
+    <string name="login_error_password_required">La contraseña es obligatoria</string>
+
+    <!-- Settings — Account -->
+    <string name="settings_account">Cuenta</string>
+    <string name="settings_sign_out">Cerrar sesión</string>
 </resources>

@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.FragmentSettingsBinding
@@ -15,7 +19,10 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SettingsViewModel by viewModels()
+    private val viewModel: SettingsViewModel by viewModels {
+        val app = requireActivity().application as NomyAgendaApp
+        SettingsViewModelFactory(app, app.agendaRepository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,6 +97,32 @@ class SettingsFragment : Fragment() {
                 viewModel.consumeRecreateEvent()
                 requireActivity().recreate()
             }
+        }
+
+        viewModel.signOutEvent.observe(viewLifecycleOwner) { shouldSignOut ->
+            if (shouldSignOut) {
+                viewModel.consumeSignOutEvent()
+                findNavController().navigate(
+                    R.id.loginFragment,
+                    null,
+                    NavOptions.Builder()
+                        .setPopUpTo(findNavController().graph.id, true)
+                        .build()
+                )
+            }
+        }
+
+        // Show current account email and wire up sign-out button
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            binding.textAccountEmail.text = currentUser.email
+            binding.cardAccount.visibility = View.VISIBLE
+        } else {
+            binding.cardAccount.visibility = View.GONE
+        }
+
+        binding.btnSignOut.setOnClickListener {
+            viewModel.signOut()
         }
 
         binding.toggleTheme.addOnButtonCheckedListener { _, checkedId, isChecked ->

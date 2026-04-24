@@ -22,7 +22,6 @@ import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.preferences.SettingsRepository
-import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
 import com.nomyagenda.app.databinding.ItemCalendarDayBinding
 import com.nomyagenda.app.ui.agenda.AgendaViewModel.Companion.toDateKey
@@ -38,7 +37,7 @@ class AgendaFragment : Fragment() {
 
     private val viewModel: AgendaViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
-        AgendaViewModelFactory(AgendaRepository(app.database.agendaEntryDao()), app)
+        AgendaViewModelFactory(app.agendaRepository, app)
     }
 
     private lateinit var adapter: AgendaAdapter
