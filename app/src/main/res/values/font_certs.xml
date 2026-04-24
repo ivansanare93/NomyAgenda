@@ -5,43 +5,4 @@
         <item>@font/pacifico</item>
         <item>@font/nunito</item>
     </array>
-
-    <!-- Google Fonts provider certificates -->
-    <array name="com_google_android_gms_fonts_certs">
-        <item>@array/com_google_android_gms_fonts_certs_dev</item>
-        <item>@array/com_google_android_gms_fonts_certs_prod</item>
-    </array>
-
-    <!-- Development certificate -->
-    <string-array name="com_google_android_gms_fonts_certs_dev">
-        <item>
-            MIIEqDCCA5CgAwIBAgIJANWFuGx90071MA0GCSqGSIb3DQEBBAUAMIGUMQswCQYD
-            VQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5j
-            aXNjbzETMBEGA1UEChMKR29vZ2xlIEluYzEXMBQGA1UECxMNR29vZ2xlIEZvbnRz
-            MRIwEAYDVQQDEwlHb29nbGUgSW5jMB4XDTEzMDUwMzAzMjg1NFoXDTQzMDQyNTAz
-            Mjg1NFowgZQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYD
-            VQQHEw1TYW4gRnJhbmNpc2NvMRMwEQYDVQQKEwpHb29nbGUgSW5jMRcwFAYDVQQL
-            Ew1Hb29nbGUgRm9udHMxEjAQBgNVBAMTCUdvb2dsZSBJbmMwggEiMA0GCSqGSIb3
-            DQEBAQUAA4IBDwAwggEKAoIBAQC9LLmWaJVELSQoxTnNUlnb5T4xjKFcMxanBnhz
-            2O84JgIVxIbpBqaGlJqsQs8IxBqfb9f8Gk5jC3M4MQIDAQAB
-        </item>
-    </string-array>
-
-    <!-- Production certificate -->
-    <string-array name="com_google_android_gms_fonts_certs_prod">
-        <item>
-            MIIEQzCCAyugAwIBAgIJAMLgh0ZkSjCNMA0GCSqGSIb3DQEBBAUAMHQxCzAJBgNV
-            BAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBW
-            aWV3MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9pZDEQMA4G
-            A1UEAxMHQW5kcm9pZDAeFw0wODA4MjEyMzEzMzRaFw0zNjAxMDcyMzEzMzRaMHQx
-            CzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3Vu
-            dGFpbiBWaWV3MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9p
-            ZDEQMA4GA1UEAxMHQW5kcm9pZDCCASAwDQYJKoZIhvcNAQEBBQADggENADCCAQgC
-            ggEBAMtNgKTvF3KRBpRVk6pOuoFJoIPi3DVGp1v8y/l3Y9NF3Vm8FiTk1d9J5ZWS
-            G/EAkrDmF9nFnF5YaZb7Xt/5tZg9HzqVMuXG1DnFHSI0Y/ZflFRd0klYLMMlHCK
-            G/F7PWFRT4k0JEOw4i8YnKnFBPPGMIreIkiTlg7YKqVnFMPNW9Xc1FeIHYE2kqe
-            MCqxpg5pN0MLLq/LqtSfRqLSFXs3ERnOLi/R2KrK/iqmU1i3IJLZ4/s0GnPRBM+
-            jKKCKmzDl/CiCqxJ4Sj7hHjfOoHtJXTfZp4MJCO5pN+5c4i1W7fTUU8plbE=
-        </item>
-    </string-array>
 </resources>
