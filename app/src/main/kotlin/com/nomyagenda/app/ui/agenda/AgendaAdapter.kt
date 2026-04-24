@@ -3,7 +3,6 @@ package com.nomyagenda.app.ui.agenda
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +11,7 @@ import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
 import com.nomyagenda.app.ui.editor.ChecklistManager
+import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -52,13 +52,13 @@ class AgendaAdapter(
                 EntryType.REMINDER -> context.getString(R.string.type_reminder)
             }
 
-            val (cardColorRes, accentColorRes) = when (entry.type) {
-                EntryType.NOTE -> R.color.note_card_bg to R.color.note_accent
-                EntryType.TASK -> R.color.task_card_bg to R.color.task_accent
-                EntryType.REMINDER -> R.color.reminder_card_bg to R.color.reminder_accent
+            val (cardColorAttr, accentColorAttr) = when (entry.type) {
+                EntryType.NOTE -> R.attr.noteCardBackground to R.attr.noteAccentColor
+                EntryType.TASK -> R.attr.taskCardBackground to R.attr.taskAccentColor
+                EntryType.REMINDER -> R.attr.reminderCardBackground to R.attr.reminderAccentColor
             }
-            binding.root.setCardBackgroundColor(ContextCompat.getColor(context, cardColorRes))
-            binding.viewAccentStripe.setBackgroundColor(ContextCompat.getColor(context, accentColorRes))
+            binding.root.setCardBackgroundColor(context.resolveThemeColor(cardColorAttr))
+            binding.viewAccentStripe.setBackgroundColor(context.resolveThemeColor(accentColorAttr))
 
             when (entry.type) {
                 EntryType.NOTE -> {

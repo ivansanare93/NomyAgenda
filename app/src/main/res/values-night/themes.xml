@@ -32,6 +32,16 @@
         <item name="colorOutline">@color/md_theme_dark_outline</item>
         <!-- Status bar -->
         <item name="android:statusBarColor">?attr/colorSurface</item>
+        <!-- Custom agenda attributes – keep Lavanda palette in dark mode -->
+        <item name="agendaBackground">@color/agenda_background</item>
+        <item name="agendaHeaderBackground">@drawable/bg_header_lavanda</item>
+        <item name="agendaHeaderDateTextColor">@color/agenda_header_date_text</item>
+        <item name="noteCardBackground">@color/note_card_bg</item>
+        <item name="noteAccentColor">@color/note_accent</item>
+        <item name="taskCardBackground">@color/task_card_bg</item>
+        <item name="taskAccentColor">@color/task_accent</item>
+        <item name="reminderCardBackground">@color/reminder_card_bg</item>
+        <item name="reminderAccentColor">@color/reminder_accent</item>
     </style>
 
 </resources>
