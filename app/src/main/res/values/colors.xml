@@ -47,7 +47,7 @@
     <color name="md_theme_dark_onSurfaceVariant">#CAC4D0</color>
     <color name="md_theme_dark_outline">#938F99</color>
 
-    <!-- Agenda section – lilac palette -->
+    <!-- Agenda section – Lavanda palette (default) -->
     <color name="agenda_background">#F5F0FF</color>
     <color name="agenda_header_bg">#6650A4</color>
     <color name="agenda_header_date_text">#CCFFFFFF</color>
@@ -60,4 +60,97 @@
 
     <color name="reminder_card_bg">#FFDEEE</color>
     <color name="reminder_accent">#AD1457</color>
+
+    <!-- Océano theme palette -->
+    <color name="ocean_primary">#0277BD</color>
+    <color name="ocean_on_primary">#FFFFFF</color>
+    <color name="ocean_primary_container">#B3E5FC</color>
+    <color name="ocean_on_primary_container">#01579B</color>
+    <color name="ocean_secondary">#00796B</color>
+    <color name="ocean_on_secondary">#FFFFFF</color>
+    <color name="ocean_secondary_container">#B2DFDB</color>
+    <color name="ocean_on_secondary_container">#004D40</color>
+    <color name="ocean_tertiary">#00838F</color>
+    <color name="ocean_on_tertiary">#FFFFFF</color>
+    <color name="ocean_tertiary_container">#B2EBF2</color>
+    <color name="ocean_on_tertiary_container">#006064</color>
+    <color name="ocean_error">#B3261E</color>
+    <color name="ocean_on_error">#FFFFFF</color>
+    <color name="ocean_error_container">#F9DEDC</color>
+    <color name="ocean_on_error_container">#410E0B</color>
+    <color name="ocean_background">#E3F8FF</color>
+    <color name="ocean_on_background">#01303A</color>
+    <color name="ocean_surface">#E3F8FF</color>
+    <color name="ocean_on_surface">#01303A</color>
+    <color name="ocean_surface_variant">#B3E5FC</color>
+    <color name="ocean_on_surface_variant">#01579B</color>
+    <color name="ocean_outline">#4FC3F7</color>
+    <color name="ocean_note_card_bg">#E3F2FD</color>
+    <color name="ocean_note_accent">#1565C0</color>
+    <color name="ocean_task_card_bg">#E0F2F1</color>
+    <color name="ocean_task_accent">#00796B</color>
+    <color name="ocean_reminder_card_bg">#E1F5FE</color>
+    <color name="ocean_reminder_accent">#0277BD</color>
+
+    <!-- Bosque theme palette -->
+    <color name="forest_primary">#2E7D32</color>
+    <color name="forest_on_primary">#FFFFFF</color>
+    <color name="forest_primary_container">#C8E6C9</color>
+    <color name="forest_on_primary_container">#1B5E20</color>
+    <color name="forest_secondary">#558B2F</color>
+    <color name="forest_on_secondary">#FFFFFF</color>
+    <color name="forest_secondary_container">#DCEDC8</color>
+    <color name="forest_on_secondary_container">#33691E</color>
+    <color name="forest_tertiary">#FF8F00</color>
+    <color name="forest_on_tertiary">#FFFFFF</color>
+    <color name="forest_tertiary_container">#FFECB3</color>
+    <color name="forest_on_tertiary_container">#FF6F00</color>
+    <color name="forest_error">#B3261E</color>
+    <color name="forest_on_error">#FFFFFF</color>
+    <color name="forest_error_container">#F9DEDC</color>
+    <color name="forest_on_error_container">#410E0B</color>
+    <color name="forest_background">#F1F8E9</color>
+    <color name="forest_on_background">#1B2E1C</color>
+    <color name="forest_surface">#F1F8E9</color>
+    <color name="forest_on_surface">#1B2E1C</color>
+    <color name="forest_surface_variant">#DCEDC8</color>
+    <color name="forest_on_surface_variant">#33691E</color>
+    <color name="forest_outline">#81C784</color>
+    <color name="forest_note_card_bg">#F1F8E9</color>
+    <color name="forest_note_accent">#388E3C</color>
+    <color name="forest_task_card_bg">#E8F5E9</color>
+    <color name="forest_task_accent">#2E7D32</color>
+    <color name="forest_reminder_card_bg">#FFF8E1</color>
+    <color name="forest_reminder_accent">#F57F17</color>
+
+    <!-- Atardecer theme palette -->
+    <color name="sunset_primary">#E64A19</color>
+    <color name="sunset_on_primary">#FFFFFF</color>
+    <color name="sunset_primary_container">#FFCCBC</color>
+    <color name="sunset_on_primary_container">#BF360C</color>
+    <color name="sunset_secondary">#FF6F00</color>
+    <color name="sunset_on_secondary">#FFFFFF</color>
+    <color name="sunset_secondary_container">#FFE0B2</color>
+    <color name="sunset_on_secondary_container">#E65100</color>
+    <color name="sunset_tertiary">#880E4F</color>
+    <color name="sunset_on_tertiary">#FFFFFF</color>
+    <color name="sunset_tertiary_container">#FCE4EC</color>
+    <color name="sunset_on_tertiary_container">#560027</color>
+    <color name="sunset_error">#B3261E</color>
+    <color name="sunset_on_error">#FFFFFF</color>
+    <color name="sunset_error_container">#F9DEDC</color>
+    <color name="sunset_on_error_container">#410E0B</color>
+    <color name="sunset_background">#FFF3E0</color>
+    <color name="sunset_on_background">#3E1010</color>
+    <color name="sunset_surface">#FFF3E0</color>
+    <color name="sunset_on_surface">#3E1010</color>
+    <color name="sunset_surface_variant">#FFCCBC</color>
+    <color name="sunset_on_surface_variant">#BF360C</color>
+    <color name="sunset_outline">#FF8A65</color>
+    <color name="sunset_note_card_bg">#FBE9E7</color>
+    <color name="sunset_note_accent">#BF360C</color>
+    <color name="sunset_task_card_bg">#FFF3E0</color>
+    <color name="sunset_task_accent">#E65100</color>
+    <color name="sunset_reminder_card_bg">#FCE4EC</color>
+    <color name="sunset_reminder_accent">#880E4F</color>
 </resources>

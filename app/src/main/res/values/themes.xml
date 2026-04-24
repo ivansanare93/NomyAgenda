@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme -->
+    <!-- Base application theme (Lavanda / default) -->
     <style name="Theme.NomyAgenda" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
@@ -32,6 +32,124 @@
         <item name="colorOutline">@color/md_theme_light_outline</item>
         <!-- Status bar -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
+        <!-- Custom agenda attributes (Lavanda defaults) -->
+        <item name="agendaBackground">@color/agenda_background</item>
+        <item name="agendaHeaderBackground">@drawable/bg_header_lavanda</item>
+        <item name="agendaHeaderDateTextColor">@color/agenda_header_date_text</item>
+        <item name="noteCardBackground">@color/note_card_bg</item>
+        <item name="noteAccentColor">@color/note_accent</item>
+        <item name="taskCardBackground">@color/task_card_bg</item>
+        <item name="taskAccentColor">@color/task_accent</item>
+        <item name="reminderCardBackground">@color/reminder_card_bg</item>
+        <item name="reminderAccentColor">@color/reminder_accent</item>
+    </style>
+
+    <!-- Thematic theme: Océano -->
+    <style name="Theme.NomyAgenda.Ocean" parent="Theme.NomyAgenda">
+        <item name="colorPrimary">@color/ocean_primary</item>
+        <item name="colorOnPrimary">@color/ocean_on_primary</item>
+        <item name="colorPrimaryContainer">@color/ocean_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/ocean_on_primary_container</item>
+        <item name="colorSecondary">@color/ocean_secondary</item>
+        <item name="colorOnSecondary">@color/ocean_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/ocean_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/ocean_on_secondary_container</item>
+        <item name="colorTertiary">@color/ocean_tertiary</item>
+        <item name="colorOnTertiary">@color/ocean_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/ocean_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/ocean_on_tertiary_container</item>
+        <item name="colorError">@color/ocean_error</item>
+        <item name="colorOnError">@color/ocean_on_error</item>
+        <item name="colorErrorContainer">@color/ocean_error_container</item>
+        <item name="colorOnErrorContainer">@color/ocean_on_error_container</item>
+        <item name="android:colorBackground">@color/ocean_background</item>
+        <item name="colorOnBackground">@color/ocean_on_background</item>
+        <item name="colorSurface">@color/ocean_surface</item>
+        <item name="colorOnSurface">@color/ocean_on_surface</item>
+        <item name="colorSurfaceVariant">@color/ocean_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/ocean_on_surface_variant</item>
+        <item name="colorOutline">@color/ocean_outline</item>
+        <item name="agendaBackground">@color/ocean_background</item>
+        <item name="agendaHeaderBackground">@drawable/bg_header_ocean</item>
+        <item name="agendaHeaderDateTextColor">@color/agenda_header_date_text</item>
+        <item name="noteCardBackground">@color/ocean_note_card_bg</item>
+        <item name="noteAccentColor">@color/ocean_note_accent</item>
+        <item name="taskCardBackground">@color/ocean_task_card_bg</item>
+        <item name="taskAccentColor">@color/ocean_task_accent</item>
+        <item name="reminderCardBackground">@color/ocean_reminder_card_bg</item>
+        <item name="reminderAccentColor">@color/ocean_reminder_accent</item>
+    </style>
+
+    <!-- Thematic theme: Bosque -->
+    <style name="Theme.NomyAgenda.Forest" parent="Theme.NomyAgenda">
+        <item name="colorPrimary">@color/forest_primary</item>
+        <item name="colorOnPrimary">@color/forest_on_primary</item>
+        <item name="colorPrimaryContainer">@color/forest_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/forest_on_primary_container</item>
+        <item name="colorSecondary">@color/forest_secondary</item>
+        <item name="colorOnSecondary">@color/forest_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/forest_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/forest_on_secondary_container</item>
+        <item name="colorTertiary">@color/forest_tertiary</item>
+        <item name="colorOnTertiary">@color/forest_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/forest_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/forest_on_tertiary_container</item>
+        <item name="colorError">@color/forest_error</item>
+        <item name="colorOnError">@color/forest_on_error</item>
+        <item name="colorErrorContainer">@color/forest_error_container</item>
+        <item name="colorOnErrorContainer">@color/forest_on_error_container</item>
+        <item name="android:colorBackground">@color/forest_background</item>
+        <item name="colorOnBackground">@color/forest_on_background</item>
+        <item name="colorSurface">@color/forest_surface</item>
+        <item name="colorOnSurface">@color/forest_on_surface</item>
+        <item name="colorSurfaceVariant">@color/forest_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/forest_on_surface_variant</item>
+        <item name="colorOutline">@color/forest_outline</item>
+        <item name="agendaBackground">@color/forest_background</item>
+        <item name="agendaHeaderBackground">@drawable/bg_header_forest</item>
+        <item name="agendaHeaderDateTextColor">@color/agenda_header_date_text</item>
+        <item name="noteCardBackground">@color/forest_note_card_bg</item>
+        <item name="noteAccentColor">@color/forest_note_accent</item>
+        <item name="taskCardBackground">@color/forest_task_card_bg</item>
+        <item name="taskAccentColor">@color/forest_task_accent</item>
+        <item name="reminderCardBackground">@color/forest_reminder_card_bg</item>
+        <item name="reminderAccentColor">@color/forest_reminder_accent</item>
+    </style>
+
+    <!-- Thematic theme: Atardecer -->
+    <style name="Theme.NomyAgenda.Sunset" parent="Theme.NomyAgenda">
+        <item name="colorPrimary">@color/sunset_primary</item>
+        <item name="colorOnPrimary">@color/sunset_on_primary</item>
+        <item name="colorPrimaryContainer">@color/sunset_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/sunset_on_primary_container</item>
+        <item name="colorSecondary">@color/sunset_secondary</item>
+        <item name="colorOnSecondary">@color/sunset_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/sunset_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/sunset_on_secondary_container</item>
+        <item name="colorTertiary">@color/sunset_tertiary</item>
+        <item name="colorOnTertiary">@color/sunset_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/sunset_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/sunset_on_tertiary_container</item>
+        <item name="colorError">@color/sunset_error</item>
+        <item name="colorOnError">@color/sunset_on_error</item>
+        <item name="colorErrorContainer">@color/sunset_error_container</item>
+        <item name="colorOnErrorContainer">@color/sunset_on_error_container</item>
+        <item name="android:colorBackground">@color/sunset_background</item>
+        <item name="colorOnBackground">@color/sunset_on_background</item>
+        <item name="colorSurface">@color/sunset_surface</item>
+        <item name="colorOnSurface">@color/sunset_on_surface</item>
+        <item name="colorSurfaceVariant">@color/sunset_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/sunset_on_surface_variant</item>
+        <item name="colorOutline">@color/sunset_outline</item>
+        <item name="agendaBackground">@color/sunset_background</item>
+        <item name="agendaHeaderBackground">@drawable/bg_header_sunset</item>
+        <item name="agendaHeaderDateTextColor">@color/agenda_header_date_text</item>
+        <item name="noteCardBackground">@color/sunset_note_card_bg</item>
+        <item name="noteAccentColor">@color/sunset_note_accent</item>
+        <item name="taskCardBackground">@color/sunset_task_card_bg</item>
+        <item name="taskAccentColor">@color/sunset_task_accent</item>
+        <item name="reminderCardBackground">@color/sunset_reminder_card_bg</item>
+        <item name="reminderAccentColor">@color/sunset_reminder_accent</item>
     </style>
 
     <!-- Toolbar style -->

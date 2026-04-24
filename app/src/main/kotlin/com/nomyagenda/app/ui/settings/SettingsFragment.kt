@@ -40,6 +40,19 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        viewModel.decorativeTheme.observe(viewLifecycleOwner) { theme ->
+            val chipId = when (theme) {
+                SettingsRepository.DECORATIVE_THEME_OCEAN -> R.id.chip_theme_ocean
+                SettingsRepository.DECORATIVE_THEME_FOREST -> R.id.chip_theme_forest
+                SettingsRepository.DECORATIVE_THEME_SUNSET -> R.id.chip_theme_sunset
+                else -> R.id.chip_theme_lavanda
+            }
+            val chip = binding.chipGroupDecorativeTheme.findViewById<View>(chipId)
+            if (chip != null && !binding.chipGroupDecorativeTheme.checkedChipIds.contains(chipId)) {
+                binding.chipGroupDecorativeTheme.check(chipId)
+            }
+        }
+
         viewModel.language.observe(viewLifecycleOwner) { lang ->
             val btnId = when (lang) {
                 SettingsRepository.LANGUAGE_ES -> R.id.btn_lang_es
@@ -57,6 +70,12 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        viewModel.recreateEvent.observe(viewLifecycleOwner) { shouldRecreate ->
+            if (shouldRecreate) {
+                requireActivity().recreate()
+            }
+        }
+
         binding.toggleTheme.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 val mode = when (checkedId) {
@@ -65,6 +84,18 @@ class SettingsFragment : Fragment() {
                     else -> SettingsRepository.THEME_SYSTEM
                 }
                 viewModel.setTheme(mode)
+            }
+        }
+
+        binding.chipGroupDecorativeTheme.setOnCheckedStateChangeListener { _, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                val theme = when (checkedIds.first()) {
+                    R.id.chip_theme_ocean -> SettingsRepository.DECORATIVE_THEME_OCEAN
+                    R.id.chip_theme_forest -> SettingsRepository.DECORATIVE_THEME_FOREST
+                    R.id.chip_theme_sunset -> SettingsRepository.DECORATIVE_THEME_SUNSET
+                    else -> SettingsRepository.DECORATIVE_THEME_DEFAULT
+                }
+                viewModel.setDecorativeTheme(theme)
             }
         }
 

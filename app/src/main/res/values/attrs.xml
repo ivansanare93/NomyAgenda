@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thematic agenda background (full screen) -->
+    <attr name="agendaBackground" format="color|reference" />
+    <!-- Thematic header background (gradient drawable or solid color) -->
+    <attr name="agendaHeaderBackground" format="color|reference" />
+    <!-- Date text color inside the header -->
+    <attr name="agendaHeaderDateTextColor" format="color|reference" />
+
+    <!-- Entry card / accent colors per entry type -->
+    <attr name="noteCardBackground" format="color|reference" />
+    <attr name="noteAccentColor" format="color|reference" />
+    <attr name="taskCardBackground" format="color|reference" />
+    <attr name="taskAccentColor" format="color|reference" />
+    <attr name="reminderCardBackground" format="color|reference" />
+    <attr name="reminderAccentColor" format="color|reference" />
+</resources>

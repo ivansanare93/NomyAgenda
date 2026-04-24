@@ -83,6 +83,11 @@
     <string name="settings_theme_light">Claro</string>
     <string name="settings_theme_dark">Oscuro</string>
     <string name="settings_theme_system">Sistema</string>
+    <string name="settings_decorative_theme">Tema decorativo</string>
+    <string name="settings_decorative_theme_lavanda">Lavanda</string>
+    <string name="settings_decorative_theme_ocean">Océano</string>
+    <string name="settings_decorative_theme_forest">Bosque</string>
+    <string name="settings_decorative_theme_sunset">Atardecer</string>
     <string name="settings_language">Idioma</string>
     <string name="settings_language_es">Español</string>
     <string name="settings_language_en">English</string>

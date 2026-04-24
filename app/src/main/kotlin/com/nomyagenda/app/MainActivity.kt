@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,16 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* no-op */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply the decorative (thematic) style before any view inflation.
+        val settings = SettingsRepository(this)
+        val themeResId = when (settings.decorativeTheme) {
+            SettingsRepository.DECORATIVE_THEME_OCEAN -> R.style.Theme_NomyAgenda_Ocean
+            SettingsRepository.DECORATIVE_THEME_FOREST -> R.style.Theme_NomyAgenda_Forest
+            SettingsRepository.DECORATIVE_THEME_SUNSET -> R.style.Theme_NomyAgenda_Sunset
+            else -> 0
+        }
+        if (themeResId != 0) setTheme(themeResId)
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
