@@ -85,11 +85,6 @@ class DiaryEntryEditorFragment : Fragment() {
             chip.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     viewModel.mood.value = emoji
-                    // Uncheck other chips
-                    for (i in 0 until binding.chipGroupMood.childCount) {
-                        val other = binding.chipGroupMood.getChildAt(i) as? com.google.android.material.chip.Chip
-                        if (other !== chip) other?.isChecked = false
-                    }
                 } else if (viewModel.mood.value == emoji) {
                     viewModel.mood.value = ""
                 }

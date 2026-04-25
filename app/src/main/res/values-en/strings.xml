@@ -182,5 +182,6 @@
     <string name="diary_photos_label">Photos</string>
     <string name="diary_add_photo">Add photo</string>
     <string name="diary_remove_photo">Remove photo</string>
+    <string name="diary_photo_desc">Diary photo</string>
     <string name="diary_saved">Entry saved</string>
 </resources>

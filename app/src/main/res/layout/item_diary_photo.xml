@@ -14,7 +14,7 @@
             android:id="@+id/image_diary_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@null"
+            android:contentDescription="@string/diary_photo_desc"
             android:scaleType="centerCrop" />
 
         <ImageButton
