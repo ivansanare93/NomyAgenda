@@ -1,13 +1,16 @@
 package com.nomyagenda.app.ui.diary
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.databinding.ItemDiaryEntryBinding
+import com.nomyagenda.app.ui.resolveThemeColor
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -31,7 +34,16 @@ class DiaryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(entry: DiaryEntry) {
+            val context = binding.root.context
             binding.textDiaryEntryDate.text = formatDateKey(entry.dateKey)
+
+            val titleColor = if (entry.color.isNotEmpty()) {
+                Color.parseColor(entry.color)
+            } else {
+                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+            }
+            binding.textDiaryEntryDate.setTextColor(titleColor)
+            binding.textDiaryEntryTitle.setTextColor(titleColor)
 
             if (entry.mood.isNotEmpty()) {
                 binding.textDiaryEntryMood.visibility = View.VISIBLE

@@ -1,13 +1,13 @@
 package com.nomyagenda.app.ui.agenda
 
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
@@ -54,25 +54,12 @@ class AgendaAdapter(
                 EntryType.REMINDER -> context.getString(R.string.type_reminder)
             }
 
-            val (cardColorAttr, accentColorAttr) = when (entry.type) {
-                EntryType.NOTE -> R.attr.noteCardBackground to R.attr.noteAccentColor
-                EntryType.TASK -> R.attr.taskCardBackground to R.attr.taskAccentColor
-                EntryType.REMINDER -> R.attr.reminderCardBackground to R.attr.reminderAccentColor
-            }
-            val cardBgColor = context.resolveThemeColor(cardColorAttr)
-            binding.root.setCardBackgroundColor(cardBgColor)
-
-            val accentColor = if (entry.color.isNotEmpty()) {
+            val titleColor = if (entry.color.isNotEmpty()) {
                 Color.parseColor(entry.color)
             } else {
-                context.resolveThemeColor(accentColorAttr)
+                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
             }
-            val transparent = Color.argb(0, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor))
-            val gradient = GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT,
-                intArrayOf(accentColor, transparent)
-            )
-            binding.layoutCardContent.background = gradient
+            binding.textEntryTitle.setTextColor(titleColor)
 
             when (entry.type) {
                 EntryType.NOTE -> {

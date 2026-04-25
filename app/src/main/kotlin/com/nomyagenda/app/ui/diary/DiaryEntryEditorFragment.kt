@@ -1,10 +1,15 @@
 package com.nomyagenda.app.ui.diary
 
 import android.app.DatePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -51,6 +56,7 @@ class DiaryEntryEditorFragment : Fragment() {
 
         setupToolbar()
         setupMoodChips()
+        setupColorPicker()
         setupPhotos()
 
         val defaultDateKey = if (args.dateKey.isNotEmpty()) args.dateKey else DiaryFragment.todayDateKey()
@@ -93,6 +99,69 @@ class DiaryEntryEditorFragment : Fragment() {
         }
     }
 
+    private fun setupColorPicker() {
+        val container = binding.colorSwatchesContainerDiary
+        val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
+        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+
+        val noneDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+            setStroke(strokeWidth, Color.LTGRAY)
+        }
+        val noneSwatch = FrameLayout(requireContext()).apply {
+            tag = ""
+            background = noneDrawable
+            layoutParams = LinearLayout.LayoutParams(size, size).apply {
+                setMargins(margin, margin, margin, margin)
+            }
+            setOnClickListener { selectColor("") }
+        }
+        container.addView(noneSwatch)
+
+        COLOR_PALETTE.forEach { hexColor ->
+            val swatch = FrameLayout(requireContext()).apply {
+                tag = hexColor
+                background = GradientDrawable().apply {
+                    shape = GradientDrawable.OVAL
+                    setColor(Color.parseColor(hexColor))
+                }
+                layoutParams = LinearLayout.LayoutParams(size, size).apply {
+                    setMargins(margin, margin, margin, margin)
+                }
+                setOnClickListener { selectColor(hexColor) }
+            }
+            container.addView(swatch)
+        }
+
+        updateSwatchSelection(container, "")
+    }
+
+    private fun selectColor(hexColor: String) {
+        viewModel.color.value = hexColor
+        updateSwatchSelection(binding.colorSwatchesContainerDiary, hexColor)
+    }
+
+    private fun updateSwatchSelection(container: LinearLayout, hexColor: String) {
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+        for (i in 0 until container.childCount) {
+            val swatch = container.getChildAt(i) as? FrameLayout ?: continue
+            val swatchColor = swatch.tag as? String ?: ""
+            val isSelected = swatchColor == hexColor
+            swatch.background = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                if (swatchColor.isEmpty()) {
+                    setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                    setStroke(strokeWidth, if (isSelected) Color.BLACK else Color.LTGRAY)
+                } else {
+                    setColor(Color.parseColor(swatchColor))
+                    if (isSelected) setStroke(strokeWidth, Color.WHITE)
+                }
+            }
+        }
+    }
+
     private fun setupPhotos() {
         photoAdapter = DiaryPhotoAdapter(onRemove = { path -> viewModel.removePhoto(path) })
         binding.recyclerPhotos.adapter = photoAdapter
@@ -131,6 +200,10 @@ class DiaryEntryEditorFragment : Fragment() {
 
         viewModel.photoPaths.observe(viewLifecycleOwner) { paths ->
             photoAdapter.submitList(paths)
+        }
+
+        viewModel.color.observe(viewLifecycleOwner) { selectedColor ->
+            updateSwatchSelection(binding.colorSwatchesContainerDiary, selectedColor ?: "")
         }
 
         viewModel.isSaved.observe(viewLifecycleOwner) { saved ->
@@ -179,6 +252,19 @@ class DiaryEntryEditorFragment : Fragment() {
     companion object {
         private val DATE_PARSE_FORMAT = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         private val DATE_DISPLAY_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
+
+        private val COLOR_PALETTE = listOf(
+            "#E53935",
+            "#E91E63",
+            "#9C27B0",
+            "#3F51B5",
+            "#2196F3",
+            "#009688",
+            "#4CAF50",
+            "#FF9800",
+            "#FF5722",
+            "#795548"
+        )
 
         fun formatDateKey(dateKey: String): String {
             return try {
