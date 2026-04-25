@@ -167,6 +167,7 @@
     <string name="lock_setup_hint_min">Conecta al menos 4 puntos</string>
     <string name="lock_setup_hint_confirm">Dibuja el mismo patrón para confirmar</string>
     <string name="lock_setup_mismatch">Los patrones no coinciden. Intenta de nuevo.</string>
+    <string name="lock_setup_success">¡Patrón guardado correctamente!</string>
 
     <!-- Diary -->
     <string name="nav_diary">Diario</string>

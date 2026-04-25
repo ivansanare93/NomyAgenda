@@ -13,6 +13,7 @@ import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.FragmentSettingsBinding
+import com.nomyagenda.app.ui.lock.LockSetupFragment
 
 class SettingsFragment : Fragment() {
 
@@ -147,6 +148,14 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        // Refresh the lock type when returning from LockSetupFragment after a successful setup.
+        parentFragmentManager.setFragmentResultListener(
+            LockSetupFragment.REQUEST_KEY,
+            viewLifecycleOwner
+        ) { _, _ ->
+            viewModel.refreshLockType()
+        }
+
         viewModel.biometricError.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 binding.textBiometricError.text = error
@@ -164,7 +173,13 @@ class SettingsFragment : Fragment() {
         binding.toggleLockType.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked && !isUpdatingLockUi) {
                 when (checkedId) {
-                    R.id.btn_lock_pattern -> viewModel.selectPatternLock()
+                    R.id.btn_lock_pattern -> {
+                        // Only navigate to setup if not already in pattern mode.
+                        // Re-setup is handled by the dedicated "Configurar patrón" button.
+                        if (viewModel.lockType.value != SettingsRepository.LOCK_TYPE_PATTERN) {
+                            viewModel.selectPatternLock()
+                        }
+                    }
                     R.id.btn_lock_biometric -> viewModel.selectBiometricLock()
                 }
             }
@@ -242,12 +257,6 @@ class SettingsFragment : Fragment() {
                 viewModel.setAppBackground(bg)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Refresh lock type in case we returned from LockSetupFragment
-        viewModel.refreshLockType()
     }
 
     override fun onDestroyView() {
