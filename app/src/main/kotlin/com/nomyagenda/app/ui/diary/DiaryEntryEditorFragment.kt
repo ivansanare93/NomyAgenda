@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -112,7 +113,7 @@ class DiaryEntryEditorFragment : Fragment() {
         val noneSwatch = FrameLayout(requireContext()).apply {
             tag = ""
             background = noneDrawable
-            layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
+            layoutParams = LinearLayout.LayoutParams(size, size).apply {
                 setMargins(margin, margin, margin, margin)
             }
             setOnClickListener { selectColor("") }
@@ -126,7 +127,7 @@ class DiaryEntryEditorFragment : Fragment() {
                     shape = GradientDrawable.OVAL
                     setColor(Color.parseColor(hexColor))
                 }
-                layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
+                layoutParams = LinearLayout.LayoutParams(size, size).apply {
                     setMargins(margin, margin, margin, margin)
                 }
                 setOnClickListener { selectColor(hexColor) }
@@ -142,7 +143,7 @@ class DiaryEntryEditorFragment : Fragment() {
         updateSwatchSelection(binding.colorSwatchesContainerDiary, hexColor)
     }
 
-    private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
+    private fun updateSwatchSelection(container: LinearLayout, hexColor: String) {
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
         for (i in 0 until container.childCount) {
             val swatch = container.getChildAt(i) as? FrameLayout ?: continue
@@ -201,8 +202,8 @@ class DiaryEntryEditorFragment : Fragment() {
             photoAdapter.submitList(paths)
         }
 
-        viewModel.color.observe(viewLifecycleOwner) { c ->
-            updateSwatchSelection(binding.colorSwatchesContainerDiary, c ?: "")
+        viewModel.color.observe(viewLifecycleOwner) { selectedColor ->
+            updateSwatchSelection(binding.colorSwatchesContainerDiary, selectedColor ?: "")
         }
 
         viewModel.isSaved.observe(viewLifecycleOwner) { saved ->
