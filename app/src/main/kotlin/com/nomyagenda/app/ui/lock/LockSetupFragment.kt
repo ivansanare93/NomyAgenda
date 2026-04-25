@@ -49,7 +49,7 @@ class LockSetupFragment : Fragment() {
                     firstPattern = pattern
                     binding.patternSetupView.setState(PatternLockView.State.SUCCESS)
                     binding.patternSetupView.postDelayed({
-                        enterConfirmStep()
+                        if (_binding != null) enterConfirmStep()
                     }, 500)
                 }
                 Step.CONFIRM -> {
@@ -57,15 +57,17 @@ class LockSetupFragment : Fragment() {
                         binding.patternSetupView.setState(PatternLockView.State.SUCCESS)
                         lockManager.savePattern(pattern)
                         binding.patternSetupView.postDelayed({
-                            findNavController().popBackStack()
+                            if (_binding != null) findNavController().popBackStack()
                         }, 500)
                     } else {
                         binding.patternSetupView.setState(PatternLockView.State.ERROR)
                         showError(getString(R.string.lock_setup_mismatch))
                         binding.patternSetupView.postDelayed({
-                            binding.patternSetupView.reset()
-                            hideError()
-                            enterDrawStep()
+                            if (_binding != null) {
+                                binding.patternSetupView.reset()
+                                hideError()
+                                enterDrawStep()
+                            }
                         }, 1_200)
                     }
                 }

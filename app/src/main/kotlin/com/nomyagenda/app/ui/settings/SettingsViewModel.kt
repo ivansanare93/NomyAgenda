@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.security.AppLockManager
@@ -23,7 +24,7 @@ class SettingsViewModel(
 ) : AndroidViewModel(app) {
 
     private val settingsRepo = SettingsRepository(app)
-    private val lockManager = AppLockManager(app)
+    private val lockManager: AppLockManager = (app as NomyAgendaApp).lockManager
 
     val themeMode = MutableLiveData(settingsRepo.themeMode)
     val decorativeTheme = MutableLiveData(settingsRepo.decorativeTheme)
