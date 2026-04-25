@@ -42,10 +42,6 @@ class PatternLockView @JvmOverloads constructor(
 
     /** Called when the user lifts their finger; receives the ordered list of dot indices. */
     var onPatternComplete: ((List<Int>) -> Unit)? = null
-
-    // ─── Paints ───────────────────────────────────────────────────────────────
-
-    private val colorNeutral = context.getColor(R.color.pattern_neutral)
     private val colorSuccess = context.getColor(R.color.pattern_success)
     private val colorError = context.getColor(R.color.pattern_error)
 
@@ -166,7 +162,7 @@ class PatternLockView @JvmOverloads constructor(
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isDrawing = false
-                if (selectedDots.size >= 4) {
+                if (selectedDots.size >= MIN_PATTERN_LENGTH) {
                     onPatternComplete?.invoke(selectedDots.toList())
                 } else {
                     // Too short – show error briefly then reset
@@ -196,5 +192,10 @@ class PatternLockView @JvmOverloads constructor(
             }
         }
         return null
+    }
+
+    companion object {
+        /** Minimum number of dots a valid pattern must contain. */
+        const val MIN_PATTERN_LENGTH = 4
     }
 }

@@ -15,6 +15,7 @@ import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.FragmentLockBinding
+import com.nomyagenda.app.security.AppLockManager
 
 class LockFragment : Fragment() {
 
@@ -25,7 +26,6 @@ class LockFragment : Fragment() {
         (requireActivity().application as NomyAgendaApp).lockManager
 
     private var failCount = 0
-    private val maxFailures = 5
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -125,7 +125,7 @@ class LockFragment : Fragment() {
             } else {
                 failCount++
                 binding.patternLockView.setState(PatternLockView.State.ERROR)
-                if (failCount >= maxFailures) {
+                if (failCount >= AppLockManager.MAX_PATTERN_FAILURES) {
                     showError(getString(R.string.lock_error_too_many))
                     binding.patternLockView.isEnabled = false
                     binding.patternLockView.postDelayed({
@@ -133,7 +133,7 @@ class LockFragment : Fragment() {
                         binding.patternLockView.isEnabled = true
                         binding.patternLockView.reset()
                         binding.textLockError.visibility = View.GONE
-                    }, 30_000)
+                    }, AppLockManager.FAILURE_COOLDOWN_MS)
                 } else {
                     showError(getString(R.string.lock_error_wrong_pattern))
                     binding.patternLockView.postDelayed({

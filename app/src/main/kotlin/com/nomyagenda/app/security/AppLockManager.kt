@@ -3,6 +3,7 @@ package com.nomyagenda.app.security
 import android.content.Context
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import java.security.MessageDigest
+import java.util.UUID
 
 /**
  * Manages the app-level lock state (pattern / biometric).
@@ -18,6 +19,8 @@ import java.security.MessageDigest
 class AppLockManager(context: Context) {
 
     private val settings = SettingsRepository(context.applicationContext)
+    private val prefs = context.applicationContext
+        .getSharedPreferences(PREFS_LOCK_NAME, Context.MODE_PRIVATE)
 
     /** Epoch-ms when the app last moved to background; 0L means never or already unlocked. */
     private var backgroundTimestamp: Long = 0L
@@ -100,10 +103,34 @@ class AppLockManager(context: Context) {
     // Private helpers
     // -------------------------------------------------------------------------
 
+    /**
+     * Returns a per-device salt stored in [PREFS_LOCK_NAME], creating one on first use.
+     * This prevents rainbow-table attacks against the stored pattern hash.
+     */
+    private fun getOrCreateSalt(): String {
+        val existing = prefs.getString(KEY_PATTERN_SALT, null)
+        if (existing != null) return existing
+        val newSalt = UUID.randomUUID().toString()
+        prefs.edit().putString(KEY_PATTERN_SALT, newSalt).apply()
+        return newSalt
+    }
+
     private fun hashPattern(pattern: List<Int>): String {
-        val raw = pattern.joinToString(",")
+        val salt = getOrCreateSalt()
+        val raw = salt + ":" + pattern.joinToString(",")
         val digest = MessageDigest.getInstance("SHA-256")
         val bytes = digest.digest(raw.toByteArray(Charsets.UTF_8))
         return bytes.joinToString("") { "%02x".format(it) }
+    }
+
+    companion object {
+        private const val PREFS_LOCK_NAME = "nomy_lock"
+        private const val KEY_PATTERN_SALT = "pattern_salt"
+
+        /** Number of failed unlock attempts before a temporary cooldown is imposed. */
+        const val MAX_PATTERN_FAILURES = 5
+
+        /** Duration of the cooldown period after [MAX_PATTERN_FAILURES] failed attempts. */
+        const val FAILURE_COOLDOWN_MS = 30_000L
     }
 }
