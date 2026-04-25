@@ -3,8 +3,14 @@ package com.nomyagenda.app.ui.editor
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.Spannable
+import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
@@ -50,6 +56,60 @@ class EntryEditorFragment : Fragment() {
     private var selectedAdvanceNoticeMinutes: Int = SettingsRepository.ADVANCE_NOTICE_NONE
     private var selectedColor: String = ""
 
+    // ---- WYSIWYG format toggle state ----
+    private var isBoldActive = false
+    private var isItalicActive = false
+    private var activeTextColor: Int? = null   // null = no colour mode active
+
+    // Tracked inside TextWatcher to know the range of the latest insertion
+    private var lastInsertStart = 0
+    private var lastInsertCount = 0
+    // Guard flag: prevents re-entrant span application in the TextWatcher
+    private var isApplyingSpans = false
+
+    /** Applies formatting spans to text inserted while a toggle is active. */
+    private val formatWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (!isApplyingSpans) {
+                lastInsertStart = start
+                lastInsertCount = count
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s == null || lastInsertCount == 0 || isApplyingSpans) return
+            isApplyingSpans = true
+            try {
+                val end = lastInsertStart + lastInsertCount
+                if (isBoldActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        lastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                if (isItalicActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.ITALIC),
+                        lastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                activeTextColor?.let { color ->
+                    s.setSpan(
+                        ForegroundColorSpan(color),
+                        lastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            } finally {
+                isApplyingSpans = false
+            }
+        }
+    }
+
     private val advanceOptions by lazy {
         listOf(
             SettingsRepository.ADVANCE_NOTICE_NONE to getString(R.string.settings_advance_notice_none),
@@ -91,13 +151,18 @@ class EntryEditorFragment : Fragment() {
             }
         }
 
-        binding.btnFormatBold.setOnClickListener { applyInlineFormat("**") }
-        binding.btnFormatItalic.setOnClickListener { applyInlineFormat("*") }
-        binding.btnFormatHeading.setOnClickListener { applyLinePrefix("# ") }
-        binding.btnFormatBullet.setOnClickListener { applyLinePrefix("- ") }
+        // Format toolbar – bold / italic are WYSIWYG toggles; others keep their
+        // prefix-insertion behaviour (they operate at line level).
+        binding.btnFormatBold.setOnClickListener    { toggleInlineFormat(Typeface.BOLD) }
+        binding.btnFormatItalic.setOnClickListener  { toggleInlineFormat(Typeface.ITALIC) }
+        binding.btnFormatHeading.setOnClickListener  { applyLinePrefix("# ") }
+        binding.btnFormatBullet.setOnClickListener   { applyLinePrefix("- ") }
         binding.btnFormatNumbered.setOnClickListener { applyLinePrefix("1. ") }
-        binding.btnFormatQuote.setOnClickListener { applyLinePrefix("> ") }
-        binding.btnFormatColor.setOnClickListener { showColorPicker() }
+        binding.btnFormatQuote.setOnClickListener    { applyLinePrefix("> ") }
+        binding.btnFormatColor.setOnClickListener    { showColorPicker() }
+
+        // Attach the TextWatcher that applies active format spans while typing
+        binding.editNoteContent.addTextChangedListener(formatWatcher)
 
         binding.buttonAddChecklistItem.setOnClickListener {
             val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
@@ -131,14 +196,14 @@ class EntryEditorFragment : Fragment() {
             binding.editEntryTitle.setText(entry.title)
             setType(entry.type)
             when (entry.type) {
-                EntryType.NOTE -> binding.editNoteContent.setText(entry.content)
+                EntryType.NOTE -> setNoteContent(entry.content)
                 EntryType.TASK -> {
                     checklistItems.clear()
                     checklistItems.addAll(ChecklistManager.fromJson(entry.checklistJson))
                     checklistAdapter.notifyDataSetChanged()
                 }
                 EntryType.REMINDER -> {
-                    binding.editNoteContent.setText(entry.content)
+                    setNoteContent(entry.content)
                     entry.dueAt?.let { dueAt ->
                         selectedDueAt = dueAt
                         binding.editDueDate.setText(DATE_FORMAT.format(Date(dueAt)))
@@ -157,6 +222,25 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
+    // ---------- content helpers ----------
+
+    /**
+     * Converts inline Markdown in [markdown] to spans and sets the result as the
+     * EditText content so the user sees visual formatting instead of raw markers.
+     */
+    private fun setNoteContent(markdown: String) {
+        val spannable = RichTextConverter.markdownInlineToSpannable(markdown)
+        binding.editNoteContent.setText(spannable, android.widget.TextView.BufferType.EDITABLE)
+    }
+
+    /** Returns the current note content serialised as a Markdown string. */
+    private fun getNoteContentAsMarkdown(): String =
+        binding.editNoteContent.text
+            ?.let { RichTextConverter.spannableToMarkdown(it) }
+            ?: ""
+
+    // ---------- type / mode switching ----------
+
     private fun setType(type: EntryType) {
         currentType = type
         binding.chipNote.isChecked = type == EntryType.NOTE
@@ -166,7 +250,6 @@ class EntryEditorFragment : Fragment() {
         binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
         binding.layoutReminderContent.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
         if (type == EntryType.NOTE || type == EntryType.REMINDER) {
-            // Reset to edit mode when switching to NOTE type
             binding.btnNoteEdit.isChecked = true
             showNoteEditMode()
         }
@@ -179,29 +262,70 @@ class EntryEditorFragment : Fragment() {
     }
 
     private fun showNotePreviewMode() {
-        val markdown = binding.editNoteContent.text?.toString() ?: ""
-        markwon.setMarkdown(binding.textNotePreview, markdown)
+        markwon.setMarkdown(binding.textNotePreview, getNoteContentAsMarkdown())
         binding.scrollFormatToolbar.visibility = View.GONE
         binding.inputLayoutNoteContent.visibility = View.GONE
         binding.cardNotePreview.visibility = View.VISIBLE
+        // Reset toggles when entering preview (they make no sense outside edit mode)
+        resetFormatToggles()
     }
 
-    private fun applyInlineFormat(marker: String) {
+    // ---------- WYSIWYG inline-format toggle ----------
+
+    /**
+     * Handles a click on a checkable format button (bold / italic).
+     *
+     * • If there is a text selection, the span is toggled on/off for that range
+     *   without changing the typing-mode toggle.
+     * • If there is no selection, the typing-mode toggle is flipped.
+     */
+    private fun toggleInlineFormat(style: Int) {
         val editText = binding.editNoteContent
         val text = editText.text ?: return
-        val start = editText.selectionStart.coerceAtLeast(0)
-        val end = editText.selectionEnd.coerceAtLeast(0)
-        if (start == end) {
-            // No selection: insert markers and place cursor between them
-            text.insert(start, "$marker$marker")
-            editText.setSelection(start + marker.length)
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+
+        if (selStart != selEnd) {
+            // Toggle the span on the selection; only remove spans fully within the selection
+            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
+                .filter { it.style == style
+                        && text.getSpanStart(it) >= selStart
+                        && text.getSpanEnd(it) <= selEnd }
+            if (existing.isNotEmpty()) {
+                existing.forEach { text.removeSpan(it) }
+            } else {
+                text.setSpan(
+                    StyleSpan(style), selStart, selEnd,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            // Keep the current typing-mode state unchanged
         } else {
-            // Wrap the selected text with the markers
-            val selected = text.subSequence(start, end).toString()
-            text.replace(start, end, "$marker$selected$marker")
-            editText.setSelection(start + marker.length, start + marker.length + selected.length)
+            // No selection – flip the typing-mode toggle
+            when (style) {
+                Typeface.BOLD -> {
+                    isBoldActive = !isBoldActive
+                    binding.btnFormatBold.isChecked = isBoldActive
+                }
+                Typeface.ITALIC -> {
+                    isItalicActive = !isItalicActive
+                    binding.btnFormatItalic.isChecked = isItalicActive
+                }
+            }
         }
     }
+
+    /** Clears all active format toggles and syncs button states. */
+    private fun resetFormatToggles() {
+        isBoldActive = false
+        isItalicActive = false
+        activeTextColor = null
+        binding.btnFormatBold.isChecked = false
+        binding.btnFormatItalic.isChecked = false
+        binding.btnFormatColor.isChecked = false
+    }
+
+    // ---------- line-level prefix formatting (unchanged) ----------
 
     private fun applyLinePrefix(prefix: String) {
         val editText = binding.editNoteContent
@@ -212,13 +336,14 @@ class EntryEditorFragment : Fragment() {
         editText.setSelection(cursor + prefix.length)
     }
 
+    // ---------- entry colour picker (unchanged) ----------
+
     private fun setupEntryColorPicker() {
         val container = binding.colorSwatchesContainer
         val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
         val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
 
-        // "No color" swatch (transparent with a border)
         val noneDrawable = GradientDrawable().apply {
             shape = GradientDrawable.OVAL
             setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
@@ -234,7 +359,6 @@ class EntryEditorFragment : Fragment() {
         }
         container.addView(noneSwatch)
 
-        // Colour swatches
         COLOR_PALETTE.forEach { hexColor ->
             val swatch = FrameLayout(requireContext()).apply {
                 tag = hexColor
@@ -250,7 +374,6 @@ class EntryEditorFragment : Fragment() {
             container.addView(swatch)
         }
 
-        // Reflect initial state (no color selected)
         updateSwatchSelection(container, "")
     }
 
@@ -277,6 +400,8 @@ class EntryEditorFragment : Fragment() {
             }
         }
     }
+
+    // ---------- text-colour picker (WYSIWYG) ----------
 
     private fun showColorPicker() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_color_picker, null)
@@ -315,22 +440,41 @@ class EntryEditorFragment : Fragment() {
         dialog.show()
     }
 
+    /**
+     * If there is a text selection the colour span is applied immediately.
+     * Otherwise, colour-typing mode is toggled: subsequent characters will
+     * receive a [ForegroundColorSpan] until the user taps the colour button again
+     * (or taps the same colour to deactivate it).
+     */
     private fun applyTextColor(hexColor: String) {
         val editText = binding.editNoteContent
         val text = editText.text ?: return
-        val start = editText.selectionStart.coerceAtLeast(0)
-        val end = editText.selectionEnd.coerceAtLeast(0)
-        val openTag = "<font color=\"$hexColor\">"
-        val closeTag = "</font>"
-        if (start == end) {
-            text.insert(start, "$openTag$closeTag")
-            editText.setSelection(start + openTag.length)
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+        val color = Color.parseColor(hexColor)
+
+        if (selStart != selEnd) {
+            // Apply immediately to the selection
+            text.setSpan(
+                ForegroundColorSpan(color), selStart, selEnd,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            // Deactivate colour-typing mode when we operate on a selection
+            activeTextColor = null
+            binding.btnFormatColor.isChecked = false
         } else {
-            val selected = text.subSequence(start, end).toString()
-            text.replace(start, end, "$openTag$selected$closeTag")
-            editText.setSelection(start + openTag.length, start + openTag.length + selected.length)
+            // Toggle colour-typing mode
+            if (activeTextColor == color) {
+                activeTextColor = null
+                binding.btnFormatColor.isChecked = false
+            } else {
+                activeTextColor = color
+                binding.btnFormatColor.isChecked = true
+            }
         }
     }
+
+    // ---------- date/time picker ----------
 
     private fun showDateTimePicker() {
         val cal = Calendar.getInstance().apply {
@@ -346,6 +490,8 @@ class EntryEditorFragment : Fragment() {
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
+    // ---------- save ----------
+
     private fun saveEntry() {
         val title = binding.editEntryTitle.text?.toString()?.trim()
         if (title.isNullOrEmpty()) {
@@ -356,12 +502,14 @@ class EntryEditorFragment : Fragment() {
 
         val tags = binding.editTags.text?.toString()?.trim() ?: ""
 
+        val noteContent: String = getNoteContentAsMarkdown()
+
         val entry = AgendaEntry(
             id = args.entryId.takeIf { it > 0 } ?: 0,
             title = title,
             type = currentType,
             content = when (currentType) {
-                EntryType.NOTE, EntryType.REMINDER -> binding.editNoteContent.text?.toString()?.trim() ?: ""
+                EntryType.NOTE, EntryType.REMINDER -> noteContent
                 EntryType.TASK -> ""
             },
             checklistJson = if (currentType == EntryType.TASK) ChecklistManager.toJson(checklistAdapter.getItems()) else "[]",
@@ -401,3 +549,4 @@ class EntryEditorFragment : Fragment() {
         )
     }
 }
+
