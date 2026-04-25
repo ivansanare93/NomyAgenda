@@ -28,6 +28,18 @@ class SettingsRepository(context: Context) {
         get() = prefs.getString(KEY_APP_BACKGROUND, APP_BACKGROUND_NONE) ?: APP_BACKGROUND_NONE
         set(value) = prefs.edit().putString(KEY_APP_BACKGROUND, value).apply()
 
+    var lockType: String
+        get() = prefs.getString(KEY_LOCK_TYPE, LOCK_TYPE_NONE) ?: LOCK_TYPE_NONE
+        set(value) = prefs.edit().putString(KEY_LOCK_TYPE, value).apply()
+
+    var lockPatternHash: String
+        get() = prefs.getString(KEY_LOCK_PATTERN_HASH, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_LOCK_PATTERN_HASH, value).apply()
+
+    var lockBackgroundTimeoutMs: Long
+        get() = prefs.getLong(KEY_LOCK_BACKGROUND_TIMEOUT_MS, LOCK_TIMEOUT_DEFAULT_MS)
+        set(value) = prefs.edit().putLong(KEY_LOCK_BACKGROUND_TIMEOUT_MS, value).apply()
+
     fun applyTheme() {
         // Thematic (non-default) themes and illustrated backgrounds use fixed light colours,
         // so force light mode. When neither is active, honour the stored day/night preference.
@@ -59,6 +71,9 @@ class SettingsRepository(context: Context) {
         const val KEY_LANGUAGE = "language"
         const val KEY_NOTIFICATIONS = "notifications_enabled"
         const val KEY_APP_BACKGROUND = "app_background"
+        const val KEY_LOCK_TYPE = "lock_type"
+        const val KEY_LOCK_PATTERN_HASH = "lock_pattern_hash"
+        const val KEY_LOCK_BACKGROUND_TIMEOUT_MS = "lock_background_timeout_ms"
 
         const val THEME_LIGHT = "LIGHT"
         const val THEME_DARK = "DARK"
@@ -83,6 +98,11 @@ class SettingsRepository(context: Context) {
         const val LANGUAGE_ES = "es"
         const val LANGUAGE_EN = "en"
         const val LANGUAGE_SYSTEM = "system"
+
+        const val LOCK_TYPE_NONE = "NONE"
+        const val LOCK_TYPE_PATTERN = "PATTERN"
+        const val LOCK_TYPE_BIOMETRIC = "BIOMETRIC"
+        const val LOCK_TIMEOUT_DEFAULT_MS = 30_000L
 
         const val ADVANCE_NOTICE_NONE = 0
         const val ADVANCE_NOTICE_1H = 60

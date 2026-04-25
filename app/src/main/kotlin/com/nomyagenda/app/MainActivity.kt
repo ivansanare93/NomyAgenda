@@ -25,9 +25,32 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: androidx.navigation.NavController
+
+    private val lockManager get() = (application as NomyAgendaApp).lockManager
 
     private val requestNotificationPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* no-op */ }
+
+    override fun onResume() {
+        super.onResume()
+        if (!::navController.isInitialized) return
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null && lockManager.shouldLock()) {
+            navController.navigate(
+                R.id.lockFragment,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(navController.graph.id, true)
+                    .build()
+            )
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        lockManager.recordBackground()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Apply the decorative (thematic) style before any view inflation.
@@ -46,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         // Dynamically choose start destination based on auth state so there is no login screen
         // flash when the user is already signed in.

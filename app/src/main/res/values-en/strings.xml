@@ -138,4 +138,31 @@
     <!-- Settings — Account -->
     <string name="settings_account">Account</string>
     <string name="settings_sign_out">Sign out</string>
+
+    <!-- Settings — Security / Lock -->
+    <string name="settings_security">App lock</string>
+    <string name="settings_security_desc">Protect the app with a pattern or fingerprint</string>
+    <string name="settings_lock_pattern">Pattern</string>
+    <string name="settings_lock_biometric">Fingerprint / Face</string>
+    <string name="settings_lock_setup_pattern">Set up pattern</string>
+
+    <!-- Lock screen -->
+    <string name="lock_title">App locked</string>
+    <string name="lock_draw_pattern">Draw your pattern to continue</string>
+    <string name="lock_use_biometric">Use fingerprint / face</string>
+    <string name="lock_icon_desc">Lock icon</string>
+    <string name="lock_biometric_prompt_title">Verify your identity</string>
+    <string name="lock_biometric_prompt_subtitle">Unlock NomyAgenda with your fingerprint or face</string>
+    <string name="lock_biometric_unavailable">Biometric authentication is not available on this device</string>
+    <string name="lock_error_wrong_pattern">Wrong pattern, please try again</string>
+    <string name="lock_error_too_many">Too many failed attempts. Wait 30 seconds.</string>
+    <string name="lock_error_biometric_failed">Fingerprint not recognized. Please try again.</string>
+
+    <!-- Pattern setup -->
+    <string name="lock_setup_title">Set up pattern</string>
+    <string name="lock_setup_draw">Draw your pattern</string>
+    <string name="lock_setup_confirm">Confirm your pattern</string>
+    <string name="lock_setup_hint_min">Connect at least 4 dots</string>
+    <string name="lock_setup_hint_confirm">Draw the same pattern to confirm</string>
+    <string name="lock_setup_mismatch">Patterns do not match. Please try again.</string>
 </resources>

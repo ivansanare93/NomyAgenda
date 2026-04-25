@@ -87,6 +87,9 @@ dependencies {
     // Google Sign-In
     implementation(libs.play.services.auth)
 
+    // Biometric
+    implementation(libs.androidx.biometric)
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

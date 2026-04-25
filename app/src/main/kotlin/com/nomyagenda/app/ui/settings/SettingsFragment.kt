@@ -19,6 +19,8 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
+    private var isUpdatingLockUi = false
+
     private val viewModel: SettingsViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
         SettingsViewModelFactory(app, app.agendaRepository)
@@ -116,7 +118,63 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Show current account email and wire up sign-out button
+        // ── Security / Lock section ──────────────────────────────────────────
+
+        viewModel.lockType.observe(viewLifecycleOwner) { type ->
+            isUpdatingLockUi = true
+            val lockEnabled = type != SettingsRepository.LOCK_TYPE_NONE
+            if (binding.switchLock.isChecked != lockEnabled) {
+                binding.switchLock.isChecked = lockEnabled
+            }
+            binding.layoutLockOptions.visibility = if (lockEnabled) View.VISIBLE else View.GONE
+
+            val btnId = when (type) {
+                SettingsRepository.LOCK_TYPE_BIOMETRIC -> R.id.btn_lock_biometric
+                else -> R.id.btn_lock_pattern
+            }
+            if (binding.toggleLockType.checkedButtonId != btnId) {
+                binding.toggleLockType.check(btnId)
+            }
+            binding.btnSetupPattern.visibility =
+                if (type == SettingsRepository.LOCK_TYPE_PATTERN) View.VISIBLE else View.GONE
+            isUpdatingLockUi = false
+        }
+
+        viewModel.navigateToLockSetup.observe(viewLifecycleOwner) { go ->
+            if (go) {
+                viewModel.consumeNavigateToLockSetup()
+                findNavController().navigate(R.id.action_settingsFragment_to_lockSetupFragment)
+            }
+        }
+
+        viewModel.biometricError.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                binding.textBiometricError.text = error
+                binding.textBiometricError.visibility = View.VISIBLE
+                viewModel.consumeBiometricError()
+            } else {
+                binding.textBiometricError.visibility = View.GONE
+            }
+        }
+
+        binding.switchLock.setOnCheckedChangeListener { _, isChecked ->
+            if (!isUpdatingLockUi) viewModel.setLockEnabled(isChecked)
+        }
+
+        binding.toggleLockType.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked && !isUpdatingLockUi) {
+                when (checkedId) {
+                    R.id.btn_lock_pattern -> viewModel.selectPatternLock()
+                    R.id.btn_lock_biometric -> viewModel.selectBiometricLock()
+                }
+            }
+        }
+
+        binding.btnSetupPattern.setOnClickListener {
+            viewModel.selectPatternLock()
+        }
+
+        // ── Account ──────────────────────────────────────────────────────────
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             binding.textAccountEmail.text = currentUser.email
@@ -184,6 +242,12 @@ class SettingsFragment : Fragment() {
                 viewModel.setAppBackground(bg)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh lock type in case we returned from LockSetupFragment
+        viewModel.refreshLockType()
     }
 
     override fun onDestroyView() {
