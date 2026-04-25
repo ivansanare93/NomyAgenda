@@ -165,4 +165,23 @@
     <string name="lock_setup_hint_min">Connect at least 4 dots</string>
     <string name="lock_setup_hint_confirm">Draw the same pattern to confirm</string>
     <string name="lock_setup_mismatch">Patterns do not match. Please try again.</string>
+
+    <!-- Diary -->
+    <string name="nav_diary">Journal</string>
+    <string name="diary_header_title">My Journal</string>
+    <string name="diary_empty">No entries yet.\nWrite about your first day!</string>
+    <string name="diary_add_entry">New journal entry</string>
+    <string name="diary_delete_title">Delete entry</string>
+    <string name="diary_delete_confirm">Delete this journal entry?</string>
+    <string name="diary_deleted">Entry deleted</string>
+    <string name="diary_editor_title">Journal entry</string>
+    <string name="diary_select_date">Select date</string>
+    <string name="diary_mood_label">Mood</string>
+    <string name="diary_title_hint">Title (optional)</string>
+    <string name="diary_content_hint">What happened today?</string>
+    <string name="diary_photos_label">Photos</string>
+    <string name="diary_add_photo">Add photo</string>
+    <string name="diary_remove_photo">Remove photo</string>
+    <string name="diary_photo_desc">Diary photo</string>
+    <string name="diary_saved">Entry saved</string>
 </resources>

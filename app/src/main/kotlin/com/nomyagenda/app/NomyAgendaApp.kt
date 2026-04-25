@@ -5,6 +5,7 @@ import com.nomyagenda.app.data.local.database.NomyAgendaDatabase
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.remote.FirestoreDataSource
 import com.nomyagenda.app.data.repository.AgendaRepository
+import com.nomyagenda.app.data.repository.DiaryRepository
 import com.nomyagenda.app.notifications.NotificationHelper
 import com.nomyagenda.app.security.AppLockManager
 
@@ -20,6 +21,10 @@ class NomyAgendaApp : Application() {
 
     val agendaRepository: AgendaRepository by lazy {
         AgendaRepository(database.agendaEntryDao(), firestoreDataSource)
+    }
+
+    val diaryRepository: DiaryRepository by lazy {
+        DiaryRepository(database.diaryEntryDao())
     }
 
     val lockManager: AppLockManager by lazy {

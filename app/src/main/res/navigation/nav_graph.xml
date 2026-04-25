@@ -28,6 +28,30 @@
     </fragment>
 
     <fragment
+        android:id="@+id/diaryFragment"
+        android:name="com.nomyagenda.app.ui.diary.DiaryFragment"
+        android:label="@string/nav_diary"
+        tools:layout="@layout/fragment_diary">
+        <action
+            android:id="@+id/action_diaryFragment_to_diaryEntryEditorFragment"
+            app:destination="@id/diaryEntryEditorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/diaryEntryEditorFragment"
+        android:name="com.nomyagenda.app.ui.diary.DiaryEntryEditorFragment"
+        android:label="@string/diary_editor_title">
+        <argument
+            android:name="entryId"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="dateKey"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+
+    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.nomyagenda.app.ui.settings.SettingsFragment"
         android:label="@string/nav_settings"
