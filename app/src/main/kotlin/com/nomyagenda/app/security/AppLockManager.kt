@@ -25,6 +25,13 @@ class AppLockManager(context: Context) {
     /** Epoch-ms when the app last moved to background; 0L means never or already unlocked. */
     private var backgroundTimestamp: Long = 0L
 
+    /**
+     * True once the user has successfully authenticated (or just saved a new lock) in this
+     * process session. Starts as false so that a fresh app start with a lock configured always
+     * shows the lock screen, regardless of [backgroundTimestamp].
+     */
+    private var hasBeenUnlockedThisSession: Boolean = false
+
     /** Whether the screen is currently locked (pending authentication). */
     var isLocked: Boolean = false
         private set
@@ -41,10 +48,24 @@ class AppLockManager(context: Context) {
     /**
      * Returns true when the lock screen should be shown to the user.
      * Also transitions [isLocked] to true when criteria are met.
+     *
+     * Two distinct cases trigger a lock:
+     * 1. Fresh process start ([backgroundTimestamp] == 0) with a lock configured and the user
+     *    has not yet authenticated this session.
+     * 2. The app returned from background after the configured timeout.
      */
     fun shouldLock(): Boolean {
         if (settings.lockType == SettingsRepository.LOCK_TYPE_NONE) return false
-        if (backgroundTimestamp == 0L) return false
+        if (backgroundTimestamp == 0L) {
+            // Fresh start: require authentication unless the user already unlocked (or just
+            // set up a new lock) during this process session.
+            return if (!hasBeenUnlockedThisSession) {
+                isLocked = true
+                true
+            } else {
+                false
+            }
+        }
         val elapsed = System.currentTimeMillis() - backgroundTimestamp
         val timeout = settings.lockBackgroundTimeoutMs
         return if (elapsed >= timeout) {
@@ -59,6 +80,7 @@ class AppLockManager(context: Context) {
     fun onUnlocked() {
         isLocked = false
         backgroundTimestamp = 0L
+        hasBeenUnlockedThisSession = true
     }
 
     /**
@@ -75,6 +97,9 @@ class AppLockManager(context: Context) {
     fun savePattern(pattern: List<Int>) {
         settings.lockPatternHash = hashPattern(pattern)
         settings.lockType = SettingsRepository.LOCK_TYPE_PATTERN
+        // The user just configured the lock in this session; no need to show the lock screen
+        // immediately (e.g. if a system overlay triggers onResume right after setup).
+        hasBeenUnlockedThisSession = true
     }
 
     /** Clears any saved pattern and disables pattern lock (unless biometric is set). */
@@ -89,6 +114,8 @@ class AppLockManager(context: Context) {
     fun enableBiometric() {
         settings.lockPatternHash = ""
         settings.lockType = SettingsRepository.LOCK_TYPE_BIOMETRIC
+        // Same rationale as savePattern: user just configured the lock in this session.
+        hasBeenUnlockedThisSession = true
     }
 
     /** Disables all lock types. */
