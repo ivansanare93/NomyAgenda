@@ -20,6 +20,7 @@ class DiaryEntryEditorViewModel(
     val title = MutableLiveData("")
     val content = MutableLiveData("")
     val mood = MutableLiveData("")
+    val color = MutableLiveData("")
     val photoPaths = MutableLiveData<List<String>>(emptyList())
     val isSaved = MutableLiveData(false)
 
@@ -33,6 +34,7 @@ class DiaryEntryEditorViewModel(
                     title.value = entry.title
                     content.value = entry.content
                     mood.value = entry.mood
+                    color.value = entry.color
                     photoPaths.value = parsePhotoPaths(entry.photoPaths)
                 }
             } else {
@@ -64,6 +66,7 @@ class DiaryEntryEditorViewModel(
             title = title.value ?: "",
             content = content.value ?: "",
             mood = mood.value ?: "",
+            color = color.value ?: "",
             photoPaths = pathsJson,
             updatedAt = now
         ) ?: DiaryEntry(
@@ -71,6 +74,7 @@ class DiaryEntryEditorViewModel(
             title = title.value ?: "",
             content = content.value ?: "",
             mood = mood.value ?: "",
+            color = color.value ?: "",
             photoPaths = pathsJson,
             createdAt = now,
             updatedAt = now
