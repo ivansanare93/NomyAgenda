@@ -104,7 +104,7 @@ class AgendaFragment : Fragment() {
             insets
         }
         // Re-apply insets once BottomNavigationView is measured in case height was 0 on first dispatch.
-        bottomNavView?.doOnLayout { ViewCompat.requestApplyInsets(binding.root) }
+        bottomNavView?.doOnLayout { _binding?.let { b -> ViewCompat.requestApplyInsets(b.root) } }
     }
 
     override fun onResume() {
