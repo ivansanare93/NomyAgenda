@@ -1,5 +1,7 @@
 package com.nomyagenda.app.ui.agenda
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,12 +59,20 @@ class AgendaAdapter(
                 EntryType.TASK -> R.attr.taskCardBackground to R.attr.taskAccentColor
                 EntryType.REMINDER -> R.attr.reminderCardBackground to R.attr.reminderAccentColor
             }
-            binding.root.setCardBackgroundColor(context.resolveThemeColor(cardColorAttr))
-            if (entry.color.isNotEmpty()) {
-                binding.viewAccentStripe.setBackgroundColor(android.graphics.Color.parseColor(entry.color))
+            val cardBgColor = context.resolveThemeColor(cardColorAttr)
+            binding.root.setCardBackgroundColor(cardBgColor)
+
+            val accentColor = if (entry.color.isNotEmpty()) {
+                Color.parseColor(entry.color)
             } else {
-                binding.viewAccentStripe.setBackgroundColor(context.resolveThemeColor(accentColorAttr))
+                context.resolveThemeColor(accentColorAttr)
             }
+            val transparent = Color.argb(0, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor))
+            val gradient = GradientDrawable(
+                GradientDrawable.Orientation.LEFT_RIGHT,
+                intArrayOf(accentColor, transparent)
+            )
+            binding.layoutCardContent.background = gradient
 
             when (entry.type) {
                 EntryType.NOTE -> {
