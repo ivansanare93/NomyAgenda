@@ -165,6 +165,7 @@
     <string name="lock_setup_hint_min">Connect at least 4 dots</string>
     <string name="lock_setup_hint_confirm">Draw the same pattern to confirm</string>
     <string name="lock_setup_mismatch">Patterns do not match. Please try again.</string>
+    <string name="lock_setup_success">Pattern saved successfully!</string>
 
     <!-- Diary -->
     <string name="nav_diary">Journal</string>

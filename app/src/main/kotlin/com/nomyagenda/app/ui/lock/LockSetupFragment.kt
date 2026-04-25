@@ -56,9 +56,17 @@ class LockSetupFragment : Fragment() {
                     if (pattern == firstPattern) {
                         binding.patternSetupView.setState(PatternLockView.State.SUCCESS)
                         lockManager.savePattern(pattern)
+                        binding.textSetupStep.text = getString(R.string.lock_setup_success)
+                        binding.textSetupHint.visibility = View.GONE
                         binding.patternSetupView.postDelayed({
-                            if (_binding != null) findNavController().popBackStack()
-                        }, 500)
+                            if (_binding != null) {
+                                parentFragmentManager.setFragmentResult(
+                                    REQUEST_KEY,
+                                    android.os.Bundle()
+                                )
+                                findNavController().popBackStack()
+                            }
+                        }, 1_200)
                     } else {
                         binding.patternSetupView.setState(PatternLockView.State.ERROR)
                         showError(getString(R.string.lock_setup_mismatch))
@@ -104,5 +112,10 @@ class LockSetupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        /** Fragment result key used to notify callers that setup completed successfully. */
+        const val REQUEST_KEY = "lock_setup_result"
     }
 }
