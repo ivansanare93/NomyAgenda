@@ -451,7 +451,11 @@ class EntryEditorFragment : Fragment() {
         val text = editText.text ?: return
         val selStart = editText.selectionStart.coerceAtLeast(0)
         val selEnd   = editText.selectionEnd.coerceAtLeast(0)
-        val color = Color.parseColor(hexColor)
+        val color = try {
+            Color.parseColor(hexColor)
+        } catch (_: IllegalArgumentException) {
+            return
+        }
 
         if (selStart != selEnd) {
             // Apply immediately to the selection
