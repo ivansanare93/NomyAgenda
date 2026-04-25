@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="32dp">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_lock"
+        android:contentDescription="@string/lock_icon_desc"
+        app:tint="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/text_setup_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/lock_setup_draw"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/text_setup_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/lock_setup_hint_min"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:gravity="center" />
+
+    <com.nomyagenda.app.ui.lock.PatternLockView
+        android:id="@+id/pattern_setup_view"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:id="@+id/text_setup_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorError"
+        android:gravity="center"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -37,7 +37,22 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_settingsFragment_to_lockSetupFragment"
+            app:destination="@id/lockSetupFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/lockFragment"
+        android:name="com.nomyagenda.app.ui.lock.LockFragment"
+        android:label="@string/lock_title"
+        tools:layout="@layout/fragment_lock" />
+
+    <fragment
+        android:id="@+id/lockSetupFragment"
+        android:name="com.nomyagenda.app.ui.lock.LockSetupFragment"
+        android:label="@string/lock_setup_title"
+        tools:layout="@layout/fragment_lock_setup" />
 
     <fragment
         android:id="@+id/entryEditorFragment"

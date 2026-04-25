@@ -140,4 +140,31 @@
     <!-- Settings — Account -->
     <string name="settings_account">Cuenta</string>
     <string name="settings_sign_out">Cerrar sesión</string>
+
+    <!-- Settings — Security / Lock -->
+    <string name="settings_security">Bloqueo de app</string>
+    <string name="settings_security_desc">Protege la app con patrón o huella</string>
+    <string name="settings_lock_pattern">Patrón</string>
+    <string name="settings_lock_biometric">Huella / Cara</string>
+    <string name="settings_lock_setup_pattern">Configurar patrón</string>
+
+    <!-- Lock screen -->
+    <string name="lock_title">App bloqueada</string>
+    <string name="lock_draw_pattern">Dibuja tu patrón para continuar</string>
+    <string name="lock_use_biometric">Usar huella / cara</string>
+    <string name="lock_icon_desc">Icono de candado</string>
+    <string name="lock_biometric_prompt_title">Verificar identidad</string>
+    <string name="lock_biometric_prompt_subtitle">Desbloquea NomyAgenda con tu huella o cara</string>
+    <string name="lock_biometric_unavailable">Autenticación biométrica no disponible en este dispositivo</string>
+    <string name="lock_error_wrong_pattern">Patrón incorrecto, inténtalo de nuevo</string>
+    <string name="lock_error_too_many">Demasiados intentos fallidos. Espera 30 segundos.</string>
+    <string name="lock_error_biometric_failed">No se reconoció la huella. Inténtalo de nuevo.</string>
+
+    <!-- Pattern setup -->
+    <string name="lock_setup_title">Configurar patrón</string>
+    <string name="lock_setup_draw">Dibuja tu patrón</string>
+    <string name="lock_setup_confirm">Confirma tu patrón</string>
+    <string name="lock_setup_hint_min">Conecta al menos 4 puntos</string>
+    <string name="lock_setup_hint_confirm">Dibuja el mismo patrón para confirmar</string>
+    <string name="lock_setup_mismatch">Los patrones no coinciden. Intenta de nuevo.</string>
 </resources>

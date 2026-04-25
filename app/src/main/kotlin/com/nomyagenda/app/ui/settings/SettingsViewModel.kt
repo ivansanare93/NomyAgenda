@@ -9,8 +9,11 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.data.repository.AgendaRepository
+import com.nomyagenda.app.security.AppLockManager
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -20,6 +23,7 @@ class SettingsViewModel(
 ) : AndroidViewModel(app) {
 
     private val settingsRepo = SettingsRepository(app)
+    private val lockManager = AppLockManager(app)
 
     val themeMode = MutableLiveData(settingsRepo.themeMode)
     val decorativeTheme = MutableLiveData(settingsRepo.decorativeTheme)
@@ -27,11 +31,19 @@ class SettingsViewModel(
     val notificationsEnabled = MutableLiveData(settingsRepo.notificationsEnabled)
     val appBackground = MutableLiveData(settingsRepo.appBackground)
 
+    val lockType = MutableLiveData(settingsRepo.lockType)
+
     /** true when the activity must recreate itself to apply a new decorative theme. */
     val recreateEvent = MutableLiveData(false)
 
     /** true when sign-out has completed and the UI should navigate to the login screen. */
     val signOutEvent = MutableLiveData(false)
+
+    /** true when the user should be navigated to LockSetupFragment. */
+    val navigateToLockSetup = MutableLiveData(false)
+
+    /** Error string when biometric is unavailable; null otherwise. */
+    val biometricError = MutableLiveData<String?>(null)
 
     fun consumeRecreateEvent() {
         recreateEvent.value = false
@@ -39,6 +51,14 @@ class SettingsViewModel(
 
     fun consumeSignOutEvent() {
         signOutEvent.value = false
+    }
+
+    fun consumeNavigateToLockSetup() {
+        navigateToLockSetup.value = false
+    }
+
+    fun consumeBiometricError() {
+        biometricError.value = null
     }
 
     fun setTheme(mode: String) {
@@ -72,6 +92,41 @@ class SettingsViewModel(
         appBackground.value = bg
         settingsRepo.applyTheme()
         recreateEvent.value = true
+    }
+
+    /**
+     * Called when the user toggles the lock switch.
+     * - Enabling with current type NONE defaults to PATTERN setup flow.
+     * - Disabling clears all lock data.
+     */
+    fun setLockEnabled(enabled: Boolean) {
+        if (!enabled) {
+            lockManager.disableLock()
+            lockType.value = SettingsRepository.LOCK_TYPE_NONE
+        } else {
+            // Default to pattern setup when first enabling
+            navigateToLockSetup.value = true
+        }
+    }
+
+    fun selectPatternLock() {
+        navigateToLockSetup.value = true
+    }
+
+    fun selectBiometricLock() {
+        val bm = BiometricManager.from(getApplication())
+        if (bm.canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS) {
+            lockManager.enableBiometric()
+            lockType.value = SettingsRepository.LOCK_TYPE_BIOMETRIC
+        } else {
+            biometricError.value = (getApplication() as android.app.Application)
+                .getString(com.nomyagenda.app.R.string.lock_biometric_unavailable)
+        }
+    }
+
+    /** Re-reads lock type from SharedPreferences (e.g. after returning from LockSetupFragment). */
+    fun refreshLockType() {
+        lockType.value = settingsRepo.lockType
     }
 
     fun signOut() {

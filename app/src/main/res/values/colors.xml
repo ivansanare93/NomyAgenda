@@ -153,4 +153,9 @@
     <color name="sunset_task_accent">#E65100</color>
     <color name="sunset_reminder_card_bg">#FCE4EC</color>
     <color name="sunset_reminder_accent">#880E4F</color>
+
+    <!-- Pattern lock colors -->
+    <color name="pattern_neutral">#6650A4</color>
+    <color name="pattern_success">#2E7D32</color>
+    <color name="pattern_error">#B3261E</color>
 </resources>
