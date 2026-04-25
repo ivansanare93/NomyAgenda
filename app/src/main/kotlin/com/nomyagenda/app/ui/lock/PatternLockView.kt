@@ -147,6 +147,10 @@ class PatternLockView @JvmOverloads constructor(
     // ─── Touch ────────────────────────────────────────────────────────────────
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        // Do not accept new input while showing the success feedback; the caller has
+        // already scheduled a delayed navigation / transition and a stray touch would
+        // reset firstPattern in LockSetupFragment, causing a false mismatch.
+        if (state == State.SUCCESS) return true
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 reset()
