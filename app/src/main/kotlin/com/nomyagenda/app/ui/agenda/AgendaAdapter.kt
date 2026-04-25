@@ -61,6 +61,12 @@ class AgendaAdapter(
             }
             binding.textEntryTitle.setTextColor(titleColor)
 
+            val contentColor = if (entry.contentColor.isNotEmpty()) {
+                Color.parseColor(entry.contentColor)
+            } else {
+                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+            }
+
             when (entry.type) {
                 EntryType.NOTE -> {
                     if (entry.content.isNotBlank()) {
@@ -85,6 +91,8 @@ class AgendaAdapter(
                     }
                 }
             }
+
+            binding.textEntryPreview.setTextColor(contentColor)
 
             if (entry.dueAt != null) {
                 binding.textEntryDueDate.visibility = View.VISIBLE

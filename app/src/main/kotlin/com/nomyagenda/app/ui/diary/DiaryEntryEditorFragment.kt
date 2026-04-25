@@ -100,7 +100,25 @@ class DiaryEntryEditorFragment : Fragment() {
     }
 
     private fun setupColorPicker() {
-        val container = binding.colorSwatchesContainerDiary
+        setupColorSwatches(
+            container = binding.colorSwatchesContainerDiary,
+            onSelect = { hex ->
+                viewModel.color.value = hex
+                updateSwatchSelection(binding.colorSwatchesContainerDiary, hex)
+            }
+        )
+        setupColorSwatches(
+            container = binding.colorSwatchesContainerDiaryContent,
+            onSelect = { hex ->
+                viewModel.contentColor.value = hex
+                updateSwatchSelection(binding.colorSwatchesContainerDiaryContent, hex)
+            }
+        )
+        updateSwatchSelection(binding.colorSwatchesContainerDiary, "")
+        updateSwatchSelection(binding.colorSwatchesContainerDiaryContent, "")
+    }
+
+    private fun setupColorSwatches(container: LinearLayout, onSelect: (String) -> Unit) {
         val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
         val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
@@ -116,7 +134,7 @@ class DiaryEntryEditorFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(size, size).apply {
                 setMargins(margin, margin, margin, margin)
             }
-            setOnClickListener { selectColor("") }
+            setOnClickListener { onSelect("") }
         }
         container.addView(noneSwatch)
 
@@ -130,17 +148,10 @@ class DiaryEntryEditorFragment : Fragment() {
                 layoutParams = LinearLayout.LayoutParams(size, size).apply {
                     setMargins(margin, margin, margin, margin)
                 }
-                setOnClickListener { selectColor(hexColor) }
+                setOnClickListener { onSelect(hexColor) }
             }
             container.addView(swatch)
         }
-
-        updateSwatchSelection(container, "")
-    }
-
-    private fun selectColor(hexColor: String) {
-        viewModel.color.value = hexColor
-        updateSwatchSelection(binding.colorSwatchesContainerDiary, hexColor)
     }
 
     private fun updateSwatchSelection(container: LinearLayout, hexColor: String) {
@@ -204,6 +215,10 @@ class DiaryEntryEditorFragment : Fragment() {
 
         viewModel.color.observe(viewLifecycleOwner) { selectedColor ->
             updateSwatchSelection(binding.colorSwatchesContainerDiary, selectedColor ?: "")
+        }
+
+        viewModel.contentColor.observe(viewLifecycleOwner) { selectedColor ->
+            updateSwatchSelection(binding.colorSwatchesContainerDiaryContent, selectedColor ?: "")
         }
 
         viewModel.isSaved.observe(viewLifecycleOwner) { saved ->

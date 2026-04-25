@@ -56,6 +56,7 @@ class FirestoreDataSource {
         "tags" to tags,
         "category" to category,
         "color" to color,
+        "contentColor" to contentColor,
         "createdAt" to createdAt
     )
 
@@ -72,6 +73,7 @@ class FirestoreDataSource {
                 tags = getString("tags") ?: "",
                 category = getString("category") ?: "",
                 color = getString("color") ?: "",
+                contentColor = getString("contentColor") ?: "",
                 createdAt = getLong("createdAt") ?: System.currentTimeMillis(),
                 firebaseId = docId
             )

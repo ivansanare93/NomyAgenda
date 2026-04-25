@@ -12,6 +12,7 @@ data class DiaryEntry(
     val mood: String = "",           // emoji string or empty
     val photoPaths: String = "[]",   // JSON array of absolute file paths
     val color: String = "",
+    val contentColor: String = "",
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )
