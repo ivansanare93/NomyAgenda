@@ -167,4 +167,22 @@
     <string name="lock_setup_hint_min">Conecta al menos 4 puntos</string>
     <string name="lock_setup_hint_confirm">Dibuja el mismo patrón para confirmar</string>
     <string name="lock_setup_mismatch">Los patrones no coinciden. Intenta de nuevo.</string>
+
+    <!-- Diary -->
+    <string name="nav_diary">Diario</string>
+    <string name="diary_header_title">Mi Diario</string>
+    <string name="diary_empty">Ninguna entrada todavía.\n¡Escribe tu primer día!</string>
+    <string name="diary_add_entry">Nueva entrada de diario</string>
+    <string name="diary_delete_title">Eliminar entrada</string>
+    <string name="diary_delete_confirm">¿Eliminar esta entrada del diario?</string>
+    <string name="diary_deleted">Entrada eliminada</string>
+    <string name="diary_editor_title">Entrada del diario</string>
+    <string name="diary_select_date">Seleccionar fecha</string>
+    <string name="diary_mood_label">Estado de ánimo</string>
+    <string name="diary_title_hint">Título (opcional)</string>
+    <string name="diary_content_hint">¿Qué ha pasado hoy?</string>
+    <string name="diary_photos_label">Fotos</string>
+    <string name="diary_add_photo">Añadir foto</string>
+    <string name="diary_remove_photo">Eliminar foto</string>
+    <string name="diary_saved">Entrada guardada</string>
 </resources>

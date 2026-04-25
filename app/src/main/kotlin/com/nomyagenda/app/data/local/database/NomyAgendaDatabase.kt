@@ -8,14 +8,18 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.nomyagenda.app.data.local.dao.AgendaEntryDao
+import com.nomyagenda.app.data.local.dao.DiaryEntryDao
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.Converters
+import com.nomyagenda.app.data.local.entity.DiaryEntry
 
-@Database(entities = [AgendaEntry::class], version = 5, exportSchema = false)
+@Database(entities = [AgendaEntry::class, DiaryEntry::class], version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NomyAgendaDatabase : RoomDatabase() {
 
     abstract fun agendaEntryDao(): AgendaEntryDao
+
+    abstract fun diaryEntryDao(): DiaryEntryDao
 
     companion object {
         @Volatile
@@ -29,6 +33,25 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `diary_entries` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `dateKey` TEXT NOT NULL,
+                        `title` TEXT NOT NULL DEFAULT '',
+                        `content` TEXT NOT NULL DEFAULT '',
+                        `mood` TEXT NOT NULL DEFAULT '',
+                        `photoPaths` TEXT NOT NULL DEFAULT '[]',
+                        `createdAt` INTEGER NOT NULL,
+                        `updatedAt` INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
         fun getDatabase(context: Context): NomyAgendaDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -36,7 +59,7 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
                     NomyAgendaDatabase::class.java,
                     "nomy_agenda_db"
                 )
-                    .addMigrations(MIGRATION_4_5)
+                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

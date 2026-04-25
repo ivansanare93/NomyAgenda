@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-        val topLevelDestinations = setOf(R.id.agendaFragment, R.id.settingsFragment)
+        val topLevelDestinations = setOf(R.id.agendaFragment, R.id.diaryFragment, R.id.settingsFragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNavigation.visibility =
                 if (destination.id in topLevelDestinations) View.VISIBLE else View.GONE
