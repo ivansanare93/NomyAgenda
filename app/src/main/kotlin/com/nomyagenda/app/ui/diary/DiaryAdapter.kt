@@ -45,6 +45,13 @@ class DiaryAdapter(
             binding.textDiaryEntryDate.setTextColor(titleColor)
             binding.textDiaryEntryTitle.setTextColor(titleColor)
 
+            val contentColor = if (entry.contentColor.isNotEmpty()) {
+                Color.parseColor(entry.contentColor)
+            } else {
+                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+            }
+            binding.textDiaryEntryPreview.setTextColor(contentColor)
+
             if (entry.mood.isNotEmpty()) {
                 binding.textDiaryEntryMood.visibility = View.VISIBLE
                 binding.textDiaryEntryMood.text = entry.mood

@@ -13,7 +13,7 @@ import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.Converters
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 
-@Database(entities = [AgendaEntry::class, DiaryEntry::class], version = 7, exportSchema = false)
+@Database(entities = [AgendaEntry::class, DiaryEntry::class], version = 8, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NomyAgendaDatabase : RoomDatabase() {
 
@@ -60,6 +60,17 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE diary_entries ADD COLUMN contentColor TEXT NOT NULL DEFAULT ''"
+                )
+                database.execSQL(
+                    "ALTER TABLE agenda_entries ADD COLUMN contentColor TEXT NOT NULL DEFAULT ''"
+                )
+            }
+        }
+
         fun getDatabase(context: Context): NomyAgendaDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -67,7 +78,7 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
                     NomyAgendaDatabase::class.java,
                     "nomy_agenda_db"
                 )
-                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

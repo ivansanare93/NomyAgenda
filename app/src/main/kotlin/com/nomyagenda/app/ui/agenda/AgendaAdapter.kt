@@ -86,6 +86,13 @@ class AgendaAdapter(
                 }
             }
 
+            val contentColor = if (entry.contentColor.isNotEmpty()) {
+                Color.parseColor(entry.contentColor)
+            } else {
+                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+            }
+            binding.textEntryPreview.setTextColor(contentColor)
+
             if (entry.dueAt != null) {
                 binding.textEntryDueDate.visibility = View.VISIBLE
                 binding.textEntryDueDate.text = DATE_FORMAT.format(Date(entry.dueAt))

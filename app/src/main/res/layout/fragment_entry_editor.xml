@@ -347,7 +347,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Entry color picker -->
+        <!-- Entry color pickers: title and content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -357,7 +357,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_entry_color"
+                android:text="@string/hint_title_color"
                 android:textAppearance="?attr/textAppearanceLabelMedium"
                 android:layout_marginBottom="@dimen/spacing_xsmall" />
 
@@ -368,6 +368,28 @@
 
                 <LinearLayout
                     android:id="@+id/color_swatches_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical" />
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_content_color"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_xsmall" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/color_swatches_container_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

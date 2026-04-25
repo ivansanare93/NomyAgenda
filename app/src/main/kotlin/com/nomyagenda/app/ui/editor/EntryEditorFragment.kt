@@ -55,6 +55,7 @@ class EntryEditorFragment : Fragment() {
     private var currentType: EntryType = EntryType.NOTE
     private var selectedAdvanceNoticeMinutes: Int = SettingsRepository.ADVANCE_NOTICE_NONE
     private var selectedColor: String = ""
+    private var selectedContentColor: String = ""
 
     // ---- WYSIWYG format toggle state ----
     private var isBoldActive = false
@@ -219,6 +220,9 @@ class EntryEditorFragment : Fragment() {
             if (entry.color.isNotEmpty()) {
                 selectEntryColor(entry.color)
             }
+            if (entry.contentColor.isNotEmpty()) {
+                selectEntryContentColor(entry.contentColor)
+            }
         }
     }
 
@@ -339,7 +343,19 @@ class EntryEditorFragment : Fragment() {
     // ---------- entry colour picker (unchanged) ----------
 
     private fun setupEntryColorPicker() {
-        val container = binding.colorSwatchesContainer
+        setupColorSwatches(binding.colorSwatchesContainer) { hex ->
+            selectedColor = hex
+            updateSwatchSelection(binding.colorSwatchesContainer, hex)
+        }
+        setupColorSwatches(binding.colorSwatchesContainerContent) { hex ->
+            selectedContentColor = hex
+            updateSwatchSelection(binding.colorSwatchesContainerContent, hex)
+        }
+        updateSwatchSelection(binding.colorSwatchesContainer, "")
+        updateSwatchSelection(binding.colorSwatchesContainerContent, "")
+    }
+
+    private fun setupColorSwatches(container: android.widget.LinearLayout, onSelect: (String) -> Unit) {
         val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
         val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
@@ -355,7 +371,7 @@ class EntryEditorFragment : Fragment() {
             layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
                 setMargins(margin, margin, margin, margin)
             }
-            setOnClickListener { selectEntryColor("") }
+            setOnClickListener { onSelect("") }
         }
         container.addView(noneSwatch)
 
@@ -369,17 +385,20 @@ class EntryEditorFragment : Fragment() {
                 layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
                     setMargins(margin, margin, margin, margin)
                 }
-                setOnClickListener { selectEntryColor(hexColor) }
+                setOnClickListener { onSelect(hexColor) }
             }
             container.addView(swatch)
         }
-
-        updateSwatchSelection(container, "")
     }
 
     private fun selectEntryColor(hexColor: String) {
         selectedColor = hexColor
         updateSwatchSelection(binding.colorSwatchesContainer, hexColor)
+    }
+
+    private fun selectEntryContentColor(hexColor: String) {
+        selectedContentColor = hexColor
+        updateSwatchSelection(binding.colorSwatchesContainerContent, hexColor)
     }
 
     private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
@@ -520,7 +539,8 @@ class EntryEditorFragment : Fragment() {
             dueAt = if (currentType == EntryType.REMINDER) selectedDueAt else null,
             advanceNoticeMinutes = if (currentType == EntryType.REMINDER) selectedAdvanceNoticeMinutes else 0,
             tags = tags,
-            color = selectedColor
+            color = selectedColor,
+            contentColor = selectedContentColor
         )
 
         viewModel.save(entry) {
