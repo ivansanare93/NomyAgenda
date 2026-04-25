@@ -51,7 +51,7 @@
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_header">
+        app:layout_constraintTop_toBottomOf="@id/layout_search">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
         app:boxBackgroundColor="?attr/colorSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_calendar"
+        app:layout_constraintTop_toBottomOf="@id/layout_header"
         app:startIconDrawable="@android:drawable/ic_menu_search"
         app:startIconTint="?attr/colorPrimary">
 
@@ -145,7 +145,7 @@
         android:paddingEnd="@dimen/spacing_xsmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_search">
+        app:layout_constraintTop_toBottomOf="@id/card_calendar">
 
         <HorizontalScrollView
             android:layout_width="0dp"
