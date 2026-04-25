@@ -97,9 +97,11 @@ class AppLockManager(context: Context) {
     fun savePattern(pattern: List<Int>) {
         settings.lockPatternHash = hashPattern(pattern)
         settings.lockType = SettingsRepository.LOCK_TYPE_PATTERN
-        // The user just configured the lock in this session; no need to show the lock screen
-        // immediately (e.g. if a system overlay triggers onResume right after setup).
+        // Treat completing setup the same as a successful unlock: reset the background
+        // timestamp so that shouldLock() never triggers immediately after setup, regardless
+        // of how long the app had been in the background before the user reached this point.
         hasBeenUnlockedThisSession = true
+        backgroundTimestamp = 0L
     }
 
     /** Clears any saved pattern and disables pattern lock (unless biometric is set). */
