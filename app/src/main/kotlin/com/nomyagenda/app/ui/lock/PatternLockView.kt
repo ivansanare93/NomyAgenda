@@ -42,6 +42,7 @@ class PatternLockView @JvmOverloads constructor(
 
     /** Called when the user lifts their finger; receives the ordered list of dot indices. */
     var onPatternComplete: ((List<Int>) -> Unit)? = null
+    private val colorNeutral = context.getColor(R.color.pattern_neutral)
     private val colorSuccess = context.getColor(R.color.pattern_success)
     private val colorError = context.getColor(R.color.pattern_error)
 
