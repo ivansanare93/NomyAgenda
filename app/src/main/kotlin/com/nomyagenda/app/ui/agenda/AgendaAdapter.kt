@@ -48,12 +48,6 @@ class AgendaAdapter(
             val context = binding.root.context
             binding.textEntryTitle.text = entry.title
 
-            binding.chipEntryType.text = when (entry.type) {
-                EntryType.NOTE -> context.getString(R.string.type_note)
-                EntryType.TASK -> context.getString(R.string.type_task)
-                EntryType.REMINDER -> context.getString(R.string.type_reminder)
-            }
-
             val titleColor = if (entry.color.isNotEmpty()) {
                 Color.parseColor(entry.color)
             } else {
