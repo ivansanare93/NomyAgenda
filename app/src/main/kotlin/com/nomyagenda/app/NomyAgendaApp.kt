@@ -20,7 +20,7 @@ class NomyAgendaApp : Application() {
     }
 
     val agendaRepository: AgendaRepository by lazy {
-        AgendaRepository(database.agendaEntryDao(), firestoreDataSource)
+        AgendaRepository(database.agendaEntryDao(), firestoreDataSource, database.pendingDeleteDao())
     }
 
     val diaryRepository: DiaryRepository by lazy {

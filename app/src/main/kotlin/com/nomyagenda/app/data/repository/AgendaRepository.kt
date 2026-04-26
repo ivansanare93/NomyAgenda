@@ -2,13 +2,16 @@ package com.nomyagenda.app.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.nomyagenda.app.data.local.dao.AgendaEntryDao
+import com.nomyagenda.app.data.local.dao.PendingDeleteDao
 import com.nomyagenda.app.data.local.entity.AgendaEntry
+import com.nomyagenda.app.data.local.entity.PendingDelete
 import com.nomyagenda.app.data.remote.FirestoreDataSource
 import kotlinx.coroutines.flow.Flow
 
 class AgendaRepository(
     private val dao: AgendaEntryDao,
-    private val remote: FirestoreDataSource? = null
+    private val remote: FirestoreDataSource? = null,
+    private val pendingDeleteDao: PendingDeleteDao? = null
 ) {
 
     fun getAll(): Flow<List<AgendaEntry>> = dao.getAll()
@@ -43,7 +46,8 @@ class AgendaRepository(
             try {
                 remote.delete(userId, entry.firebaseId)
             } catch (_: Exception) {
-                // Offline — local delete already done
+                // Offline — queue the Firestore delete to be retried on next sync
+                pendingDeleteDao?.insert(PendingDelete(entry.firebaseId))
             }
         }
     }
@@ -54,10 +58,23 @@ class AgendaRepository(
      * Fetches all entries from Firestore and upserts them into Room.
      * Existing local entries with the same [AgendaEntry.firebaseId] are updated in place
      * (their local primary key is preserved).
+     *
+     * Before fetching, any Firestore deletes that failed while offline are retried so that
+     * previously-deleted entries are not re-imported.
      */
     suspend fun syncFromFirestore(userId: String) {
         remote ?: return
         try {
+            // Flush pending remote deletes first so they are not re-imported below.
+            pendingDeleteDao?.getAll()?.forEach { pending ->
+                try {
+                    remote.delete(userId, pending.firebaseId)
+                    pendingDeleteDao?.delete(pending.firebaseId)
+                } catch (_: Exception) {
+                    // Still offline — leave it in the queue and try again next time
+                }
+            }
+
             val remoteEntries = remote.fetchAll(userId)
             for (remoteEntry in remoteEntries) {
                 val existing = dao.getByFirebaseId(remoteEntry.firebaseId)

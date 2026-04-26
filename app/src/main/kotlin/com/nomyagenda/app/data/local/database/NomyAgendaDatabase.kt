@@ -9,17 +9,21 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.nomyagenda.app.data.local.dao.AgendaEntryDao
 import com.nomyagenda.app.data.local.dao.DiaryEntryDao
+import com.nomyagenda.app.data.local.dao.PendingDeleteDao
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.Converters
 import com.nomyagenda.app.data.local.entity.DiaryEntry
+import com.nomyagenda.app.data.local.entity.PendingDelete
 
-@Database(entities = [AgendaEntry::class, DiaryEntry::class], version = 8, exportSchema = false)
+@Database(entities = [AgendaEntry::class, DiaryEntry::class, PendingDelete::class], version = 9, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NomyAgendaDatabase : RoomDatabase() {
 
     abstract fun agendaEntryDao(): AgendaEntryDao
 
     abstract fun diaryEntryDao(): DiaryEntryDao
+
+    abstract fun pendingDeleteDao(): PendingDeleteDao
 
     companion object {
         @Volatile
@@ -71,6 +75,14 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `pending_deletes` (`firebaseId` TEXT NOT NULL, PRIMARY KEY(`firebaseId`))"
+                )
+            }
+        }
+
         fun getDatabase(context: Context): NomyAgendaDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -78,7 +90,7 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
                     NomyAgendaDatabase::class.java,
                     "nomy_agenda_db"
                 )
-                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
+                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
