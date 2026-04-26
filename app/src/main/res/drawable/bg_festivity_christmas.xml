@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: warm white -->
+    <path
+        android:fillColor="#FFFAF8"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Green pine tree left -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M40,300 L60,260 L80,300 Z" />
+    <path
+        android:fillColor="#388E3C"
+        android:pathData="M35,330 L60,275 L85,330 Z" />
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M30,365 L60,295 L90,365 Z" />
+    <path
+        android:fillColor="#5D4037"
+        android:pathData="M53,365 H67 V395 H53 Z" />
+
+    <!-- Green pine tree right -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M295,480 L315,440 L335,480 Z" />
+    <path
+        android:fillColor="#388E3C"
+        android:pathData="M290,510 L315,455 L340,510 Z" />
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M285,545 L315,470 L345,545 Z" />
+    <path
+        android:fillColor="#5D4037"
+        android:pathData="M308,545 H322 V570 H308 Z" />
+
+    <!-- Snowflake 1 at (180, 80) -->
+    <path
+        android:fillColor="#90CAF9"
+        android:strokeColor="#90CAF9"
+        android:strokeWidth="2"
+        android:pathData="M180,65 L180,95 M165,80 L195,80 M168,68 L192,92 M192,68 L168,92" />
+
+    <!-- Snowflake 2 at (80, 160) -->
+    <path
+        android:fillColor="#BBDEFB"
+        android:strokeColor="#BBDEFB"
+        android:strokeWidth="1.5"
+        android:pathData="M80,150 L80,170 M70,160 L90,160 M73,153 L87,167 M87,153 L73,167" />
+
+    <!-- Snowflake 3 at (300, 120) -->
+    <path
+        android:fillColor="#90CAF9"
+        android:strokeColor="#90CAF9"
+        android:strokeWidth="1.5"
+        android:pathData="M300,110 L300,130 M290,120 L310,120 M293,113 L307,127 M307,113 L293,127" />
+
+    <!-- Snowflake 4 at (250, 250) -->
+    <path
+        android:fillColor="#BBDEFB"
+        android:strokeColor="#BBDEFB"
+        android:strokeWidth="2"
+        android:pathData="M250,237 L250,263 M237,250 L263,250 M240,240 L260,260 M260,240 L240,260" />
+
+    <!-- Snowflake 5 at (130, 420) -->
+    <path
+        android:fillColor="#90CAF9"
+        android:strokeColor="#90CAF9"
+        android:strokeWidth="1.5"
+        android:pathData="M130,410 L130,430 M120,420 L140,420 M123,413 L137,427 M137,413 L123,427" />
+
+    <!-- Snowflake 6 at (60, 570) -->
+    <path
+        android:fillColor="#BBDEFB"
+        android:strokeColor="#BBDEFB"
+        android:strokeWidth="2"
+        android:pathData="M60,558 L60,582 M48,570 L72,570 M51,561 L69,579 M69,561 L51,579" />
+
+    <!-- Snowflake 7 at (310, 350) -->
+    <path
+        android:fillColor="#90CAF9"
+        android:strokeColor="#90CAF9"
+        android:strokeWidth="1.5"
+        android:pathData="M310,340 L310,360 M300,350 L320,350 M303,343 L317,357 M317,343 L303,357" />
+
+    <!-- Snowflake 8 at (200, 600) -->
+    <path
+        android:fillColor="#BBDEFB"
+        android:strokeColor="#BBDEFB"
+        android:strokeWidth="1.5"
+        android:pathData="M200,590 L200,610 M190,600 L210,600 M193,593 L207,607 M207,593 L193,607" />
+
+    <!-- Red berries cluster top-right -->
+    <path android:fillColor="#C62828" android:pathData="M315,50 A5,5 0 1 1 315,60 A5,5 0 1 1 315,50" />
+    <path android:fillColor="#C62828" android:pathData="M327,44 A5,5 0 1 1 327,54 A5,5 0 1 1 327,44" />
+    <path android:fillColor="#C62828" android:pathData="M322,58 A5,5 0 1 1 322,68 A5,5 0 1 1 322,58" />
+    <path android:fillColor="#388E3C" android:pathData="M310,48 Q320,38 330,48" android:strokeColor="#388E3C" android:strokeWidth="2" android:fillColor="#00000000" />
+
+    <!-- Red berries cluster bottom-left -->
+    <path android:fillColor="#C62828" android:pathData="M30,650 A5,5 0 1 1 30,660 A5,5 0 1 1 30,650" />
+    <path android:fillColor="#C62828" android:pathData="M42,644 A5,5 0 1 1 42,654 A5,5 0 1 1 42,644" />
+    <path android:fillColor="#C62828" android:pathData="M37,658 A5,5 0 1 1 37,668 A5,5 0 1 1 37,658" />
+    <path android:fillColor="#388E3C" android:pathData="M25,648 Q35,638 45,648" android:strokeColor="#388E3C" android:strokeWidth="2" android:fillColor="#00000000" />
+
+    <!-- Gold star ornament -->
+    <path
+        android:fillColor="#FFD600"
+        android:pathData="M180,30 L183,40 L193,40 L185,46 L188,56 L180,50 L172,56 L175,46 L167,40 L177,40 Z" />
+
+</vector>

@@ -192,4 +192,20 @@
     <string name="diary_photo_desc">Foto del diario</string>
     <string name="diary_saved">Entrada guardada</string>
     <string name="diary_detail_title">Ver entrada del diario</string>
+
+    <!-- Diary backgrounds -->
+    <string name="diary_background_label">Fondo de la entrada</string>
+    <string name="diary_background_basic">Básicos</string>
+    <string name="diary_background_thematic">Temáticos</string>
+    <string name="diary_background_festive">Festividades</string>
+    <string name="diary_bg_none">Sin fondo</string>
+    <string name="diary_bg_basic_cream">Crema</string>
+    <string name="diary_bg_basic_sky">Cielo</string>
+    <string name="diary_bg_basic_mint">Menta</string>
+    <string name="diary_bg_basic_lavender">Lavanda</string>
+    <string name="diary_bg_basic_rose">Rosa</string>
+    <string name="diary_bg_christmas">Navidad</string>
+    <string name="diary_bg_halloween">Halloween</string>
+    <string name="diary_bg_valentines">San Valentín</string>
+    <string name="diary_bg_easter">Pascua</string>
 </resources>

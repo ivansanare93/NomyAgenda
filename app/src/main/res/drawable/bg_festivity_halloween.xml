@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: warm orange -->
+    <path
+        android:fillColor="#FFF3E0"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Pumpkin 1 at (60, 120) -->
+    <group android:translateX="60" android:translateY="120">
+        <path android:fillColor="#E65100" android:pathData="M0,-20 A20,20 0 1 1 0,20 A20,20 0 1 1 0,-20" />
+        <path android:fillColor="#BF360C" android:pathData="M-12,-15 Q0,-5 12,-15 Q0,5 -12,-15" />
+        <path android:fillColor="#33691E" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" android:fillColor="#00000000" />
+        <!-- Jack-o-lantern eyes -->
+        <path android:fillColor="#1A1A1A" android:pathData="M-10,-8 L-6,-4 L-2,-8 L-6,-12 Z" />
+        <path android:fillColor="#1A1A1A" android:pathData="M2,-8 L6,-4 L10,-8 L6,-12 Z" />
+        <!-- Mouth -->
+        <path android:fillColor="#1A1A1A" android:pathData="M-10,4 L-6,8 L0,6 L6,8 L10,4 L8,4 L6,6 L0,4 L-6,6 L-8,4 Z" />
+    </group>
+
+    <!-- Pumpkin 2 at (280, 300) smaller -->
+    <group android:translateX="280" android:translateY="300" android:scaleX="0.7" android:scaleY="0.7">
+        <path android:fillColor="#F57C00" android:pathData="M0,-20 A20,20 0 1 1 0,20 A20,20 0 1 1 0,-20" />
+        <path android:fillColor="#BF360C" android:pathData="M-12,-15 Q0,-5 12,-15 Q0,5 -12,-15" />
+        <path android:fillColor="#33691E" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" android:fillColor="#00000000" />
+        <path android:fillColor="#1A1A1A" android:pathData="M-10,-8 L-6,-4 L-2,-8 L-6,-12 Z" />
+        <path android:fillColor="#1A1A1A" android:pathData="M2,-8 L6,-4 L10,-8 L6,-12 Z" />
+        <path android:fillColor="#1A1A1A" android:pathData="M-10,4 L-6,8 L0,6 L6,8 L10,4 L8,4 L6,6 L0,4 L-6,6 L-8,4 Z" />
+    </group>
+
+    <!-- Pumpkin 3 at (100, 540) smaller -->
+    <group android:translateX="100" android:translateY="540" android:scaleX="0.6" android:scaleY="0.6">
+        <path android:fillColor="#E65100" android:pathData="M0,-20 A20,20 0 1 1 0,20 A20,20 0 1 1 0,-20" />
+        <path android:fillColor="#BF360C" android:pathData="M-12,-15 Q0,-5 12,-15 Q0,5 -12,-15" />
+        <path android:fillColor="#33691E" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" android:fillColor="#00000000" />
+        <path android:fillColor="#1A1A1A" android:pathData="M-10,-8 L-6,-4 L-2,-8 L-6,-12 Z" />
+        <path android:fillColor="#1A1A1A" android:pathData="M2,-8 L6,-4 L10,-8 L6,-12 Z" />
+        <path android:fillColor="#1A1A1A" android:pathData="M-10,4 L-6,8 L0,6 L6,8 L10,4 L8,4 L6,6 L0,4 L-6,6 L-8,4 Z" />
+    </group>
+
+    <!-- Bat 1 at (200, 80) -->
+    <path
+        android:fillColor="#4A148C"
+        android:pathData="M200,75 Q185,65 175,70 Q185,78 190,80 Q185,85 180,90 L200,82 L220,90 Q215,85 210,80 Q215,78 225,70 Q215,65 200,75" />
+
+    <!-- Bat 2 at (320, 200) smaller -->
+    <path
+        android:fillColor="#6A1B9A"
+        android:pathData="M320,195 Q308,187 300,191 Q308,197 312,199 Q308,203 304,207 L320,201 L336,207 Q332,203 328,199 Q332,197 340,191 Q332,187 320,195" />
+
+    <!-- Bat 3 at (50, 400) smaller -->
+    <path
+        android:fillColor="#4A148C"
+        android:pathData="M50,395 Q38,387 30,391 Q38,397 42,399 Q38,403 34,407 L50,401 L66,407 Q62,403 58,399 Q62,397 70,391 Q62,387 50,395" />
+
+    <!-- Moon top-right -->
+    <path
+        android:fillColor="#FFE082"
+        android:pathData="M310,60 A30,30 0 1 1 310,60.001 Z M325,45 A30,30 0 1 0 325,75 Z" />
+    <!-- Simpler moon crescent -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M330,40 A25,25 0 0 1 330,90 A15,15 0 0 0 330,40 Z" />
+
+    <!-- Spider web top-left -->
+    <path
+        android:strokeColor="#BDBDBD"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"
+        android:pathData="M20,20 L50,50 M20,20 L20,50 M20,20 L50,20 M30,20 A10,10 0 0 1 20,30 M40,20 A20,20 0 0 1 20,40 M50,20 A30,30 0 0 1 20,50" />
+    <!-- Spider -->
+    <path android:fillColor="#212121" android:pathData="M50,48 A3,3 0 1 1 50,54 A3,3 0 1 1 50,48" />
+
+    <!-- Stars scattered -->
+    <path android:fillColor="#FFE082" android:pathData="M160,50 L161.5,55 L167,55 L162.5,58 L164,63 L160,60 L156,63 L157.5,58 L153,55 L158.5,55 Z" />
+    <path android:fillColor="#FFE082" android:pathData="M250,600 L251.5,605 L257,605 L252.5,608 L254,613 L250,610 L246,613 L247.5,608 L243,605 L248.5,605 Z" />
+
+</vector>
