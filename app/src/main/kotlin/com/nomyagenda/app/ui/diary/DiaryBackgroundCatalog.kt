@@ -37,7 +37,13 @@ object DiaryBackgroundCatalog {
         DiaryBackgroundItem("christmas", R.drawable.bg_festivity_christmas, R.string.diary_bg_christmas),
         DiaryBackgroundItem("halloween", R.drawable.bg_festivity_halloween, R.string.diary_bg_halloween),
         DiaryBackgroundItem("valentines", R.drawable.bg_festivity_valentines, R.string.diary_bg_valentines),
-        DiaryBackgroundItem("easter", R.drawable.bg_festivity_easter, R.string.diary_bg_easter)
+        DiaryBackgroundItem("valentines_roses", R.drawable.bg_festivity_valentines_roses, R.string.diary_bg_valentines_roses),
+        DiaryBackgroundItem("valentines_pastel", R.drawable.bg_festivity_valentines_pastel, R.string.diary_bg_valentines_pastel),
+        DiaryBackgroundItem("easter", R.drawable.bg_festivity_easter, R.string.diary_bg_easter),
+        DiaryBackgroundItem("birthday", R.drawable.bg_festivity_birthday, R.string.diary_bg_birthday),
+        DiaryBackgroundItem("birthday_pastel", R.drawable.bg_festivity_birthday_pastel, R.string.diary_bg_birthday_pastel),
+        DiaryBackgroundItem("new_year", R.drawable.bg_festivity_new_year, R.string.diary_bg_new_year),
+        DiaryBackgroundItem("spring", R.drawable.bg_festivity_spring, R.string.diary_bg_spring)
     )
 
     private val allBackgrounds: List<DiaryBackgroundItem> =

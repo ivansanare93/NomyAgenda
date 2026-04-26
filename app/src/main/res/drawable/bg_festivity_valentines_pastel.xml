@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: soft lilac -->
+    <path android:fillColor="#EDE7F6" android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Large central heart (faint) -->
+    <path android:fillColor="#EED5F5" android:pathData="M180,360 C180,360 120,305 120,265 C120,235 140,215 162,222 C168,224 180,234 180,234 C180,234 192,224 198,222 C220,215 240,235 240,265 C240,305 180,360 180,360 Z" />
+
+    <!-- Medium hearts scattered -->
+    <path android:fillColor="#CE93D8" android:pathData="M55,80 C55,80 40,66 40,56 C40,48 46,43 52,46 C53,46.5 55,49 55,49 C55,49 57,46.5 58,46 C64,43 70,48 70,56 C70,66 55,80 55,80 Z" />
+    <path android:fillColor="#BA68C8" android:pathData="M300,120 C300,120 285,106 285,96 C285,88 291,83 297,86 C298,86.5 300,89 300,89 C300,89 302,86.5 303,86 C309,83 315,88 315,96 C315,106 300,120 300,120 Z" />
+    <path android:fillColor="#E040FB" android:pathData="M330,300 C330,300 318,289 318,281 C318,274 323,270 328,272.5 C328.5,273 330,275 330,275 C330,275 331.5,273 332,272.5 C337,270 342,274 342,281 C342,289 330,300 330,300 Z" />
+    <path android:fillColor="#CE93D8" android:pathData="M25,420 C25,420 13,409 13,401 C13,394 18,390 23,392.5 C23.5,393 25,395 25,395 C25,395 26.5,393 27,392.5 C32,390 37,394 37,401 C37,409 25,420 25,420 Z" />
+    <path android:fillColor="#BA68C8" android:pathData="M270,520 C270,520 258,509 258,501 C258,494 263,490 268,492.5 C268.5,493 270,495 270,495 C270,495 271.5,493 272,492.5 C277,490 282,494 282,501 C282,509 270,520 270,520 Z" />
+    <path android:fillColor="#E040FB" android:pathData="M80,620 C80,620 68,609 68,601 C68,594 73,590 78,592.5 C78.5,593 80,595 80,595 C80,595 81.5,593 82,592.5 C87,590 92,594 92,601 C92,609 80,620 80,620 Z" />
+    <path android:fillColor="#CE93D8" android:pathData="M200,680 C200,680 190,670 190,663 C190,657 194,654 199,656 C199.5,656.5 200,658 200,658 C200,658 200.5,656.5 201,656 C206,654 210,657 210,663 C210,670 200,680 200,680 Z" />
+
+    <!-- Small hearts scattered -->
+    <path android:fillColor="#F8BBD9" android:pathData="M130,55 C130,55 122,47 122,41 C122,36 126,33 130,35 C130,35 130,35 130,35 C130,35 130,35 130,35 C134,33 138,36 138,41 C138,47 130,55 130,55 Z" />
+    <path android:fillColor="#F48FB1" android:pathData="M240,160 C240,160 232,152 232,146 C232,141 236,138 240,140 C240,140 240,140 240,140 C240,140 240,140 240,140 C244,138 248,141 248,146 C248,152 240,160 240,160 Z" />
+    <path android:fillColor="#F8BBD9" android:pathData="M50,250 C50,250 43,243 43,238 C43,234 46,232 50,233.5 C50,233.5 50,233.5 50,233.5 C50,233.5 50,233.5 50,233.5 C54,232 57,234 57,238 C57,243 50,250 50,250 Z" />
+    <path android:fillColor="#CE93D8" android:pathData="M310,440 C310,440 303,433 303,428 C303,424 306,422 310,423.5 C310,423.5 310,423.5 310,423.5 C310,423.5 310,423.5 310,423.5 C314,422 317,424 317,428 C317,433 310,440 310,440 Z" />
+    <path android:fillColor="#F8BBD9" android:pathData="M145,590 C145,590 138,583 138,578 C138,574 141,572 145,573.5 C145,573.5 145,573.5 145,573.5 C145,573.5 145,573.5 145,573.5 C149,572 152,574 152,578 C152,583 145,590 145,590 Z" />
+    <path android:fillColor="#F48FB1" android:pathData="M345,600 C345,600 338,593 338,588 C338,584 341,582 345,583.5 C345,583.5 345,583.5 345,583.5 C345,583.5 345,583.5 345,583.5 C349,582 352,584 352,588 C352,593 345,600 345,600 Z" />
+
+    <!-- Tiny heart dots -->
+    <path android:fillColor="#E1BEE7" android:pathData="M175,130 C175,130 170,125 170,121 C170,118 172,116 175,117.5 C178,116 180,118 180,121 C180,125 175,130 175,130 Z" />
+    <path android:fillColor="#E1BEE7" android:pathData="M345,180 C345,180 340,175 340,171 C340,168 342,166 345,167.5 C348,166 350,168 350,171 C350,175 345,180 345,180 Z" />
+    <path android:fillColor="#F8BBD9" android:pathData="M15,555 C15,555 10,550 10,546 C10,543 12,541 15,542.5 C18,541 20,543 20,546 C20,550 15,555 15,555 Z" />
+
+    <!-- Cupid arrow across center area -->
+    <path android:fillColor="#00000000" android:pathData="M80,200 Q180,280 280,200" android:strokeColor="#CE93D8" android:strokeWidth="1.5" />
+    <!-- Arrowhead right -->
+    <path android:fillColor="#CE93D8" android:pathData="M277,197 L283,203 L286,196 Z" />
+    <!-- Arrow feathers left -->
+    <path android:fillColor="#CE93D8" android:pathData="M80,200 L74,194 L77,201 L71,204 Z" />
+
+</vector>
