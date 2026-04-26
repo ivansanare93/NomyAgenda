@@ -9,7 +9,8 @@ import com.nomyagenda.app.databinding.ItemDiaryPhotoBinding
 import java.io.File
 
 class DiaryPhotoAdapter(
-    private val onRemove: (String) -> Unit
+    private val onRemove: (String) -> Unit,
+    private val readOnly: Boolean = false
 ) : RecyclerView.Adapter<DiaryPhotoAdapter.PhotoViewHolder>() {
 
     private val paths = mutableListOf<String>()
@@ -43,7 +44,12 @@ class DiaryPhotoAdapter(
             } else {
                 binding.imageDiaryPhoto.setImageDrawable(null)
             }
-            binding.btnRemovePhoto.setOnClickListener { onRemove(path) }
+            if (readOnly) {
+                binding.btnRemovePhoto.visibility = View.GONE
+            } else {
+                binding.btnRemovePhoto.visibility = View.VISIBLE
+                binding.btnRemovePhoto.setOnClickListener { onRemove(path) }
+            }
         }
     }
 }

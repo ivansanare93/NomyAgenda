@@ -48,7 +48,7 @@ class DiaryFragment : Fragment() {
         binding.textDiaryDate.text = HEADER_DATE_FORMAT.format(Date())
 
         adapter = DiaryAdapter(
-            onClick = { entry -> openEditor(entry.id) },
+            onClick = { entry -> openDetail(entry.id) },
             onLongClick = { entry -> confirmDelete(entry) }
         )
         binding.recyclerDiary.adapter = adapter
@@ -74,6 +74,11 @@ class DiaryFragment : Fragment() {
             insets
         }
         bottomNavView?.doOnLayout { _binding?.let { b -> ViewCompat.requestApplyInsets(b.root) } }
+    }
+
+    private fun openDetail(entryId: Int) {
+        val action = DiaryFragmentDirections.actionDiaryFragmentToDiaryEntryDetailFragment(entryId)
+        findNavController().navigate(action)
     }
 
     private fun openEditor(entryId: Int) {

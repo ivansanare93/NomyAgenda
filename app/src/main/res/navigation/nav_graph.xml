@@ -38,6 +38,23 @@
         <action
             android:id="@+id/action_diaryFragment_to_diaryEntryEditorFragment"
             app:destination="@id/diaryEntryEditorFragment" />
+        <action
+            android:id="@+id/action_diaryFragment_to_diaryEntryDetailFragment"
+            app:destination="@id/diaryEntryDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/diaryEntryDetailFragment"
+        android:name="com.nomyagenda.app.ui.diary.DiaryEntryDetailFragment"
+        android:label="@string/diary_detail_title"
+        tools:layout="@layout/fragment_diary_entry_detail">
+        <argument
+            android:name="entryId"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_diaryEntryDetailFragment_to_diaryEntryEditorFragment"
+            app:destination="@id/diaryEntryEditorFragment" />
     </fragment>
 
     <fragment
