@@ -351,16 +351,26 @@ class DiaryEntryEditorFragment : Fragment() {
         private val DATE_DISPLAY_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
 
         private val COLOR_PALETTE = listOf(
-            "#E53935",
-            "#E91E63",
-            "#9C27B0",
-            "#3F51B5",
-            "#2196F3",
-            "#009688",
-            "#4CAF50",
-            "#FF9800",
-            "#FF5722",
-            "#795548"
+            "#F44336", // Rojo
+            "#E91E63", // Rosa
+            "#9C27B0", // Morado
+            "#673AB7", // Morado oscuro
+            "#3F51B5", // Índigo
+            "#2196F3", // Azul
+            "#03A9F4", // Azul claro
+            "#00BCD4", // Cian
+            "#009688", // Verde azulado
+            "#4CAF50", // Verde
+            "#8BC34A", // Verde lima
+            "#CDDC39", // Lima
+            "#FFEB3B", // Amarillo
+            "#FFC107", // Ámbar
+            "#FF9800", // Naranja
+            "#FF5722", // Naranja oscuro
+            "#795548", // Marrón
+            "#607D8B", // Azul gris
+            "#9E9E9E", // Gris
+            "#212121"  // Negro
         )
 
         fun formatDateKey(dateKey: String): String {
