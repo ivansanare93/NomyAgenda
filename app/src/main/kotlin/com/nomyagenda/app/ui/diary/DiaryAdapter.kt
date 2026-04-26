@@ -89,10 +89,9 @@ class DiaryAdapter(
 
             val bgDrawableRes = DiaryBackgroundCatalog.resolveDrawable(entry.background)
             if (bgDrawableRes != 0) {
-                binding.imageDiaryItemBg.setImageResource(bgDrawableRes)
-                binding.imageDiaryItemBg.visibility = View.VISIBLE
+                binding.frameDiaryItemContainer.setBackgroundResource(bgDrawableRes)
             } else {
-                binding.imageDiaryItemBg.visibility = View.GONE
+                binding.frameDiaryItemContainer.background = null
             }
         }
     }
