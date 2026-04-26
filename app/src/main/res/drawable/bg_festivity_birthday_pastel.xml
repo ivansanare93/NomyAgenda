@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: soft lavender -->
+    <path android:fillColor="#F3E5F5" android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Scattered star/sparkle decorations -->
+    <path android:fillColor="#CE93D8" android:pathData="M45,45 L46.5,50 L52,50 L47.5,53 L49,58 L45,55 L41,58 L42.5,53 L38,50 L43.5,50 Z" />
+    <path android:fillColor="#F8BBD9" android:pathData="M310,85 L311.5,90 L317,90 L312.5,93 L314,98 L310,95 L306,98 L307.5,93 L303,90 L308.5,90 Z" />
+    <path android:fillColor="#B39DDB" android:pathData="M170,40 L171.2,44 L175,44 L172,46.5 L173.2,50.5 L170,48 L166.8,50.5 L168,46.5 L165,44 L168.8,44 Z" />
+    <path android:fillColor="#F48FB1" android:pathData="M340,210 L341.2,214 L345,214 L342,216.5 L343.2,220.5 L340,218 L336.8,220.5 L338,216.5 L335,214 L338.8,214 Z" />
+    <path android:fillColor="#CE93D8" android:pathData="M20,310 L21.2,314 L25,314 L22,316.5 L23.2,320.5 L20,318 L16.8,320.5 L18,316.5 L15,314 L18.8,314 Z" />
+    <path android:fillColor="#B39DDB" android:pathData="M280,460 L281.5,465 L287,465 L282.5,468 L284,473 L280,470 L276,473 L277.5,468 L273,465 L278.5,465 Z" />
+    <path android:fillColor="#F8BBD9" android:pathData="M60,580 L61.2,584 L65,584 L62,586.5 L63.2,590.5 L60,588 L56.8,590.5 L58,586.5 L55,584 L58.8,584 Z" />
+    <path android:fillColor="#CE93D8" android:pathData="M200,680 L201.2,684 L205,684 L202,686.5 L203.2,690.5 L200,688 L196.8,690.5 L198,686.5 L195,684 L198.8,684 Z" />
+
+    <!-- Small dot confetti -->
+    <path android:fillColor="#F48FB1" android:pathData="M95,30 A3,3 0 1 1 95,36 A3,3 0 1 1 95,30" />
+    <path android:fillColor="#80DEEA" android:pathData="M240,55 A3,3 0 1 1 240,61 A3,3 0 1 1 240,55" />
+    <path android:fillColor="#A5D6A7" android:pathData="M18,175 A3,3 0 1 1 18,181 A3,3 0 1 1 18,175" />
+    <path android:fillColor="#FFF176" android:pathData="M350,365 A3,3 0 1 1 350,371 A3,3 0 1 1 350,365" />
+    <path android:fillColor="#F48FB1" android:pathData="M130,700 A3,3 0 1 1 130,706 A3,3 0 1 1 130,700" />
+    <path android:fillColor="#80DEEA" android:pathData="M320,660 A3,3 0 1 1 320,666 A3,3 0 1 1 320,660" />
+
+    <!-- Balloon 1: pink at (65, 170) -->
+    <group android:translateX="65" android:translateY="170">
+        <path android:fillColor="#F48FB1" android:pathData="M0,-30 A20,30 0 1 1 0,30 A20,30 0 1 1 0,-30" />
+        <path android:fillColor="#FCE4EC" android:pathData="M-8,-18 A5,4 0 1 1 -8,-11 A5,4 0 1 1 -8,-18" />
+        <path android:fillColor="#F48FB1" android:pathData="M-3,30 L3,30 L0,36 Z" />
+        <path android:fillColor="#00000000" android:pathData="M0,36 Q7,52 -3,68 Q7,84 0,100" android:strokeColor="#CE93D8" android:strokeWidth="1.5" />
+    </group>
+
+    <!-- Balloon 2: mint at (265, 135) -->
+    <group android:translateX="265" android:translateY="135">
+        <path android:fillColor="#80CBC4" android:pathData="M0,-30 A20,30 0 1 1 0,30 A20,30 0 1 1 0,-30" />
+        <path android:fillColor="#B2DFDB" android:pathData="M-8,-18 A5,4 0 1 1 -8,-11 A5,4 0 1 1 -8,-18" />
+        <path android:fillColor="#80CBC4" android:pathData="M-3,30 L3,30 L0,36 Z" />
+        <path android:fillColor="#00000000" android:pathData="M0,36 Q-7,52 3,68 Q-7,84 0,100" android:strokeColor="#B2DFDB" android:strokeWidth="1.5" />
+    </group>
+
+    <!-- Balloon 3: lavender at (160, 80) -->
+    <group android:translateX="160" android:translateY="80">
+        <path android:fillColor="#CE93D8" android:pathData="M0,-30 A20,30 0 1 1 0,30 A20,30 0 1 1 0,-30" />
+        <path android:fillColor="#E1BEE7" android:pathData="M-8,-18 A5,4 0 1 1 -8,-11 A5,4 0 1 1 -8,-18" />
+        <path android:fillColor="#CE93D8" android:pathData="M-3,30 L3,30 L0,36 Z" />
+        <path android:fillColor="#00000000" android:pathData="M0,36 Q6,52 -4,68 Q6,84 0,100" android:strokeColor="#E1BEE7" android:strokeWidth="1.5" />
+    </group>
+
+    <!-- Balloon 4: yellow at (320, 340) -->
+    <group android:translateX="320" android:translateY="340">
+        <path android:fillColor="#FFF176" android:pathData="M0,-26 A18,26 0 1 1 0,26 A18,26 0 1 1 0,-26" />
+        <path android:fillColor="#FFFDE7" android:pathData="M-7,-16 A4,3 0 1 1 -7,-10 A4,3 0 1 1 -7,-16" />
+        <path android:fillColor="#FFF176" android:pathData="M-3,26 L3,26 L0,31 Z" />
+        <path android:fillColor="#00000000" android:pathData="M0,31 Q-6,46 4,61 Q-4,76 0,91" android:strokeColor="#FFF9C4" android:strokeWidth="1.5" />
+    </group>
+
+    <!-- Balloon 5: peach at (40, 430) -->
+    <group android:translateX="40" android:translateY="430">
+        <path android:fillColor="#FFAB91" android:pathData="M0,-26 A18,26 0 1 1 0,26 A18,26 0 1 1 0,-26" />
+        <path android:fillColor="#FFCCBC" android:pathData="M-7,-16 A4,3 0 1 1 -7,-10 A4,3 0 1 1 -7,-16" />
+        <path android:fillColor="#FFAB91" android:pathData="M-3,26 L3,26 L0,31 Z" />
+        <path android:fillColor="#00000000" android:pathData="M0,31 Q6,46 -4,61 Q4,76 0,91" android:strokeColor="#FFCCBC" android:strokeWidth="1.5" />
+    </group>
+
+    <!-- Gift box at (155, 560) -->
+    <!-- Box body -->
+    <path android:fillColor="#F8BBD9" android:pathData="M130,580 H210 V640 H130 Z" />
+    <!-- Box lid -->
+    <path android:fillColor="#F48FB1" android:pathData="M124,562 H216 V582 H124 Z" />
+    <!-- Ribbon vertical -->
+    <path android:fillColor="#CE93D8" android:pathData="M166,562 H174 V640 H166 Z" />
+    <!-- Ribbon horizontal on lid -->
+    <path android:fillColor="#CE93D8" android:pathData="M124,568 H216 V576 H124 Z" />
+    <!-- Bow left loop -->
+    <path android:fillColor="#BA68C8" android:pathData="M170,558 Q148,542 152,558 Q160,550 170,558 Z" />
+    <!-- Bow right loop -->
+    <path android:fillColor="#BA68C8" android:pathData="M170,558 Q192,542 188,558 Q180,550 170,558 Z" />
+    <!-- Bow knot -->
+    <path android:fillColor="#9C27B0" android:pathData="M165,556 A5,5 0 1 1 165,566 A5,5 0 1 1 165,556" />
+    <!-- Polka dots on box -->
+    <path android:fillColor="#F48FB1" android:pathData="M145,596 A4,4 0 1 1 145,604 A4,4 0 1 1 145,596" />
+    <path android:fillColor="#F48FB1" android:pathData="M195,596 A4,4 0 1 1 195,604 A4,4 0 1 1 195,596" />
+    <path android:fillColor="#F48FB1" android:pathData="M145,618 A4,4 0 1 1 145,626 A4,4 0 1 1 145,618" />
+    <path android:fillColor="#F48FB1" android:pathData="M195,618 A4,4 0 1 1 195,626 A4,4 0 1 1 195,618" />
+
+</vector>

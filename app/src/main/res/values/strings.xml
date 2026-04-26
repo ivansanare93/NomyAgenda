@@ -208,4 +208,10 @@
     <string name="diary_bg_halloween">Halloween</string>
     <string name="diary_bg_valentines">San Valentín</string>
     <string name="diary_bg_easter">Pascua</string>
+    <string name="diary_bg_birthday">Cumpleaños</string>
+    <string name="diary_bg_birthday_pastel">Cumpleaños pastel</string>
+    <string name="diary_bg_valentines_roses">San Valentín rosas</string>
+    <string name="diary_bg_valentines_pastel">San Valentín pastel</string>
+    <string name="diary_bg_new_year">Año Nuevo</string>
+    <string name="diary_bg_spring">Primavera</string>
 </resources>

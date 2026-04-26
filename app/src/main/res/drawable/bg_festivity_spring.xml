@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: pale blush green -->
+    <path android:fillColor="#F1FBF5" android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Cherry blossom petals (5-petal flowers scattered) -->
+    <!-- Blossom at (60, 80) -->
+    <group android:translateX="60" android:translateY="80">
+        <path android:fillColor="#F8BBD9" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (280, 55) (small) -->
+    <group android:scaleX="0.75" android:scaleY="0.75" android:translateX="280" android:translateY="55">
+        <path android:fillColor="#FCE4EC" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (170, 175) (large) -->
+    <group android:scaleX="1.2" android:scaleY="1.2" android:translateX="170" android:translateY="175">
+        <path android:fillColor="#F8BBD9" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#E91E63" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (330, 230) (small) -->
+    <group android:scaleX="0.8" android:scaleY="0.8" android:translateX="330" android:translateY="230">
+        <path android:fillColor="#FCE4EC" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (45, 380) -->
+    <group android:scaleX="0.9" android:scaleY="0.9" android:translateX="45" android:translateY="380">
+        <path android:fillColor="#F8BBD9" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (230, 420) (larger) -->
+    <group android:scaleX="1.1" android:scaleY="1.1" android:translateX="230" android:translateY="420">
+        <path android:fillColor="#FCE4EC" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (130, 560) -->
+    <group android:translateX="130" android:translateY="560">
+        <path android:fillColor="#F8BBD9" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#E91E63" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (310, 600) (small) -->
+    <group android:scaleX="0.75" android:scaleY="0.75" android:translateX="310" android:translateY="600">
+        <path android:fillColor="#FCE4EC" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Blossom at (60, 680) -->
+    <group android:scaleX="0.85" android:scaleY="0.85" android:translateX="60" android:translateY="680">
+        <path android:fillColor="#F8BBD9" android:pathData="M0,-12 A5,5 0 1 1 0,-2 A5,5 0 1 1 0,-12 M8.5,-4 A5,5 0 1 1 8.5,6 A5,5 0 1 1 8.5,-4 M5.3,9 A5,5 0 1 1 5.3,19 A5,5 0 1 1 5.3,9 M-5.3,9 A5,5 0 1 1 -5.3,19 A5,5 0 1 1 -5.3,9 M-8.5,-4 A5,5 0 1 1 -8.5,6 A5,5 0 1 1 -8.5,-4" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,-3 A4,4 0 1 1 0,5 A4,4 0 1 1 0,-3" />
+    </group>
+
+    <!-- Falling petals (single oval shapes) -->
+    <path android:fillColor="#F8BBD9" android:pathData="M115,35 A5,8 0 1 1 115,51 A5,8 0 1 1 115,35" />
+    <path android:fillColor="#FCE4EC" android:pathData="M210,95 A4,7 0 1 1 210,109 A4,7 0 1 1 210,95" />
+    <path android:fillColor="#F8BBD9" android:pathData="M345,120 A4,7 0 1 1 345,134 A4,7 0 1 1 345,120" />
+    <path android:fillColor="#FCE4EC" android:pathData="M15,290 A5,8 0 1 1 15,306 A5,8 0 1 1 15,290" />
+    <path android:fillColor="#F8BBD9" android:pathData="M355,450 A4,7 0 1 1 355,464 A4,7 0 1 1 355,450" />
+    <path android:fillColor="#FCE4EC" android:pathData="M30,520 A5,8 0 1 1 30,536 A5,8 0 1 1 30,520" />
+    <path android:fillColor="#F8BBD9" android:pathData="M200,640 A4,7 0 1 1 200,654 A4,7 0 1 1 200,640" />
+
+    <!-- Butterfly at (200, 310) -->
+    <group android:translateX="200" android:translateY="310">
+        <!-- Left upper wing -->
+        <path android:fillColor="#80CBC4" android:pathData="M0,0 Q-30,-25 -40,-10 Q-30,5 0,0" />
+        <!-- Left lower wing -->
+        <path android:fillColor="#A5D6A7" android:pathData="M0,0 Q-25,10 -30,25 Q-15,20 0,0" />
+        <!-- Right upper wing -->
+        <path android:fillColor="#80CBC4" android:pathData="M0,0 Q30,-25 40,-10 Q30,5 0,0" />
+        <!-- Right lower wing -->
+        <path android:fillColor="#A5D6A7" android:pathData="M0,0 Q25,10 30,25 Q15,20 0,0" />
+        <!-- Body -->
+        <path android:fillColor="#4E342E" android:pathData="M0,-10 A3,10 0 1 1 0,10 A3,10 0 1 1 0,-10" />
+    </group>
+
+    <!-- Second smaller butterfly at (120, 480) -->
+    <group android:scaleX="0.65" android:scaleY="0.65" android:translateX="120" android:translateY="480">
+        <path android:fillColor="#CE93D8" android:pathData="M0,0 Q-30,-25 -40,-10 Q-30,5 0,0" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,0 Q-25,10 -30,25 Q-15,20 0,0" />
+        <path android:fillColor="#CE93D8" android:pathData="M0,0 Q30,-25 40,-10 Q30,5 0,0" />
+        <path android:fillColor="#F48FB1" android:pathData="M0,0 Q25,10 30,25 Q15,20 0,0" />
+        <path android:fillColor="#4E342E" android:pathData="M0,-10 A3,10 0 1 1 0,10 A3,10 0 1 1 0,-10" />
+    </group>
+
+    <!-- Branch line top-left -->
+    <path android:fillColor="#00000000" android:pathData="M0,140 Q40,80 90,100 Q130,115 120,160" android:strokeColor="#8D6E63" android:strokeWidth="3" />
+    <!-- Branch line top-right -->
+    <path android:fillColor="#00000000" android:pathData="M360,100 Q320,60 280,85 Q250,105 260,150" android:strokeColor="#8D6E63" android:strokeWidth="3" />
+
+</vector>

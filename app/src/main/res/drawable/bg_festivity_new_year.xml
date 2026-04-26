@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: deep midnight blue -->
+    <path android:fillColor="#0D1B3E" android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Stars scattered -->
+    <path android:fillColor="#FFFFFF" android:pathData="M30,40 A2,2 0 1 1 30,44 A2,2 0 1 1 30,40" />
+    <path android:fillColor="#FFFFFF" android:pathData="M80,25 A1.5,1.5 0 1 1 80,28 A1.5,1.5 0 1 1 80,25" />
+    <path android:fillColor="#FFFFFF" android:pathData="M150,15 A2,2 0 1 1 150,19 A2,2 0 1 1 150,15" />
+    <path android:fillColor="#FFFFFF" android:pathData="M240,30 A1.5,1.5 0 1 1 240,33 A1.5,1.5 0 1 1 240,30" />
+    <path android:fillColor="#FFFFFF" android:pathData="M310,20 A2,2 0 1 1 310,24 A2,2 0 1 1 310,20" />
+    <path android:fillColor="#FFFFFF" android:pathData="M350,55 A1.5,1.5 0 1 1 350,58 A1.5,1.5 0 1 1 350,55" />
+    <path android:fillColor="#FFFDE7" android:pathData="M10,110 A2,2 0 1 1 10,114 A2,2 0 1 1 10,110" />
+    <path android:fillColor="#FFFFFF" android:pathData="M55,180 A1.5,1.5 0 1 1 55,183 A1.5,1.5 0 1 1 55,180" />
+    <path android:fillColor="#FFFFFF" android:pathData="M340,140 A2,2 0 1 1 340,144 A2,2 0 1 1 340,140" />
+    <path android:fillColor="#FFFDE7" android:pathData="M290,85 A1.5,1.5 0 1 1 290,88 A1.5,1.5 0 1 1 290,85" />
+    <path android:fillColor="#FFFFFF" android:pathData="M120,300 A1.5,1.5 0 1 1 120,303 A1.5,1.5 0 1 1 120,300" />
+    <path android:fillColor="#FFFFFF" android:pathData="M350,310 A2,2 0 1 1 350,314 A2,2 0 1 1 350,310" />
+
+    <!-- Firework burst 1 at (80, 160) - gold -->
+    <group android:translateX="80" android:translateY="160">
+        <path android:fillColor="#00000000" android:pathData="M0,0 L0,-40" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L28,-28" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L40,0" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L28,28" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L0,40" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-28,28" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-40,0" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-28,-28" android:strokeColor="#FFD600" android:strokeWidth="2" />
+        <!-- Sparkle dots at tips -->
+        <path android:fillColor="#FFFF00" android:pathData="M0,-42 A3,3 0 1 1 0,-36 A3,3 0 1 1 0,-42" />
+        <path android:fillColor="#FFD600" android:pathData="M38,-2 A3,3 0 1 1 38,4 A3,3 0 1 1 38,-2" />
+        <path android:fillColor="#FFFF00" android:pathData="M-2,38 A3,3 0 1 1 -2,44 A3,3 0 1 1 -2,38" />
+        <path android:fillColor="#FFD600" android:pathData="M-42,-2 A3,3 0 1 1 -42,4 A3,3 0 1 1 -42,-2" />
+    </group>
+
+    <!-- Firework burst 2 at (290, 120) - pink/magenta -->
+    <group android:translateX="290" android:translateY="120">
+        <path android:fillColor="#00000000" android:pathData="M0,0 L0,-35" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L25,-25" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L35,0" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L25,25" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L0,35" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-25,25" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-35,0" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-25,-25" android:strokeColor="#FF4081" android:strokeWidth="2" />
+        <path android:fillColor="#FF4081" android:pathData="M0,-37 A3,3 0 1 1 0,-31 A3,3 0 1 1 0,-37" />
+        <path android:fillColor="#FF80AB" android:pathData="M33,-2 A3,3 0 1 1 33,4 A3,3 0 1 1 33,-2" />
+        <path android:fillColor="#FF4081" android:pathData="M-2,33 A3,3 0 1 1 -2,39 A3,3 0 1 1 -2,33" />
+        <path android:fillColor="#FF80AB" android:pathData="M-37,-2 A3,3 0 1 1 -37,4 A3,3 0 1 1 -37,-2" />
+    </group>
+
+    <!-- Firework burst 3 at (190, 260) - cyan/aqua (smaller) -->
+    <group android:scaleX="0.75" android:scaleY="0.75" android:translateX="190" android:translateY="260">
+        <path android:fillColor="#00000000" android:pathData="M0,0 L0,-40" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L28,-28" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L40,0" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L28,28" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L0,40" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-28,28" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-40,0" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#00000000" android:pathData="M0,0 L-28,-28" android:strokeColor="#40C4FF" android:strokeWidth="2" />
+        <path android:fillColor="#40C4FF" android:pathData="M0,-42 A3,3 0 1 1 0,-36 A3,3 0 1 1 0,-42" />
+        <path android:fillColor="#80D8FF" android:pathData="M38,-2 A3,3 0 1 1 38,4 A3,3 0 1 1 38,-2" />
+        <path android:fillColor="#40C4FF" android:pathData="M-2,38 A3,3 0 1 1 -2,44 A3,3 0 1 1 -2,38" />
+        <path android:fillColor="#80D8FF" android:pathData="M-42,-2 A3,3 0 1 1 -42,4 A3,3 0 1 1 -42,-2" />
+    </group>
+
+    <!-- Champagne glasses at (160, 520) -->
+    <!-- Left glass -->
+    <path android:fillColor="#00000000" android:pathData="M148,465 Q142,490 152,510 L162,510 Q172,490 166,465 Z" android:strokeColor="#FFD600" android:strokeWidth="1.5" />
+    <path android:fillColor="#FFD60030" android:pathData="M148,465 Q142,490 152,510 L162,510 Q172,490 166,465 Z" />
+    <path android:fillColor="#00000000" android:pathData="M152,510 L162,510 L157,510 L157,530" android:strokeColor="#FFD600" android:strokeWidth="1.5" />
+    <path android:fillColor="#00000000" android:pathData="M150,530 H164" android:strokeColor="#FFD600" android:strokeWidth="1.5" />
+    <!-- Right glass -->
+    <path android:fillColor="#00000000" android:pathData="M174,465 Q168,490 178,510 L188,510 Q198,490 192,465 Z" android:strokeColor="#FFD600" android:strokeWidth="1.5" />
+    <path android:fillColor="#FFD60030" android:pathData="M174,465 Q168,490 178,510 L188,510 Q198,490 192,465 Z" />
+    <path android:fillColor="#00000000" android:pathData="M178,510 L188,510 L183,510 L183,530" android:strokeColor="#FFD600" android:strokeWidth="1.5" />
+    <path android:fillColor="#00000000" android:pathData="M176,530 H190" android:strokeColor="#FFD600" android:strokeWidth="1.5" />
+    <!-- Glasses clinking -->
+    <path android:fillColor="#00000000" android:pathData="M164,470 L173,470" android:strokeColor="#FFFFFF" android:strokeWidth="1" />
+    <!-- Bubbles rising from glasses -->
+    <path android:fillColor="#FFD600" android:pathData="M155,460 A3,3 0 1 1 155,454 A3,3 0 1 1 155,460" />
+    <path android:fillColor="#FFD600" android:pathData="M159,450 A2,2 0 1 1 159,446 A2,2 0 1 1 159,450" />
+    <path android:fillColor="#FFFFFF" android:pathData="M152,445 A2,2 0 1 1 152,441 A2,2 0 1 1 152,445" />
+    <path android:fillColor="#FFD600" android:pathData="M181,460 A3,3 0 1 1 181,454 A3,3 0 1 1 181,460" />
+    <path android:fillColor="#FFFFFF" android:pathData="M185,450 A2,2 0 1 1 185,446 A2,2 0 1 1 185,450" />
+    <path android:fillColor="#FFD600" android:pathData="M178,443 A2,2 0 1 1 178,439 A2,2 0 1 1 178,443" />
+
+    <!-- Gold star ornament at top center -->
+    <path android:fillColor="#FFD600" android:pathData="M180,28 L183,38 L193,38 L185,44 L188,54 L180,48 L172,54 L175,44 L167,38 L177,38 Z" />
+
+    <!-- Confetti/sparkles bottom half -->
+    <path android:fillColor="#FF4081" android:pathData="M50,580 A3,3 0 1 1 50,586 A3,3 0 1 1 50,580" />
+    <path android:fillColor="#FFD600" android:pathData="M310,560 A3,3 0 1 1 310,566 A3,3 0 1 1 310,560" />
+    <path android:fillColor="#40C4FF" android:pathData="M100,640 A3,3 0 1 1 100,646 A3,3 0 1 1 100,640" />
+    <path android:fillColor="#FFFFFF" android:pathData="M260,670 A2,2 0 1 1 260,674 A2,2 0 1 1 260,670" />
+    <path android:fillColor="#FF4081" android:pathData="M170,700 A2,2 0 1 1 170,704 A2,2 0 1 1 170,700" />
+    <path android:fillColor="#FFD600" android:pathData="M330,700 A3,3 0 1 1 330,706 A3,3 0 1 1 330,700" />
+    <path android:fillColor="#40C4FF" android:pathData="M25,695 A2,2 0 1 1 25,699 A2,2 0 1 1 25,695" />
+
+</vector>
