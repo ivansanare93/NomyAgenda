@@ -86,6 +86,14 @@ class DiaryAdapter(
 
             binding.root.setOnClickListener { onClick(entry) }
             binding.root.setOnLongClickListener { onLongClick(entry); true }
+
+            val bgDrawableRes = DiaryBackgroundCatalog.resolveDrawable(entry.background)
+            if (bgDrawableRes != 0) {
+                binding.imageDiaryItemBg.setImageResource(bgDrawableRes)
+                binding.imageDiaryItemBg.visibility = View.VISIBLE
+            } else {
+                binding.imageDiaryItemBg.visibility = View.GONE
+            }
         }
     }
 
