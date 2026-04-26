@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
+import com.nomyagenda.app.ui.resolveThemeColor
+import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.data.local.entity.ChecklistItem
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.preferences.SettingsRepository
@@ -346,13 +348,35 @@ class EntryEditorFragment : Fragment() {
         setupColorSwatches(binding.colorSwatchesContainer) { hex ->
             selectedColor = hex
             updateSwatchSelection(binding.colorSwatchesContainer, hex)
+            applyTitleColorPreview(hex)
         }
         setupColorSwatches(binding.colorSwatchesContainerContent) { hex ->
             selectedContentColor = hex
             updateSwatchSelection(binding.colorSwatchesContainerContent, hex)
+            applyContentColorPreview(hex)
         }
         updateSwatchSelection(binding.colorSwatchesContainer, "")
         updateSwatchSelection(binding.colorSwatchesContainerContent, "")
+    }
+
+    private fun applyTitleColorPreview(hexColor: String) {
+        applyTextColorToView(binding.editEntryTitle, hexColor)
+    }
+
+    private fun applyContentColorPreview(hexColor: String) {
+        applyTextColorToView(binding.editNoteContent, hexColor)
+    }
+
+    private fun applyTextColorToView(view: android.widget.TextView, hexColor: String) {
+        if (hexColor.isNotEmpty()) {
+            try {
+                view.setTextColor(Color.parseColor(hexColor))
+            } catch (_: IllegalArgumentException) { /* ignore invalid colour */ }
+        } else {
+            view.setTextColor(
+                requireContext().resolveThemeColor(MaterialR.attr.colorOnBackground)
+            )
+        }
     }
 
     private fun setupColorSwatches(container: android.widget.LinearLayout, onSelect: (String) -> Unit) {
@@ -394,11 +418,13 @@ class EntryEditorFragment : Fragment() {
     private fun selectEntryColor(hexColor: String) {
         selectedColor = hexColor
         updateSwatchSelection(binding.colorSwatchesContainer, hexColor)
+        applyTitleColorPreview(hexColor)
     }
 
     private fun selectEntryContentColor(hexColor: String) {
         selectedContentColor = hexColor
         updateSwatchSelection(binding.colorSwatchesContainerContent, hexColor)
+        applyContentColorPreview(hexColor)
     }
 
     private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
