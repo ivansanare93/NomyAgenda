@@ -4,16 +4,15 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
 import com.nomyagenda.app.ui.editor.ChecklistManager
-import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -51,7 +50,7 @@ class AgendaAdapter(
             val titleColor = if (entry.color.isNotEmpty()) {
                 Color.parseColor(entry.color)
             } else {
-                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+                ContextCompat.getColor(context, R.color.md_theme_light_onSurface)
             }
             binding.textEntryTitle.setTextColor(titleColor)
 
@@ -83,7 +82,7 @@ class AgendaAdapter(
             val contentColor = if (entry.contentColor.isNotEmpty()) {
                 Color.parseColor(entry.contentColor)
             } else {
-                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+                ContextCompat.getColor(context, R.color.md_theme_light_onSurface)
             }
             binding.textEntryPreview.setTextColor(contentColor)
 

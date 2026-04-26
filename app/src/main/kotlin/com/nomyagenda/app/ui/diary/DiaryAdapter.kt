@@ -4,13 +4,13 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.R as MaterialR
+import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.databinding.ItemDiaryEntryBinding
-import com.nomyagenda.app.ui.resolveThemeColor
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -40,7 +40,7 @@ class DiaryAdapter(
             val titleColor = if (entry.color.isNotEmpty()) {
                 Color.parseColor(entry.color)
             } else {
-                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+                ContextCompat.getColor(context, R.color.md_theme_light_onSurface)
             }
             binding.textDiaryEntryDate.setTextColor(titleColor)
             binding.textDiaryEntryTitle.setTextColor(titleColor)
@@ -48,7 +48,7 @@ class DiaryAdapter(
             val contentColor = if (entry.contentColor.isNotEmpty()) {
                 Color.parseColor(entry.contentColor)
             } else {
-                context.resolveThemeColor(MaterialR.attr.colorOnSurface)
+                ContextCompat.getColor(context, R.color.md_theme_light_onSurface)
             }
             binding.textDiaryEntryPreview.setTextColor(contentColor)
 
