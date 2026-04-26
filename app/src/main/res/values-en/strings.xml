@@ -41,6 +41,8 @@
     <string name="hint_category">Category (optional)</string>
     <string name="add_item">Add item</string>
     <string name="editor_title">Edit entry</string>
+    <string name="entry_detail_title">View entry</string>
+    <string name="edit">Edit</string>
     <string name="entry_saved">Saved</string>
     <string name="error_title_required">Title is required</string>
     <string name="search_hint">Search by title, content, tag or category…</string>

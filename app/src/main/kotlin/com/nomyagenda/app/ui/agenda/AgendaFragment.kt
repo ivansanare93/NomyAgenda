@@ -258,8 +258,13 @@ class AgendaFragment : Fragment() {
     }
 
     private fun openEditor(entryId: Int) {
-        val action = AgendaFragmentDirections.actionAgendaFragmentToEntryEditorFragment(entryId)
-        findNavController().navigate(action)
+        if (entryId == 0) {
+            val action = AgendaFragmentDirections.actionAgendaFragmentToEntryEditorFragment(entryId)
+            findNavController().navigate(action)
+        } else {
+            val action = AgendaFragmentDirections.actionAgendaFragmentToEntryDetailFragment(entryId)
+            findNavController().navigate(action)
+        }
     }
 
     private fun confirmDelete(entry: AgendaEntry) {
