@@ -15,9 +15,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.databinding.FragmentDiaryEntryEditorBinding
+import com.nomyagenda.app.ui.resolveThemeColor
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -57,6 +59,7 @@ class DiaryEntryEditorFragment : Fragment() {
         setupToolbar()
         setupMoodChips()
         setupColorPicker()
+        setupBackgroundPicker()
         setupPhotos()
 
         val defaultDateKey = if (args.dateKey.isNotEmpty()) args.dateKey else DiaryFragment.todayDateKey()
@@ -173,6 +176,81 @@ class DiaryEntryEditorFragment : Fragment() {
         }
     }
 
+    private fun setupBackgroundPicker() {
+        setupBackgroundSwatches(binding.bgSwatchesBasic, DiaryBackgroundCatalog.basicBackgrounds)
+        setupBackgroundSwatches(binding.bgSwatchesThematic, DiaryBackgroundCatalog.thematicBackgrounds)
+        setupBackgroundSwatches(binding.bgSwatchesFestive, DiaryBackgroundCatalog.festiveBackgrounds)
+    }
+
+    private fun setupBackgroundSwatches(container: LinearLayout, backgrounds: List<DiaryBackgroundItem>) {
+        val size = resources.getDimensionPixelSize(R.dimen.bg_swatch_size)
+        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+        val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
+
+        backgrounds.forEach { item ->
+            val swatch = FrameLayout(requireContext()).apply {
+                tag = item.key
+                layoutParams = LinearLayout.LayoutParams(size, size).apply {
+                    setMargins(margin, margin, margin, margin)
+                }
+                clipToOutline = true
+                outlineProvider = android.view.ViewOutlineProvider.BACKGROUND
+                if (item.drawableRes != 0) {
+                    background = ContextCompat.getDrawable(requireContext(), item.drawableRes)
+                } else {
+                    background = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadii = FloatArray(8) { cornerRadius }
+                        setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                        setStroke(strokeWidth, Color.LTGRAY)
+                    }
+                    val noneLabel = android.widget.TextView(requireContext()).apply {
+                        text = "✕"
+                        textSize = 18f
+                        gravity = android.view.Gravity.CENTER
+                        setTextColor(Color.LTGRAY)
+                        layoutParams = FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.MATCH_PARENT
+                        )
+                    }
+                    addView(noneLabel)
+                }
+                setOnClickListener {
+                    viewModel.background.value = item.key
+                }
+            }
+            container.addView(swatch)
+        }
+    }
+
+    private fun updateBackgroundSelection(selectedKey: String) {
+        val containers = listOf(binding.bgSwatchesBasic, binding.bgSwatchesThematic, binding.bgSwatchesFestive)
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+        val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
+
+        containers.forEach { container ->
+            for (i in 0 until container.childCount) {
+                val swatch = container.getChildAt(i) as? FrameLayout ?: continue
+                val key = swatch.tag as? String ?: continue
+                val isSelected = key == selectedKey
+
+                if (isSelected) {
+                    val selectionOverlay = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadii = FloatArray(8) { cornerRadius }
+                        setStroke(strokeWidth, requireContext().resolveThemeColor(MaterialR.attr.colorPrimary))
+                        setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                    }
+                    swatch.foreground = selectionOverlay
+                } else {
+                    swatch.foreground = null
+                }
+            }
+        }
+    }
+
     private fun setupPhotos() {
         photoAdapter = DiaryPhotoAdapter(onRemove = { path -> viewModel.removePhoto(path) })
         binding.recyclerPhotos.adapter = photoAdapter
@@ -219,6 +297,10 @@ class DiaryEntryEditorFragment : Fragment() {
 
         viewModel.contentColor.observe(viewLifecycleOwner) { selectedColor ->
             updateSwatchSelection(binding.colorSwatchesContainerDiaryContent, selectedColor ?: "")
+        }
+
+        viewModel.background.observe(viewLifecycleOwner) { bgKey ->
+            updateBackgroundSelection(bgKey ?: "")
         }
 
         viewModel.isSaved.observe(viewLifecycleOwner) { saved ->

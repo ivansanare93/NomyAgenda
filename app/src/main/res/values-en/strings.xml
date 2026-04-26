@@ -190,4 +190,20 @@
     <string name="diary_photo_desc">Diary photo</string>
     <string name="diary_saved">Entry saved</string>
     <string name="diary_detail_title">View diary entry</string>
+
+    <!-- Diary backgrounds -->
+    <string name="diary_background_label">Entry background</string>
+    <string name="diary_background_basic">Basic</string>
+    <string name="diary_background_thematic">Thematic</string>
+    <string name="diary_background_festive">Festivities</string>
+    <string name="diary_bg_none">None</string>
+    <string name="diary_bg_basic_cream">Cream</string>
+    <string name="diary_bg_basic_sky">Sky</string>
+    <string name="diary_bg_basic_mint">Mint</string>
+    <string name="diary_bg_basic_lavender">Lavender</string>
+    <string name="diary_bg_basic_rose">Rose</string>
+    <string name="diary_bg_christmas">Christmas</string>
+    <string name="diary_bg_halloween">Halloween</string>
+    <string name="diary_bg_valentines">Valentine\'s Day</string>
+    <string name="diary_bg_easter">Easter</string>
 </resources>

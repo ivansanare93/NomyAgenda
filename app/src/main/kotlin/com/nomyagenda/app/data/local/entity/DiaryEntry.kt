@@ -13,6 +13,7 @@ data class DiaryEntry(
     val photoPaths: String = "[]",   // JSON array of absolute file paths
     val color: String = "",
     val contentColor: String = "",
+    val background: String = "",
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

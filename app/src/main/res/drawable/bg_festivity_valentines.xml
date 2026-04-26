@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="720dp"
+    android:viewportWidth="360"
+    android:viewportHeight="720">
+
+    <!-- Background: soft rose -->
+    <path
+        android:fillColor="#FFF0F4"
+        android:pathData="M0,0 H360 V720 H0 Z" />
+
+    <!-- Large heart center -->
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M180,340 C180,340 140,305 140,280 C140,260 155,250 170,255 C175,257 180,262 180,262 C180,262 185,257 190,255 C205,250 220,260 220,280 C220,305 180,340 180,340 Z" />
+
+    <!-- Heart at (60, 80) -->
+    <path
+        android:fillColor="#F06292"
+        android:pathData="M60,95 C60,95 42,78 42,66 C42,56 50,50 58,53 C59,54 60,56 60,56 C60,56 61,54 62,53 C70,50 78,56 78,66 C78,78 60,95 60,95 Z" />
+
+    <!-- Heart at (300, 150) -->
+    <path
+        android:fillColor="#EC407A"
+        android:pathData="M300,165 C300,165 282,148 282,136 C282,126 290,120 298,123 C299,124 300,126 300,126 C300,126 301,124 302,123 C310,120 318,126 318,136 C318,148 300,165 300,165 Z" />
+
+    <!-- Heart at (40, 280) smaller -->
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M40,292 C40,292 26,279 26,270 C26,263 32,258 38,261 C39,261.5 40,263 40,263 C40,263 41,261.5 42,261 C48,258 54,263 54,270 C54,279 40,292 40,292 Z" />
+
+    <!-- Heart at (320, 460) smaller -->
+    <path
+        android:fillColor="#E91E63"
+        android:pathData="M320,472 C320,472 306,459 306,450 C306,443 312,438 318,441 C319,441.5 320,443 320,443 C320,443 321,441.5 322,441 C328,438 334,443 334,450 C334,459 320,472 320,472 Z" />
+
+    <!-- Heart at (160, 560) -->
+    <path
+        android:fillColor="#F06292"
+        android:pathData="M160,578 C160,578 142,561 142,549 C142,539 150,533 158,536 C159,537 160,539 160,539 C160,539 161,537 162,536 C170,533 178,539 178,549 C178,561 160,578 160,578 Z" />
+
+    <!-- Heart at (80, 650) smaller -->
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M80,662 C80,662 66,649 66,640 C66,633 72,628 78,631 C79,631.5 80,633 80,633 C80,633 81,631.5 82,631 C88,628 94,633 94,640 C94,649 80,662 80,662 Z" />
+
+    <!-- Heart at (260, 680) smaller -->
+    <path
+        android:fillColor="#EC407A"
+        android:pathData="M260,692 C260,692 246,679 246,670 C246,663 252,658 258,661 C259,661.5 260,663 260,663 C260,663 261,661.5 262,661 C268,658 274,663 274,670 C274,679 260,692 260,692 Z" />
+
+    <!-- Small heart sprinkles -->
+    <path android:fillColor="#F8BBD9" android:pathData="M130,180 C130,180 123,173 123,168 C123,164 126,162 129,163.5 L130,165 L131,163.5 C134,162 137,164 137,168 C137,173 130,180 130,180 Z" />
+    <path android:fillColor="#F8BBD9" android:pathData="M230,420 C230,420 223,413 223,408 C223,404 226,402 229,403.5 L230,405 L231,403.5 C234,402 237,404 237,408 C237,413 230,420 230,420 Z" />
+    <path android:fillColor="#FCE4EC" android:pathData="M355,55 C355,55 348,48 348,43 C348,39 351,37 354,38.5 L355,40 L356,38.5 C359,37 362,39 362,43 C362,48 355,55 355,55 Z" />
+    <path android:fillColor="#FCE4EC" android:pathData="M15,500 C15,500 8,493 8,488 C8,484 11,482 14,483.5 L15,485 L16,483.5 C19,482 22,484 22,488 C22,493 15,500 15,500 Z" />
+
+    <!-- Roses / flowers accent -->
+    <path android:fillColor="#F48FB1" android:pathData="M200,50 A8,8 0 1 1 200,66 A8,8 0 1 1 200,50" />
+    <path android:fillColor="#E91E63" android:pathData="M200,54 A4,4 0 1 1 200,62 A4,4 0 1 1 200,54" />
+
+</vector>

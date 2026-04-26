@@ -14,6 +14,7 @@
     <dimen name="color_swatch_size">40dp</dimen>
     <dimen name="color_swatch_margin">6dp</dimen>
     <dimen name="color_swatch_stroke_width">3dp</dimen>
+    <dimen name="bg_swatch_size">72dp</dimen>
 
     <dimen name="login_min_height">600dp</dimen>
     <dimen name="login_title_text_size">48sp</dimen>

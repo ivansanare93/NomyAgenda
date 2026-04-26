@@ -106,6 +106,14 @@ class DiaryEntryDetailFragment : Fragment() {
                 binding.textDetailPhotosLabel.visibility = View.GONE
                 binding.recyclerDetailPhotos.visibility = View.GONE
             }
+
+            val bgDrawableRes = DiaryBackgroundCatalog.resolveDrawable(entry.background)
+            if (bgDrawableRes != 0) {
+                binding.imageDiaryBg.setImageResource(bgDrawableRes)
+                binding.imageDiaryBg.visibility = View.VISIBLE
+            } else {
+                binding.imageDiaryBg.visibility = View.GONE
+            }
         }
 
         binding.fabEditDiaryEntry.setOnClickListener {
