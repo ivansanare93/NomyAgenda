@@ -15,8 +15,6 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.FragmentEntryDetailBinding
 import com.nomyagenda.app.ui.editor.ChecklistManager
-import com.nomyagenda.app.ui.editor.EntryEditorViewModel
-import com.nomyagenda.app.ui.editor.EntryEditorViewModelFactory
 import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
@@ -30,9 +28,9 @@ class EntryDetailFragment : Fragment() {
 
     private val args: EntryDetailFragmentArgs by navArgs()
 
-    private val viewModel: EntryEditorViewModel by viewModels {
+    private val viewModel: EntryDetailViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
-        EntryEditorViewModelFactory(app.agendaRepository, app)
+        EntryDetailViewModelFactory(app.agendaRepository)
     }
 
     private lateinit var markwon: Markwon
