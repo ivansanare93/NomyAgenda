@@ -14,11 +14,9 @@
     <group android:translateX="60" android:translateY="120">
         <path android:fillColor="#E65100" android:pathData="M0,-20 A20,20 0 1 1 0,20 A20,20 0 1 1 0,-20" />
         <path android:fillColor="#BF360C" android:pathData="M-12,-15 Q0,-5 12,-15 Q0,5 -12,-15" />
-        <path android:fillColor="#33691E" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" android:fillColor="#00000000" />
-        <!-- Jack-o-lantern eyes -->
+        <path android:fillColor="#00000000" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" />
         <path android:fillColor="#1A1A1A" android:pathData="M-10,-8 L-6,-4 L-2,-8 L-6,-12 Z" />
         <path android:fillColor="#1A1A1A" android:pathData="M2,-8 L6,-4 L10,-8 L6,-12 Z" />
-        <!-- Mouth -->
         <path android:fillColor="#1A1A1A" android:pathData="M-10,4 L-6,8 L0,6 L6,8 L10,4 L8,4 L6,6 L0,4 L-6,6 L-8,4 Z" />
     </group>
 
@@ -26,7 +24,7 @@
     <group android:translateX="280" android:translateY="300" android:scaleX="0.7" android:scaleY="0.7">
         <path android:fillColor="#F57C00" android:pathData="M0,-20 A20,20 0 1 1 0,20 A20,20 0 1 1 0,-20" />
         <path android:fillColor="#BF360C" android:pathData="M-12,-15 Q0,-5 12,-15 Q0,5 -12,-15" />
-        <path android:fillColor="#33691E" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" android:fillColor="#00000000" />
+        <path android:fillColor="#00000000" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" />
         <path android:fillColor="#1A1A1A" android:pathData="M-10,-8 L-6,-4 L-2,-8 L-6,-12 Z" />
         <path android:fillColor="#1A1A1A" android:pathData="M2,-8 L6,-4 L10,-8 L6,-12 Z" />
         <path android:fillColor="#1A1A1A" android:pathData="M-10,4 L-6,8 L0,6 L6,8 L10,4 L8,4 L6,6 L0,4 L-6,6 L-8,4 Z" />
@@ -36,7 +34,7 @@
     <group android:translateX="100" android:translateY="540" android:scaleX="0.6" android:scaleY="0.6">
         <path android:fillColor="#E65100" android:pathData="M0,-20 A20,20 0 1 1 0,20 A20,20 0 1 1 0,-20" />
         <path android:fillColor="#BF360C" android:pathData="M-12,-15 Q0,-5 12,-15 Q0,5 -12,-15" />
-        <path android:fillColor="#33691E" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" android:fillColor="#00000000" />
+        <path android:fillColor="#00000000" android:pathData="M-2,-20 Q0,-30 5,-22" android:strokeColor="#33691E" android:strokeWidth="2" />
         <path android:fillColor="#1A1A1A" android:pathData="M-10,-8 L-6,-4 L-2,-8 L-6,-12 Z" />
         <path android:fillColor="#1A1A1A" android:pathData="M2,-8 L6,-4 L10,-8 L6,-12 Z" />
         <path android:fillColor="#1A1A1A" android:pathData="M-10,4 L-6,8 L0,6 L6,8 L10,4 L8,4 L6,6 L0,4 L-6,6 L-8,4 Z" />

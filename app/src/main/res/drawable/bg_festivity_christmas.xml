@@ -98,13 +98,13 @@
     <path android:fillColor="#C62828" android:pathData="M315,50 A5,5 0 1 1 315,60 A5,5 0 1 1 315,50" />
     <path android:fillColor="#C62828" android:pathData="M327,44 A5,5 0 1 1 327,54 A5,5 0 1 1 327,44" />
     <path android:fillColor="#C62828" android:pathData="M322,58 A5,5 0 1 1 322,68 A5,5 0 1 1 322,58" />
-    <path android:fillColor="#388E3C" android:pathData="M310,48 Q320,38 330,48" android:strokeColor="#388E3C" android:strokeWidth="2" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M310,48 Q320,38 330,48" android:strokeColor="#388E3C" android:strokeWidth="2" />
 
     <!-- Red berries cluster bottom-left -->
     <path android:fillColor="#C62828" android:pathData="M30,650 A5,5 0 1 1 30,660 A5,5 0 1 1 30,650" />
     <path android:fillColor="#C62828" android:pathData="M42,644 A5,5 0 1 1 42,654 A5,5 0 1 1 42,644" />
     <path android:fillColor="#C62828" android:pathData="M37,658 A5,5 0 1 1 37,668 A5,5 0 1 1 37,658" />
-    <path android:fillColor="#388E3C" android:pathData="M25,648 Q35,638 45,648" android:strokeColor="#388E3C" android:strokeWidth="2" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M25,648 Q35,638 45,648" android:strokeColor="#388E3C" android:strokeWidth="2" />
 
     <!-- Gold star ornament -->
     <path

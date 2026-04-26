@@ -14,7 +14,7 @@
     <path
         android:fillColor="#F48FB1"
         android:pathData="M70,75 C50,75 40,90 40,108 C40,126 50,141 70,141 C90,141 100,126 100,108 C100,90 90,75 70,75 Z" />
-    <path android:fillColor="#E91E63" android:pathData="M45,100 Q70,92 95,100" android:strokeColor="#E91E63" android:strokeWidth="3" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M45,100 Q70,92 95,100" android:strokeColor="#E91E63" android:strokeWidth="3" />
     <path android:fillColor="#F8BBD9" android:pathData="M53,88 A4,4 0 1 1 53,96 A4,4 0 1 1 53,88" />
     <path android:fillColor="#F8BBD9" android:pathData="M70,80 A3,3 0 1 1 70,86 A3,3 0 1 1 70,80" />
 
@@ -22,7 +22,7 @@
     <path
         android:fillColor="#90CAF9"
         android:pathData="M220,38 C200,38 190,53 190,71 C190,89 200,104 220,104 C240,104 250,89 250,71 C250,53 240,38 220,38 Z" />
-    <path android:fillColor="#1E88E5" android:pathData="M195,63 Q220,55 245,63" android:strokeColor="#1E88E5" android:strokeWidth="3" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M195,63 Q220,55 245,63" android:strokeColor="#1E88E5" android:strokeWidth="3" />
     <path android:fillColor="#BBDEFB" android:pathData="M208,48 A3,3 0 1 1 208,54 A3,3 0 1 1 208,48" />
     <path android:fillColor="#BBDEFB" android:pathData="M228,42 A2,2 0 1 1 228,46 A2,2 0 1 1 228,42" />
 
@@ -30,27 +30,27 @@
     <path
         android:fillColor="#FFF176"
         android:pathData="M310,238 C290,238 280,253 280,271 C280,289 290,304 310,304 C330,304 340,289 340,271 C340,253 330,238 310,238 Z" />
-    <path android:fillColor="#F9A825" android:pathData="M285,263 Q310,255 335,263" android:strokeColor="#F9A825" android:strokeWidth="3" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M285,263 Q310,255 335,263" android:strokeColor="#F9A825" android:strokeWidth="3" />
     <path android:fillColor="#FFFDE7" android:pathData="M298,248 A3,3 0 1 1 298,254 A3,3 0 1 1 298,248" />
 
     <!-- Easter egg 4 at (50, 400) - purple -->
     <path
         android:fillColor="#CE93D8"
         android:pathData="M50,378 C30,378 20,393 20,411 C20,429 30,444 50,444 C70,444 80,429 80,411 C80,393 70,378 50,378 Z" />
-    <path android:fillColor="#8E24AA" android:pathData="M25,403 Q50,395 75,403" android:strokeColor="#8E24AA" android:strokeWidth="3" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M25,403 Q50,395 75,403" android:strokeColor="#8E24AA" android:strokeWidth="3" />
     <path android:fillColor="#F3E5F5" android:pathData="M35,390 A3,3 0 1 1 35,396 A3,3 0 1 1 35,390" />
 
     <!-- Easter egg 5 at (180, 460) - orange -->
     <path
         android:fillColor="#FFCC80"
         android:pathData="M180,438 C160,438 150,453 150,471 C150,489 160,504 180,504 C200,504 210,489 210,471 C210,453 200,438 180,438 Z" />
-    <path android:fillColor="#F57C00" android:pathData="M155,463 Q180,455 205,463" android:strokeColor="#F57C00" android:strokeWidth="3" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M155,463 Q180,455 205,463" android:strokeColor="#F57C00" android:strokeWidth="3" />
 
     <!-- Easter egg 6 at (290, 560) - green -->
     <path
         android:fillColor="#A5D6A7"
         android:pathData="M290,538 C270,538 260,553 260,571 C260,589 270,604 290,604 C310,604 320,589 320,571 C320,553 310,538 290,538 Z" />
-    <path android:fillColor="#2E7D32" android:pathData="M265,563 Q290,555 315,563" android:strokeColor="#2E7D32" android:strokeWidth="3" android:fillColor="#00000000" />
+    <path android:fillColor="#00000000" android:pathData="M265,563 Q290,555 315,563" android:strokeColor="#2E7D32" android:strokeWidth="3" />
     <path android:fillColor="#E8F5E9" android:pathData="M278,548 A3,3 0 1 1 278,554 A3,3 0 1 1 278,548" />
 
     <!-- Bunny silhouette at (160, 200) -->
