@@ -119,6 +119,14 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        viewModel.signOutError.observe(viewLifecycleOwner) { error ->
+            if (!error.isNullOrBlank()) {
+                binding.textBiometricError.text = error
+                binding.textBiometricError.visibility = View.VISIBLE
+                viewModel.consumeSignOutError()
+            }
+        }
+
         // ── Security / Lock section ──────────────────────────────────────────
 
         viewModel.lockType.observe(viewLifecycleOwner) { type ->

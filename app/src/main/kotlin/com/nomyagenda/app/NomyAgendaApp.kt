@@ -7,6 +7,7 @@ import com.nomyagenda.app.data.remote.FirestoreDataSource
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.data.repository.DiaryRepository
 import com.nomyagenda.app.notifications.NotificationHelper
+import com.nomyagenda.app.notifications.ReminderService
 import com.nomyagenda.app.security.AppLockManager
 
 class NomyAgendaApp : Application() {
@@ -29,6 +30,10 @@ class NomyAgendaApp : Application() {
 
     val lockManager: AppLockManager by lazy {
         AppLockManager(this)
+    }
+
+    val reminderService: ReminderService by lazy {
+        ReminderService(this)
     }
 
     override fun onCreate() {

@@ -1,23 +1,22 @@
 package com.nomyagenda.app.ui.agenda
 
-import android.app.Application
 import androidx.lifecycle.*
+import com.nomyagenda.app.core.datetime.toDateKey
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.repository.AgendaRepository
-import com.nomyagenda.app.notifications.NotificationHelper
+import com.nomyagenda.app.notifications.ReminderService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class AgendaViewModel(
     private val repository: AgendaRepository,
-    private val app: Application
-) : AndroidViewModel(app) {
+    private val reminderService: ReminderService
+) : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
     private val _filterType = MutableStateFlow<EntryType?>(null)
@@ -88,9 +87,7 @@ class AgendaViewModel(
 
     fun deleteEntry(entry: AgendaEntry) {
         viewModelScope.launch {
-            if (entry.type == EntryType.REMINDER) {
-                NotificationHelper.cancelReminder(app, entry.id)
-            }
+            reminderService.cancelForDeletedEntry(entry)
             repository.delete(entry)
         }
     }
@@ -122,25 +119,14 @@ class AgendaViewModel(
         }
     }
 
-    companion object {
-        fun Long.toDateKey(): String {
-            val cal = Calendar.getInstance()
-            cal.timeInMillis = this
-            return "%04d-%02d-%02d".format(
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH) + 1,
-                cal.get(Calendar.DAY_OF_MONTH)
-            )
-        }
-    }
 }
 
 class AgendaViewModelFactory(
     private val repository: AgendaRepository,
-    private val app: Application
+    private val reminderService: ReminderService
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return AgendaViewModel(repository, app) as T
+        return AgendaViewModel(repository, reminderService) as T
     }
 }

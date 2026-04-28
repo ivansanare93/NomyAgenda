@@ -24,7 +24,10 @@ class DiaryEntryEditorViewModel(
     val contentColor = MutableLiveData("")
     val background = MutableLiveData("")
     val photoPaths = MutableLiveData<List<String>>(emptyList())
-    val isSaved = MutableLiveData(false)
+    private val _saveSuccessEvent = MutableLiveData(false)
+    val saveSuccessEvent: LiveData<Boolean> = _saveSuccessEvent
+    private val _saveErrorEvent = MutableLiveData<String?>(null)
+    val saveErrorEvent: LiveData<String?> = _saveErrorEvent
 
     fun loadEntry(entryId: Int, defaultDateKey: String) {
         viewModelScope.launch {
@@ -88,9 +91,21 @@ class DiaryEntryEditorViewModel(
             updatedAt = now
         )
         viewModelScope.launch {
-            repository.upsert(entry)
-            isSaved.value = true
+            try {
+                repository.upsert(entry)
+                _saveSuccessEvent.value = true
+            } catch (_: Exception) {
+                _saveErrorEvent.value = "No se pudo guardar el diario"
+            }
         }
+    }
+
+    fun consumeSaveSuccessEvent() {
+        _saveSuccessEvent.value = false
+    }
+
+    fun consumeSaveErrorEvent() {
+        _saveErrorEvent.value = null
     }
 
     private fun parsePhotoPaths(json: String): List<String> {

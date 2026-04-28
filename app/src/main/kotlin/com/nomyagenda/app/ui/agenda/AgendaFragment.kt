@@ -18,13 +18,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
+import com.nomyagenda.app.core.datetime.toDateKey
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
 import com.nomyagenda.app.databinding.ItemCalendarDayBinding
-import com.nomyagenda.app.ui.agenda.AgendaViewModel.Companion.toDateKey
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -37,7 +37,7 @@ class AgendaFragment : Fragment() {
 
     private val viewModel: AgendaViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
-        AgendaViewModelFactory(app.agendaRepository, app)
+        AgendaViewModelFactory(app.agendaRepository, app.reminderService)
     }
 
     private lateinit var adapter: AgendaAdapter

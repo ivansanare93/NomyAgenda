@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nomyagenda.app.R
+import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.databinding.ItemDiaryEntryBinding
 import org.json.JSONArray
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class DiaryAdapter(
     private val onClick: (DiaryEntry) -> Unit,
@@ -35,7 +34,7 @@ class DiaryAdapter(
 
         fun bind(entry: DiaryEntry) {
             val context = binding.root.context
-            binding.textDiaryEntryDate.text = formatDateKey(entry.dateKey)
+            binding.textDiaryEntryDate.text = formatDiaryDateKey(entry.dateKey)
 
             val titleColor = if (entry.color.isNotEmpty()) {
                 Color.parseColor(entry.color)
@@ -100,18 +99,6 @@ class DiaryAdapter(
 
     companion object {
         private const val PREVIEW_MAX_CHARS = 150
-        private val DATE_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
-        private val DATE_PARSE_FORMAT = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-
-        private fun formatDateKey(dateKey: String): String {
-            return try {
-                val date = DATE_PARSE_FORMAT.parse(dateKey) ?: return dateKey
-                DATE_FORMAT.format(date).replaceFirstChar { it.uppercase() }
-            } catch (_: Exception) {
-                dateKey
-            }
-        }
-
         private fun countPhotos(photoPaths: String): Int {
             return try {
                 JSONArray(photoPaths).length()

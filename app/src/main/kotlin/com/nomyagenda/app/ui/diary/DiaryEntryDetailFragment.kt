@@ -12,11 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.NomyAgendaApp
+import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.databinding.FragmentDiaryEntryDetailBinding
 import com.nomyagenda.app.ui.resolveThemeColor
 import org.json.JSONArray
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class DiaryEntryDetailFragment : Fragment() {
 
@@ -58,7 +57,7 @@ class DiaryEntryDetailFragment : Fragment() {
         viewModel.entry.observe(viewLifecycleOwner) { entry ->
             if (entry == null) return@observe
 
-            binding.textDetailDiaryDate.text = formatDateKey(entry.dateKey)
+            binding.textDetailDiaryDate.text = formatDiaryDateKey(entry.dateKey)
 
             if (entry.mood.isNotEmpty()) {
                 binding.textDetailDiaryMood.visibility = View.VISIBLE
@@ -133,18 +132,6 @@ class DiaryEntryDetailFragment : Fragment() {
     }
 
     companion object {
-        private val DATE_PARSE_FORMAT = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        private val DATE_DISPLAY_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
-
-        private fun formatDateKey(dateKey: String): String {
-            return try {
-                val date = DATE_PARSE_FORMAT.parse(dateKey) ?: return dateKey
-                DATE_DISPLAY_FORMAT.format(date).replaceFirstChar { it.uppercase() }
-            } catch (_: Exception) {
-                dateKey
-            }
-        }
-
         private fun parsePhotoPaths(json: String): List<String> {
             return try {
                 val arr = JSONArray(json)

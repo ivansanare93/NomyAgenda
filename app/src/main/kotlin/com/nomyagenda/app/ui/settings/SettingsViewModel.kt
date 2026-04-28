@@ -45,6 +45,8 @@ class SettingsViewModel(
 
     /** Error string when biometric is unavailable; null otherwise. */
     val biometricError = MutableLiveData<String?>(null)
+    /** Error string when sign-out fails; null otherwise. */
+    val signOutError = MutableLiveData<String?>(null)
 
     fun consumeRecreateEvent() {
         recreateEvent.value = false
@@ -60,6 +62,10 @@ class SettingsViewModel(
 
     fun consumeBiometricError() {
         biometricError.value = null
+    }
+
+    fun consumeSignOutError() {
+        signOutError.value = null
     }
 
     fun setTheme(mode: String) {
@@ -132,13 +138,20 @@ class SettingsViewModel(
 
     fun signOut() {
         viewModelScope.launch {
-            agendaRepository.deleteAll()
+            try {
+                agendaRepository.deleteAll()
+            } catch (e: Exception) {
+                android.util.Log.w("SettingsViewModel", "Local delete failed on sign-out", e)
+                signOutError.value = "No se pudieron limpiar los datos locales"
+            }
+
             FirebaseAuth.getInstance().signOut()
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
             try {
                 GoogleSignIn.getClient(getApplication(), gso).signOut().await()
             } catch (e: Exception) {
                 android.util.Log.w("SettingsViewModel", "Google sign-out failed", e)
+                signOutError.value = "No se pudo cerrar sesion de Google"
             }
             signOutEvent.value = true
         }
