@@ -3,6 +3,7 @@
 
     <!-- Bottom Navigation -->
     <string name="nav_agenda">Agenda</string>
+    <string name="nav_calendar">Calendario</string>
     <string name="nav_settings">Ajustes</string>
     <string name="nav_back">Volver</string>
 
@@ -82,6 +83,15 @@
     <!-- Calendar week strip -->
     <string name="calendar_prev_week">Semana anterior</string>
     <string name="calendar_next_week">Semana siguiente</string>
+    <string name="calendar_prev_month">Mes anterior</string>
+    <string name="calendar_next_month">Mes siguiente</string>
+    <string name="calendar_weekday_monday">Lun</string>
+    <string name="calendar_weekday_tuesday">Mar</string>
+    <string name="calendar_weekday_wednesday">Mié</string>
+    <string name="calendar_weekday_thursday">Jue</string>
+    <string name="calendar_weekday_friday">Vie</string>
+    <string name="calendar_weekday_saturday">Sáb</string>
+    <string name="calendar_weekday_sunday">Dom</string>
 
     <!-- Placeholders -->
     <string name="settings_placeholder">Ajustes — próximamente</string>

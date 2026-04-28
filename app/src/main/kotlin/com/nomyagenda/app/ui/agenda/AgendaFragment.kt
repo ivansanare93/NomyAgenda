@@ -2,7 +2,6 @@ package com.nomyagenda.app.ui.agenda
 
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,20 +12,16 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
-import com.nomyagenda.app.core.datetime.toDateKey
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
-import com.nomyagenda.app.databinding.ItemCalendarDayBinding
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -43,11 +38,6 @@ class AgendaFragment : Fragment() {
     private lateinit var adapter: AgendaAdapter
 
     private val settingsRepository by lazy { SettingsRepository(requireContext()) }
-
-    // Calendar week strip state
-    private var currentWeekStart: Calendar = mondayOf(Calendar.getInstance())
-    private var selectedDateKey: String? = null
-    private val dayBindings = arrayOfNulls<ItemCalendarDayBinding>(7)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAgendaBinding.inflate(inflater, container, false)
@@ -79,11 +69,9 @@ class AgendaFragment : Fragment() {
 
         setupFilterChips()
         setupSortButton()
-        setupCalendarStrip()
 
-        viewModel.entryDates.observe(viewLifecycleOwner) { dates ->
-            updateCalendarDays(dates)
-        }
+        val selectedDateKey = arguments?.getString(ARG_SELECTED_DATE_KEY)
+        viewModel.setSelectedDate(selectedDateKey?.takeIf { it.isNotBlank() })
 
         binding.fabAddEvent.setOnClickListener { openEditor(0) }
 
@@ -132,96 +120,6 @@ class AgendaFragment : Fragment() {
             val bgColor = ta.getColor(0, 0xFFFFFFFF.toInt())
             ta.recycle()
             binding.root.setBackgroundColor(bgColor)
-        }
-    }
-
-    private fun setupCalendarStrip() {
-        // Inflate 7 day cells into the week LinearLayout
-        for (i in 0..6) {
-            val dayBinding = ItemCalendarDayBinding.inflate(layoutInflater, binding.layoutCalendarDays, false)
-            dayBinding.root.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            binding.layoutCalendarDays.addView(dayBinding.root)
-            dayBindings[i] = dayBinding
-            val index = i
-            dayBinding.root.setOnClickListener {
-                val day = currentWeekStart.clone() as Calendar
-                day.add(Calendar.DAY_OF_MONTH, index)
-                val dateKey = day.timeInMillis.toDateKey()
-                selectedDateKey = if (selectedDateKey == dateKey) null else dateKey
-                viewModel.setSelectedDate(selectedDateKey)
-                updateCalendarDays(viewModel.entryDates.value ?: emptySet())
-            }
-        }
-
-        binding.btnPrevWeek.setOnClickListener {
-            currentWeekStart.add(Calendar.WEEK_OF_YEAR, -1)
-            updateCalendarHeader()
-            updateCalendarDays(viewModel.entryDates.value ?: emptySet())
-        }
-
-        binding.btnNextWeek.setOnClickListener {
-            currentWeekStart.add(Calendar.WEEK_OF_YEAR, 1)
-            updateCalendarHeader()
-            updateCalendarDays(viewModel.entryDates.value ?: emptySet())
-        }
-
-        updateCalendarHeader()
-        updateCalendarDays(emptySet())
-    }
-
-    private fun updateCalendarHeader() {
-        val endOfWeek = currentWeekStart.clone() as Calendar
-        endOfWeek.add(Calendar.DAY_OF_MONTH, 6)
-        val startDay = currentWeekStart.get(Calendar.DAY_OF_MONTH)
-        val endDay = endOfWeek.get(Calendar.DAY_OF_MONTH)
-        val startMonth = currentWeekStart.get(Calendar.MONTH)
-        val endMonth = endOfWeek.get(Calendar.MONTH)
-        val weekHeaderText = if (startMonth == endMonth) {
-            "$startDay – $endDay ${MONTH_YEAR_FORMAT.format(endOfWeek.time)}"
-        } else {
-            "${DAY_MONTH_FORMAT.format(currentWeekStart.time)} – $endDay ${MONTH_YEAR_FORMAT.format(endOfWeek.time)}"
-        }
-        binding.textWeekRange.text = weekHeaderText
-    }
-
-    private fun updateCalendarDays(datesWithEntries: Set<String>) {
-        val todayKey = Calendar.getInstance().timeInMillis.toDateKey()
-        for (i in 0..6) {
-            val dayBinding = dayBindings[i] ?: continue
-            val day = currentWeekStart.clone() as Calendar
-            day.add(Calendar.DAY_OF_MONTH, i)
-            val dateKey = day.timeInMillis.toDateKey()
-
-            dayBinding.textDayName.text = DAY_NAME_FORMAT.format(day.time).uppercase()
-            dayBinding.textDayNumber.text = day.get(Calendar.DAY_OF_MONTH).toString()
-            dayBinding.dotEntries.visibility =
-                if (datesWithEntries.contains(dateKey)) View.VISIBLE else View.INVISIBLE
-
-            val isSelected = dateKey == selectedDateKey
-            val isToday = dateKey == todayKey
-            val ctx = requireContext()
-            when {
-                isSelected -> {
-                    dayBinding.textDayNumber.background =
-                        ContextCompat.getDrawable(ctx, R.drawable.bg_calendar_day_selected)
-                    dayBinding.textDayNumber.setTextColor(
-                        MaterialColors.getColor(dayBinding.root, com.google.android.material.R.attr.colorOnPrimary)
-                    )
-                }
-                isToday -> {
-                    dayBinding.textDayNumber.background =
-                        ContextCompat.getDrawable(ctx, R.drawable.bg_calendar_day_today)
-                    dayBinding.textDayNumber.setTextColor(
-                        MaterialColors.getColor(dayBinding.root, com.google.android.material.R.attr.colorPrimary)
-                    )
-                }
-                else -> {
-                    dayBinding.textDayNumber.background = null
-                    dayBinding.textDayNumber.setTextColor(
-                        MaterialColors.getColor(dayBinding.root, com.google.android.material.R.attr.colorOnBackground)
-                    )
-                }
-            }
         }
     }
 
@@ -285,22 +183,7 @@ class AgendaFragment : Fragment() {
     }
 
     companion object {
+        const val ARG_SELECTED_DATE_KEY = "selectedDateKey"
         private val HEADER_DATE_FORMAT = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es"))
-        private val DAY_NAME_FORMAT = SimpleDateFormat("EEE", Locale.getDefault())
-        private val MONTH_YEAR_FORMAT = SimpleDateFormat("MMM yyyy", Locale.getDefault())
-        private val DAY_MONTH_FORMAT = SimpleDateFormat("d MMM", Locale.getDefault())
-
-        /** Returns a new Calendar set to the Monday of the week containing [from]. */
-        private fun mondayOf(from: Calendar): Calendar {
-            val cal = from.clone() as Calendar
-            val dow = cal.get(Calendar.DAY_OF_WEEK)
-            val daysFromMonday = (dow - Calendar.MONDAY + 7) % 7
-            cal.add(Calendar.DAY_OF_MONTH, -daysFromMonday)
-            cal.set(Calendar.HOUR_OF_DAY, 0)
-            cal.set(Calendar.MINUTE, 0)
-            cal.set(Calendar.SECOND, 0)
-            cal.set(Calendar.MILLISECOND, 0)
-            return cal
-        }
     }
 }

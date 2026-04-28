@@ -44,6 +44,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.nomyagenda.app.ui.calendar.CalendarFragment"
+        android:label="@string/nav_calendar"
+        tools:layout="@layout/fragment_calendar" />
+
+    <fragment
         android:id="@+id/diaryEntryDetailFragment"
         android:name="com.nomyagenda.app.ui.diary.DiaryEntryDetailFragment"
         android:label="@string/diary_detail_title"

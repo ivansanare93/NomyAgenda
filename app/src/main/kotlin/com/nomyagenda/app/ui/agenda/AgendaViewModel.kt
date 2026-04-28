@@ -20,7 +20,7 @@ class AgendaViewModel(
 
     private val _searchQuery = MutableStateFlow("")
     private val _filterType = MutableStateFlow<EntryType?>(null)
-    private val _sortOrder = MutableStateFlow(SortOrder.DUE_DATE)
+    private val _sortOrder = MutableStateFlow(SortOrder.CREATED_AT)
     private val _selectedDate = MutableStateFlow<String?>(null)
 
     private data class Filters(
@@ -53,20 +53,6 @@ class AgendaViewModel(
         }
     }.asLiveData()
 
-    /** Set of date keys ("YYYY-MM-DD") for which at least one entry exists (respecting type filter). */
-    val entryDates: LiveData<Set<String>> = _filterType
-        .flatMapLatest { filterType ->
-            repository.getAll().map { list ->
-                list
-                    .filter { entry -> filterType == null || entry.type == filterType }
-                    .map { entry ->
-                        val ts = entry.dueAt ?: entry.createdAt
-                        ts.toDateKey()
-                    }
-                    .toSet()
-            }
-        }.asLiveData()
-
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
     }
@@ -93,15 +79,15 @@ class AgendaViewModel(
     }
 
     private fun comparatorFor(sortOrder: SortOrder): Comparator<AgendaEntry> = when (sortOrder) {
-        SortOrder.CREATED_AT -> compareBy { it.createdAt }
+        SortOrder.CREATED_AT -> compareByDescending { it.createdAt }
         SortOrder.DUE_DATE -> Comparator { a, b ->
             val aDue = a.dueAt
             val bDue = b.dueAt
             when {
-                aDue == null && bDue == null -> a.createdAt.compareTo(b.createdAt)
+                aDue == null && bDue == null -> b.createdAt.compareTo(a.createdAt)
                 aDue == null -> 1
                 bDue == null -> -1
-                else -> aDue.compareTo(bDue)
+                else -> bDue.compareTo(aDue)
             }
         }
         SortOrder.CATEGORY -> Comparator { a, b ->

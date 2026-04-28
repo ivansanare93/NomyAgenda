@@ -12,6 +12,11 @@
         android:title="@string/nav_diary" />
 
     <item
+        android:id="@+id/calendarFragment"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="@string/nav_calendar" />
+
+    <item
         android:id="@+id/settingsFragment"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/nav_settings" />

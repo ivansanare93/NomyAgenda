@@ -186,10 +186,13 @@ class EntryEditorFragment : Fragment() {
         binding.spinnerAdvanceNotice.setOnItemClickListener { _, _, position, _ ->
             selectedAdvanceNoticeMinutes = advanceOptions[position].first
         }
+        selectedDueAt = System.currentTimeMillis()
+        binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
 
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
 
         setupEntryColorPicker()
+        setType(currentType)
 
         if (args.entryId > 0) {
             viewModel.load(args.entryId)
@@ -208,10 +211,6 @@ class EntryEditorFragment : Fragment() {
                 }
                 EntryType.REMINDER -> {
                     setNoteContent(entry.content)
-                    entry.dueAt?.let { dueAt ->
-                        selectedDueAt = dueAt
-                        binding.editDueDate.setText(DATE_FORMAT.format(Date(dueAt)))
-                    }
                     selectedAdvanceNoticeMinutes = entry.advanceNoticeMinutes
                     val label = advanceOptions.firstOrNull { it.first == entry.advanceNoticeMinutes }?.second
                         ?: advanceOptions[0].second
@@ -219,6 +218,8 @@ class EntryEditorFragment : Fragment() {
                     binding.spinnerAdvanceNotice.setAdapter(advanceNoticeAdapter)
                 }
             }
+            selectedDueAt = entry.dueAt ?: selectedDueAt ?: System.currentTimeMillis()
+            binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
             binding.editTags.setText(entry.tags)
             if (entry.color.isNotEmpty()) {
                 selectEntryColor(entry.color)
@@ -270,7 +271,8 @@ class EntryEditorFragment : Fragment() {
         binding.chipReminder.isChecked = type == EntryType.REMINDER
         binding.layoutNoteContent.visibility = if (type == EntryType.NOTE || type == EntryType.REMINDER) View.VISIBLE else View.GONE
         binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
-        binding.layoutReminderContent.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
+        binding.layoutReminderContent.visibility = View.VISIBLE
+        binding.layoutAdvanceNotice.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
         if (type == EntryType.NOTE || type == EntryType.REMINDER) {
             binding.btnNoteEdit.isChecked = true
             showNoteEditMode()
@@ -578,7 +580,7 @@ class EntryEditorFragment : Fragment() {
                 EntryType.TASK -> ""
             },
             checklistJson = if (currentType == EntryType.TASK) ChecklistManager.toJson(checklistAdapter.getItems()) else "[]",
-            dueAt = if (currentType == EntryType.REMINDER) selectedDueAt else null,
+            dueAt = selectedDueAt ?: System.currentTimeMillis(),
             advanceNoticeMinutes = if (currentType == EntryType.REMINDER) selectedAdvanceNoticeMinutes else 0,
             tags = tags,
             color = selectedColor,
