@@ -7,23 +7,26 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AgendaEntryDao {
 
-@Query("""
-SELECT * FROM agenda_entries
-ORDER BY 
-    CASE WHEN dueAt IS NULL THEN 1 ELSE 0 END,
-    dueAt DESC,
-    createdAt DESC
-""")
-    fun getAll(): Flow<List<AgendaEntry>>
-
+    @Query("""
+    SELECT * FROM agenda_entries
+    ORDER BY 
+        CASE WHEN dueAt IS NULL THEN 1 ELSE 0 END,
+        dueAt DESC,
+        createdAt DESC
+    """)
+        fun getAll(): Flow<List<AgendaEntry>>
+    
     @Query("""
     SELECT * FROM agenda_entries
     WHERE title LIKE '%' || :query || '%'
        OR content LIKE '%' || :query || '%'
        OR tags LIKE '%' || :query || '%'
        OR category LIKE '%' || :query || '%'
-    ORDER BY COALESCE(dueAt, createdAt) DESC, createdAt DESC
-""")
+    ORDER BY 
+        CASE WHEN dueAt IS NULL THEN 1 ELSE 0 END,
+        dueAt DESC,
+        createdAt DESC
+    """)
     fun search(query: String): Flow<List<AgendaEntry>>
 
     @Query("SELECT * FROM agenda_entries WHERE id = :id")
