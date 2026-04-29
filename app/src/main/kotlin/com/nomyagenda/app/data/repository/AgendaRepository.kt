@@ -21,18 +21,25 @@ class AgendaRepository(
     suspend fun getById(id: Int): AgendaEntry? = dao.getById(id)
 
     suspend fun upsert(entry: AgendaEntry): Long {
-        val rowId = dao.upsert(entry)
+        // Si es edición, preservar el createdAt original
+        val toSave = if (entry.id != 0) {
+            val existing = dao.getById(entry.id)
+            if (existing != null) entry.copy(createdAt = existing.createdAt) else entry
+        } else {
+            entry
+        }
+
+        val rowId = dao.upsert(toSave)
+
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (remote != null && userId != null) {
             try {
-                val savedEntry = if (entry.id == 0) entry.copy(id = rowId.toInt()) else entry
+                val savedEntry = if (toSave.id == 0) toSave.copy(id = rowId.toInt()) else toSave
                 val fbId = remote.upsert(userId, savedEntry)
                 if (fbId != savedEntry.firebaseId) {
                     dao.upsert(savedEntry.copy(firebaseId = fbId))
                 }
-            } catch (_: Exception) {
-                // Offline or Firestore unavailable — Room is the source of truth
-            }
+            } catch (_: Exception) { }
         }
         return rowId
     }
@@ -79,9 +86,8 @@ class AgendaRepository(
             for (remoteEntry in remoteEntries) {
                 val existing = dao.getByFirebaseId(remoteEntry.firebaseId)
                 if (existing != null) {
-                    dao.upsert(remoteEntry.copy(id = existing.id))
+                    dao.upsert(remoteEntry.copy(id = existing.id, createdAt = existing.createdAt)) // ← añadir createdAt
                 } else {
-                    // id = 0 tells Room to auto-generate the primary key on insert
                     dao.upsert(remoteEntry.copy(id = 0))
                 }
             }

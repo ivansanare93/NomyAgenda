@@ -29,8 +29,22 @@ interface AgendaEntryDao {
     @Query("SELECT * FROM agenda_entries WHERE type = 'REMINDER' AND dueAt > :after")
     suspend fun getFutureReminders(after: Long): List<AgendaEntry>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(entry: AgendaEntry): Long
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(entry: AgendaEntry): Long
+
+    @Update
+    suspend fun update(entry: AgendaEntry)
+
+    // Devuelve el id final de la fila (nuevo o existente)
+    suspend fun upsert(entry: AgendaEntry): Long {
+        val result = insert(entry)
+        return if (result == -1L) {
+            update(entry)
+            entry.id.toLong()
+        } else {
+            result
+        }
+    }
 
     @Delete
     suspend fun delete(entry: AgendaEntry)

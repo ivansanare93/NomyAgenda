@@ -102,53 +102,43 @@ object RichTextConverter {
         val length = text.length
         if (length == 0) return ""
 
-        data class Event(val pos: Int, val close: Boolean, val marker: String)
-
-        val events = mutableListOf<Event>()
-
-        // Bold spans
-        mergeRanges(
-            text.getSpans(0, length, StyleSpan::class.java)
-                .filter { it.style == Typeface.BOLD }
-                .map { text.getSpanStart(it) to text.getSpanEnd(it) }
-        ).forEach { (s, e) ->
-            events += Event(s, false, "**")
-            events += Event(e, true, "**")
-        }
-
-        // Italic spans
-        mergeRanges(
-            text.getSpans(0, length, StyleSpan::class.java)
-                .filter { it.style == Typeface.ITALIC }
-                .map { text.getSpanStart(it) to text.getSpanEnd(it) }
-        ).forEach { (s, e) ->
-            events += Event(s, false, "*")
-            events += Event(e, true, "*")
-        }
-
-        // ForegroundColorSpan → <font color="..."> ... </font>
-        text.getSpans(0, length, ForegroundColorSpan::class.java).forEach { span ->
-            val s = text.getSpanStart(span)
-            val e = text.getSpanEnd(span)
-            if (s < e) {
-                val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
-                events += Event(s, false, "<font color=\"$hex\">")
-                events += Event(e, true, "</font>")
-            }
-        }
-
-        // Sort: ascending position; at same position, opens before closes
-        events.sortWith(compareBy({ it.pos }, { if (it.close) 1 else 0 }))
-
         val raw = text.toString()
-        val sb = StringBuilder(length + events.size * 4)
-        var lastPos = 0
-        events.forEach { ev ->
-            if (ev.pos > lastPos) sb.append(raw, lastPos, ev.pos)
-            sb.append(ev.marker)
-            lastPos = ev.pos
+        val sb = StringBuilder()
+        var i = 0
+
+        while (i <= length) {
+            // Markers to open at position i (spans that start here)
+            val openingBold = text.getSpans(i, i, StyleSpan::class.java)
+                .filter { it.style == Typeface.BOLD && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
+            val openingItalic = text.getSpans(i, i, StyleSpan::class.java)
+                .filter { it.style == Typeface.ITALIC && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
+            val openingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
+                .filter { text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
+
+            // Markers to close at position i (spans that end here)
+            // Close in REVERSE open order: color, italic, bold
+            val closingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
+                .filter { text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
+            val closingItalic = text.getSpans(i, i, StyleSpan::class.java)
+                .filter { it.style == Typeface.ITALIC && text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
+            val closingBold = text.getSpans(i, i, StyleSpan::class.java)
+                .filter { it.style == Typeface.BOLD && text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
+
+            // Emit closes first (reverse open order), then opens
+            closingColors.forEach { sb.append("</font>") }
+            if (closingItalic.isNotEmpty()) sb.append("*")
+            if (closingBold.isNotEmpty()) sb.append("**")
+
+            if (openingBold.isNotEmpty()) sb.append("**")
+            if (openingItalic.isNotEmpty()) sb.append("*")
+            openingColors.forEach { span ->
+                val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
+                sb.append("<font color=\"$hex\">")
+            }
+
+            if (i < length) sb.append(raw[i])
+            i++
         }
-        if (lastPos < length) sb.append(raw, lastPos, length)
 
         return sb.toString()
     }
