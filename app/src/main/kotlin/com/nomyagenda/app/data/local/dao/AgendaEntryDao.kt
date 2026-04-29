@@ -7,7 +7,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AgendaEntryDao {
 
-    @Query("SELECT * FROM agenda_entries ORDER BY COALESCE(dueAt, createdAt) DESC, createdAt DESC")
+@Query("""
+SELECT * FROM agenda_entries
+ORDER BY 
+    CASE WHEN dueAt IS NULL THEN 1 ELSE 0 END,
+    dueAt DESC,
+    createdAt DESC
+""")
     fun getAll(): Flow<List<AgendaEntry>>
 
     @Query("""
