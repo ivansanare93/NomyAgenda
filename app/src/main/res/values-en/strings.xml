@@ -38,6 +38,7 @@
     <string name="hint_entry_color">Entry color</string>
     <string name="hint_title_color">Title color</string>
     <string name="hint_content_color">Text color</string>
+    <string name="hint_font_family">Font</string>
     <string name="hint_category">Category (optional)</string>
     <string name="add_item">Add item</string>
     <string name="editor_title">Edit entry</string>

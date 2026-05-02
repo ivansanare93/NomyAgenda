@@ -1,6 +1,7 @@
 package com.nomyagenda.app.ui.diary
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.databinding.FragmentDiaryEntryDetailBinding
+import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.resolveThemeColor
 import org.json.JSONArray
 
@@ -113,6 +115,10 @@ class DiaryEntryDetailFragment : Fragment() {
             } else {
                 binding.imageDiaryBg.visibility = View.GONE
             }
+
+            val typeface = FontCatalog.resolve(requireContext(), entry.fontFamily)
+            binding.textDetailDiaryTitle.typeface = typeface
+            binding.textDetailDiaryContent.typeface = typeface
         }
 
         binding.fabEditDiaryEntry.setOnClickListener {

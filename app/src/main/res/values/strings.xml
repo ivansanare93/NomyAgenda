@@ -39,6 +39,7 @@
     <string name="hint_entry_color">Color de la entrada</string>
     <string name="hint_title_color">Color del título</string>
     <string name="hint_content_color">Color del texto</string>
+    <string name="hint_font_family">Tipo de letra</string>
     <string name="hint_category">Categoría (opcional)</string>
     <string name="add_item">Añadir elemento</string>
     <string name="editor_title">Editar entrada</string>

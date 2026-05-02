@@ -16,6 +16,7 @@ data class AgendaEntry(
     val category: String = "",
     val color: String = "",
     val contentColor: String = "",
+    val fontFamily: String = "",
     val createdAt: Long = System.currentTimeMillis(),
     val firebaseId: String = ""
 )

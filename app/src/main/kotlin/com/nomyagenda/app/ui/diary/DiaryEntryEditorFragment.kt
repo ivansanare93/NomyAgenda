@@ -21,6 +21,7 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.databinding.FragmentDiaryEntryEditorBinding
 import com.nomyagenda.app.ui.common.color.ColorPalette
+import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.resolveThemeColor
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -62,6 +63,7 @@ class DiaryEntryEditorFragment : Fragment() {
         setupMoodChips()
         setupColorPicker()
         setupBackgroundPicker()
+        setupFontPicker()
         setupPhotos()
 
         val defaultDateKey = if (args.dateKey.isNotEmpty()) args.dateKey else DiaryFragment.todayDateKey()
@@ -176,6 +178,51 @@ class DiaryEntryEditorFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setupFontPicker() {
+        FontCatalog.fonts.forEach { fontItem ->
+            val typeface = FontCatalog.resolve(requireContext(), fontItem.id)
+            val btn = com.google.android.material.button.MaterialButton(
+                requireContext(),
+                null,
+                com.google.android.material.R.attr.materialButtonOutlinedStyle
+            ).apply {
+                tag = fontItem.id
+                text = fontItem.displayName
+                this.typeface = typeface
+                isCheckable = true
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(
+                        resources.getDimensionPixelSize(R.dimen.color_swatch_margin),
+                        0,
+                        resources.getDimensionPixelSize(R.dimen.color_swatch_margin),
+                        0
+                    )
+                }
+                setOnClickListener {
+                    viewModel.fontFamily.value = fontItem.id
+                }
+            }
+            binding.fontPickerContainer.addView(btn)
+        }
+    }
+
+    private fun updateFontSelection(selectedId: String) {
+        for (i in 0 until binding.fontPickerContainer.childCount) {
+            val btn = binding.fontPickerContainer.getChildAt(i)
+                as? com.google.android.material.button.MaterialButton ?: continue
+            btn.isChecked = btn.tag as? String == selectedId
+        }
+    }
+
+    private fun applyFontToViews(fontId: String) {
+        val typeface = FontCatalog.resolve(requireContext(), fontId)
+        binding.editDiaryTitle.typeface = typeface
+        binding.editDiaryContent.typeface = typeface
     }
 
     private fun setupBackgroundPicker() {
@@ -323,6 +370,11 @@ class DiaryEntryEditorFragment : Fragment() {
 
         viewModel.background.observe(viewLifecycleOwner) { bgKey ->
             updateBackgroundSelection(bgKey ?: "")
+        }
+
+        viewModel.fontFamily.observe(viewLifecycleOwner) { fontId ->
+            updateFontSelection(fontId ?: "")
+            applyFontToViews(fontId ?: "")
         }
 
         viewModel.saveSuccessEvent.observe(viewLifecycleOwner) { saved ->
