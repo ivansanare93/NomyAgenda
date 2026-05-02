@@ -21,10 +21,14 @@ class AgendaRepository(
     suspend fun getById(id: Int): AgendaEntry? = dao.getById(id)
 
     suspend fun upsert(entry: AgendaEntry): Long {
-        // Si es edición, preservar el createdAt original
+        // Si es edición, preservar los campos que no gestiona el editor (createdAt, firebaseId, category)
         val toSave = if (entry.id != 0) {
             val existing = dao.getById(entry.id)
-            if (existing != null) entry.copy(createdAt = existing.createdAt) else entry
+            if (existing != null) entry.copy(
+                createdAt = existing.createdAt,
+                firebaseId = existing.firebaseId,
+                category = existing.category
+            ) else entry
         } else {
             entry
         }
