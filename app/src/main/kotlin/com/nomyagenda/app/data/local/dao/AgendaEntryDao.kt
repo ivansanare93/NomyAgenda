@@ -11,7 +11,7 @@ interface AgendaEntryDao {
     SELECT * FROM agenda_entries
     ORDER BY 
         CASE WHEN dueAt IS NULL THEN 1 ELSE 0 END,
-        dueAt DESC,
+        dueAt ASC,
         createdAt DESC
     """)
         fun getAll(): Flow<List<AgendaEntry>>
@@ -24,7 +24,7 @@ interface AgendaEntryDao {
        OR category LIKE '%' || :query || '%'
     ORDER BY 
         CASE WHEN dueAt IS NULL THEN 1 ELSE 0 END,
-        dueAt DESC,
+        dueAt ASC,
         createdAt DESC
     """)
     fun search(query: String): Flow<List<AgendaEntry>>
