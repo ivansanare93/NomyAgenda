@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.nomyagenda.app.core.datetime.toDateKey
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
+import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.repository.AgendaRepository
 import com.nomyagenda.app.notifications.ReminderService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,21 +20,24 @@ class AgendaViewModel(
 
     private val _searchQuery = MutableStateFlow("")
     private val _filterType = MutableStateFlow<EntryType?>(null)
+    private val _sortOrder = MutableStateFlow(SortOrder.DUE_DATE)
     private val _selectedDate = MutableStateFlow<String?>(null)
 
     private data class Filters(
         val query: String,
         val filterType: EntryType?,
+        val sortOrder: SortOrder,
         val selectedDate: String?
     )
 
     val entries: LiveData<List<AgendaEntry>> = combine(
         _searchQuery.debounce(300),
         _filterType,
+        _sortOrder,
         _selectedDate
-    ) { query, filterType, selectedDate ->
-        Filters(query, filterType, selectedDate)
-    }.flatMapLatest { (query, filterType, selectedDate) ->
+    ) { query, filterType, sortOrder, selectedDate ->
+        Filters(query, filterType, sortOrder, selectedDate)
+    }.flatMapLatest { (query, filterType, sortOrder, selectedDate) ->
         val source = if (query.isBlank()) repository.getAll() else repository.search(query)
         source.map { list ->
             list
@@ -45,7 +49,7 @@ class AgendaViewModel(
                         ts.toDateKey() == selectedDate
                     }
                 }
-                .sortedByDescending { it.createdAt }
+                .sortedWith(comparatorFor(sortOrder))
         }
     }.asLiveData()
 
@@ -57,14 +61,47 @@ class AgendaViewModel(
         _filterType.value = type
     }
 
+    fun setSortOrder(sortOrder: SortOrder) {
+        _sortOrder.value = sortOrder
+    }
+
     fun setSelectedDate(dateKey: String?) {
         _selectedDate.value = dateKey
     }
+
+    val currentSortOrder: SortOrder get() = _sortOrder.value
 
     fun deleteEntry(entry: AgendaEntry) {
         viewModelScope.launch {
             reminderService.cancelForDeletedEntry(entry)
             repository.delete(entry)
+        }
+    }
+
+    private fun comparatorFor(sortOrder: SortOrder): Comparator<AgendaEntry> = when (sortOrder) {
+        SortOrder.CREATED_AT -> compareByDescending { it.createdAt }
+        SortOrder.DUE_DATE -> Comparator { a, b ->
+            val aDue = a.dueAt
+            val bDue = b.dueAt
+            when {
+                aDue == null && bDue == null -> b.createdAt.compareTo(a.createdAt)
+                aDue == null -> 1
+                bDue == null -> -1
+                else -> bDue.compareTo(aDue)
+            }
+        }
+        SortOrder.CATEGORY -> Comparator { a, b ->
+            val aCat = a.category
+            val bCat = b.category
+            when {
+                aCat.isEmpty() && bCat.isEmpty() -> a.createdAt.compareTo(b.createdAt)
+                aCat.isEmpty() -> 1
+                bCat.isEmpty() -> -1
+                else -> {
+                    val cmp = String.CASE_INSENSITIVE_ORDER.compare(aCat, bCat)
+                    if (cmp != 0) cmp else a.createdAt.compareTo(b.createdAt)
+                }
+            }
         }
     }
 
