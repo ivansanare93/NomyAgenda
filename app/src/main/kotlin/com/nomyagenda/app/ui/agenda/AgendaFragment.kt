@@ -18,7 +18,6 @@ import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
-import com.nomyagenda.app.data.local.entity.SortOrder
 import com.nomyagenda.app.data.preferences.SettingsRepository
 import com.nomyagenda.app.databinding.FragmentAgendaBinding
 import java.text.SimpleDateFormat
@@ -68,7 +67,6 @@ class AgendaFragment : Fragment() {
         }
 
         setupFilterChips()
-        setupSortButton()
 
         val selectedDateKey = arguments?.getString(ARG_SELECTED_DATE_KEY)
         viewModel.setSelectedDate(selectedDateKey?.takeIf { it.isNotBlank() })
@@ -132,26 +130,6 @@ class AgendaFragment : Fragment() {
                 else -> null
             }
             viewModel.setFilterType(filterType)
-        }
-    }
-
-    private fun setupSortButton() {
-        val sortLabels = arrayOf(
-            getString(R.string.sort_due_date),
-            getString(R.string.sort_created_at),
-            getString(R.string.sort_category)
-        )
-        val sortOrders = arrayOf(SortOrder.DUE_DATE, SortOrder.CREATED_AT, SortOrder.CATEGORY)
-
-        binding.btnSort.setOnClickListener {
-            val currentIndex = sortOrders.indexOf(viewModel.currentSortOrder).coerceAtLeast(0)
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.sort_by)
-                .setSingleChoiceItems(sortLabels, currentIndex) { dialog, which ->
-                    viewModel.setSortOrder(sortOrders[which])
-                    dialog.dismiss()
-                }
-                .show()
         }
     }
 
