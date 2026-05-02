@@ -14,6 +14,7 @@ import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.FragmentEntryDetailBinding
+import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
 import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
@@ -115,6 +116,10 @@ class EntryDetailFragment : Fragment() {
                     }
                 }
             }
+            // Font
+            val typeface = FontCatalog.resolve(requireContext(), entry.fontFamily)
+            binding.textDetailTitle.typeface = typeface
+            binding.textDetailContent.typeface = typeface
         }
 
         binding.fabEditEntry.setOnClickListener {

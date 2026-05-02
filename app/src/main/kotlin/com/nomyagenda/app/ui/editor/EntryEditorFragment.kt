@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
 import com.nomyagenda.app.ui.common.color.ColorPalette
+import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.ui.resolveThemeColor
 import com.google.android.material.R as MaterialR
@@ -59,6 +60,7 @@ class EntryEditorFragment : Fragment() {
     private var selectedAdvanceNoticeMinutes: Int = SettingsRepository.ADVANCE_NOTICE_NONE
     private var selectedColor: String = ""
     private var selectedContentColor: String = ""
+    private var selectedFontFamily: String = ""
 
     // ---- WYSIWYG format toggle state ----
     private var isBoldActive = false
@@ -192,6 +194,7 @@ class EntryEditorFragment : Fragment() {
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
 
         setupEntryColorPicker()
+        setupFontPicker()
         setType(currentType)
 
         if (args.entryId > 0) {
@@ -226,6 +229,9 @@ class EntryEditorFragment : Fragment() {
             }
             if (entry.contentColor.isNotEmpty()) {
                 selectEntryContentColor(entry.contentColor)
+            }
+            if (entry.fontFamily.isNotEmpty()) {
+                selectEntryFont(entry.fontFamily)
             }
         }
 
@@ -450,6 +456,57 @@ class EntryEditorFragment : Fragment() {
         applyContentColorPreview(hexColor)
     }
 
+    private fun setupFontPicker() {
+        FontCatalog.fonts.forEach { fontItem ->
+            val typeface = FontCatalog.resolve(requireContext(), fontItem.id)
+            val btn = com.google.android.material.button.MaterialButton(
+                requireContext(),
+                null,
+                com.google.android.material.R.attr.materialButtonOutlinedStyle
+            ).apply {
+                tag = fontItem.id
+                text = fontItem.displayName
+                this.typeface = typeface
+                isCheckable = true
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(
+                        resources.getDimensionPixelSize(R.dimen.color_swatch_margin),
+                        0,
+                        resources.getDimensionPixelSize(R.dimen.color_swatch_margin),
+                        0
+                    )
+                }
+                setOnClickListener {
+                    selectEntryFont(fontItem.id)
+                }
+            }
+            binding.fontPickerContainerEntry.addView(btn)
+        }
+    }
+
+    private fun selectEntryFont(fontId: String) {
+        selectedFontFamily = fontId
+        updateFontSelection(fontId)
+        applyFontToEditors(fontId)
+    }
+
+    private fun updateFontSelection(fontId: String) {
+        for (i in 0 until binding.fontPickerContainerEntry.childCount) {
+            val btn = binding.fontPickerContainerEntry.getChildAt(i)
+                as? com.google.android.material.button.MaterialButton ?: continue
+            btn.isChecked = btn.tag as? String == fontId
+        }
+    }
+
+    private fun applyFontToEditors(fontId: String) {
+        val typeface = FontCatalog.resolve(requireContext(), fontId)
+        binding.editEntryTitle.typeface = typeface
+        binding.editNoteContent.typeface = typeface
+    }
+
     private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
         for (i in 0 until container.childCount) {
@@ -587,7 +644,8 @@ class EntryEditorFragment : Fragment() {
             advanceNoticeMinutes = if (currentType == EntryType.REMINDER) selectedAdvanceNoticeMinutes else 0,
             tags = tags,
             color = selectedColor,
-            contentColor = selectedContentColor
+            contentColor = selectedContentColor,
+            fontFamily = selectedFontFamily
         )
 
         viewModel.save(entry)
