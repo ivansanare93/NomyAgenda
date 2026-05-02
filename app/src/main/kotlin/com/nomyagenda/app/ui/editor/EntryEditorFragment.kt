@@ -323,7 +323,12 @@ class EntryEditorFragment : Fragment() {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             }
-            // Keep the current typing-mode state unchanged
+            // MaterialButton auto-toggles isChecked before the listener fires; reset it
+            // so the button always reflects the actual typing-mode state, not the selection op.
+            when (style) {
+                Typeface.BOLD   -> binding.btnFormatBold.isChecked   = isBoldActive
+                Typeface.ITALIC -> binding.btnFormatItalic.isChecked = isItalicActive
+            }
         } else {
             // No selection – flip the typing-mode toggle
             when (style) {
