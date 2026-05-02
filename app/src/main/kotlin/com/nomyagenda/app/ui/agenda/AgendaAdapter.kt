@@ -12,6 +12,7 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.data.local.entity.AgendaEntry
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
+import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
 import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
@@ -101,6 +102,10 @@ class AgendaAdapter(
             }
 
             binding.textEntryCategory.visibility = View.GONE
+
+            val typeface = FontCatalog.resolve(context, entry.fontFamily)
+            binding.textEntryTitle.typeface = typeface
+            binding.textEntryPreview.typeface = typeface
 
             binding.root.setOnClickListener { onClick(entry) }
             binding.root.setOnLongClickListener { onLongClick(entry); true }

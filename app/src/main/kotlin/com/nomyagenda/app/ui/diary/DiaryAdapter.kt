@@ -12,6 +12,7 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.databinding.ItemDiaryEntryBinding
+import com.nomyagenda.app.ui.common.font.FontCatalog
 import org.json.JSONArray
 
 class DiaryAdapter(
@@ -82,6 +83,12 @@ class DiaryAdapter(
             } else {
                 binding.textDiaryPhotoCount.visibility = View.GONE
             }
+
+            val typeface = FontCatalog.resolve(context, entry.fontFamily)
+            binding.textDiaryEntryDate.typeface = typeface
+            binding.textDiaryEntryTitle.typeface = typeface
+            binding.textDiaryEntryPreview.typeface = typeface
+            binding.textDiaryPhotoCount.typeface = typeface
 
             binding.root.setOnClickListener { onClick(entry) }
             binding.root.setOnLongClickListener { onLongClick(entry); true }
