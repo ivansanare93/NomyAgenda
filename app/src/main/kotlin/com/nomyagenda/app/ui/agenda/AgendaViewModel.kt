@@ -20,7 +20,7 @@ class AgendaViewModel(
 
     private val _searchQuery = MutableStateFlow("")
     private val _filterType = MutableStateFlow<EntryType?>(null)
-    private val _sortOrder = MutableStateFlow(SortOrder.CREATED_AT)
+    private val _sortOrder = MutableStateFlow(SortOrder.DUE_DATE)
     private val _selectedDate = MutableStateFlow<String?>(null)
 
     private data class Filters(
@@ -87,7 +87,7 @@ class AgendaViewModel(
                 aDue == null && bDue == null -> b.createdAt.compareTo(a.createdAt)
                 aDue == null -> 1
                 bDue == null -> -1
-                else -> bDue.compareTo(aDue)
+                else -> aDue.compareTo(bDue)
             }
         }
         SortOrder.CATEGORY -> Comparator { a, b ->
