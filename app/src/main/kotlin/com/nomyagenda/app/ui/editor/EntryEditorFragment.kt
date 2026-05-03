@@ -610,10 +610,17 @@ class EntryEditorFragment : Fragment() {
             selectedDueAt?.let { timeInMillis = it }
         }
         DatePickerDialog(requireContext(), { _, year, month, day ->
-            cal.set(year, month, day, 0, 0, 0)
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.DAY_OF_MONTH, day)
+            cal.set(Calendar.SECOND, 0)
             cal.set(Calendar.MILLISECOND, 0)
-            selectedDueAt = cal.timeInMillis
-            binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
+            TimePickerDialog(requireContext(), { _, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                selectedDueAt = cal.timeInMillis
+                binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
+            }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
@@ -657,7 +664,7 @@ class EntryEditorFragment : Fragment() {
     }
 
     companion object {
-        private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     }
 }
 
