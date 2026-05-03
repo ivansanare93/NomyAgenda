@@ -2,8 +2,13 @@ package com.nomyagenda.app.ui.diary
 
 import android.app.DatePickerDialog
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.Spannable
+import android.text.TextWatcher
+import android.text.style.StyleSpan
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -22,6 +27,7 @@ import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.databinding.FragmentDiaryEntryEditorBinding
 import com.nomyagenda.app.ui.common.color.ColorPalette
 import com.nomyagenda.app.ui.common.font.FontCatalog
+import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,6 +46,50 @@ class DiaryEntryEditorFragment : Fragment() {
     }
 
     private lateinit var photoAdapter: DiaryPhotoAdapter
+
+    // ---- WYSIWYG format toggle state ----
+    private var isBoldActive = false
+    private var isItalicActive = false
+
+    private var lastInsertStart = 0
+    private var lastInsertCount = 0
+    private var isApplyingSpans = false
+
+    /** Applies formatting spans to text inserted while a toggle is active. */
+    private val formatWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (!isApplyingSpans) {
+                lastInsertStart = start
+                lastInsertCount = count
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s == null || lastInsertCount == 0 || isApplyingSpans) return
+            isApplyingSpans = true
+            try {
+                val end = lastInsertStart + lastInsertCount
+                if (isBoldActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        lastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                if (isItalicActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.ITALIC),
+                        lastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            } finally {
+                isApplyingSpans = false
+            }
+        }
+    }
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
@@ -65,6 +115,7 @@ class DiaryEntryEditorFragment : Fragment() {
         setupBackgroundPicker()
         setupFontPicker()
         setupPhotos()
+        setupFormatToolbar()
 
         val defaultDateKey = if (args.dateKey.isNotEmpty()) args.dateKey else DiaryFragment.todayDateKey()
         viewModel.loadEntry(args.entryId, defaultDateKey)
@@ -82,6 +133,49 @@ class DiaryEntryEditorFragment : Fragment() {
                 saveDiaryEntry()
                 true
             } else false
+        }
+    }
+
+    private fun setupFormatToolbar() {
+        binding.editDiaryContent.addTextChangedListener(formatWatcher)
+        binding.btnDiaryFormatBold.setOnClickListener { toggleInlineFormat(Typeface.BOLD) }
+        binding.btnDiaryFormatItalic.setOnClickListener { toggleInlineFormat(Typeface.ITALIC) }
+    }
+
+    private fun toggleInlineFormat(style: Int) {
+        val editText = binding.editDiaryContent
+        val text = editText.text ?: return
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+
+        if (selStart != selEnd) {
+            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
+                .filter { it.style == style
+                        && text.getSpanStart(it) >= selStart
+                        && text.getSpanEnd(it) <= selEnd }
+            if (existing.isNotEmpty()) {
+                existing.forEach { text.removeSpan(it) }
+            } else {
+                text.setSpan(
+                    StyleSpan(style), selStart, selEnd,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            when (style) {
+                Typeface.BOLD   -> binding.btnDiaryFormatBold.isChecked   = isBoldActive
+                Typeface.ITALIC -> binding.btnDiaryFormatItalic.isChecked = isItalicActive
+            }
+        } else {
+            when (style) {
+                Typeface.BOLD -> {
+                    isBoldActive = !isBoldActive
+                    binding.btnDiaryFormatBold.isChecked = isBoldActive
+                }
+                Typeface.ITALIC -> {
+                    isItalicActive = !isItalicActive
+                    binding.btnDiaryFormatItalic.isChecked = isItalicActive
+                }
+            }
         }
     }
 
@@ -324,9 +418,9 @@ class DiaryEntryEditorFragment : Fragment() {
         }
 
         viewModel.content.observe(viewLifecycleOwner) { c ->
-            if (binding.editDiaryContent.text.toString() != c) {
-                binding.editDiaryContent.setText(c)
-            }
+            if (c == null) return@observe
+            val spannable = RichTextConverter.markdownInlineToSpannable(c)
+            binding.editDiaryContent.setText(spannable, android.widget.TextView.BufferType.EDITABLE)
         }
 
         viewModel.mood.observe(viewLifecycleOwner) { currentMood ->
@@ -419,7 +513,9 @@ class DiaryEntryEditorFragment : Fragment() {
 
     private fun saveDiaryEntry() {
         viewModel.title.value = binding.editDiaryTitle.text.toString()
-        viewModel.content.value = binding.editDiaryContent.text.toString()
+        viewModel.content.value = binding.editDiaryContent.text
+            ?.let { RichTextConverter.spannableToMarkdown(it) }
+            ?: ""
         viewModel.save()
     }
 

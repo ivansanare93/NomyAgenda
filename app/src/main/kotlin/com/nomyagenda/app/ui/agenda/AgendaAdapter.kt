@@ -15,6 +15,7 @@ import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
 import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -28,7 +29,9 @@ class AgendaAdapter(
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        markwon = Markwon.create(recyclerView.context)
+        markwon = Markwon.builder(recyclerView.context)
+            .usePlugin(HtmlPlugin.create())
+            .build()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {

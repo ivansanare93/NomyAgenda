@@ -18,6 +18,7 @@ import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
 import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -44,7 +45,9 @@ class EntryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        markwon = Markwon.create(requireContext())
+        markwon = Markwon.builder(requireContext())
+            .usePlugin(HtmlPlugin.create())
+            .build()
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
