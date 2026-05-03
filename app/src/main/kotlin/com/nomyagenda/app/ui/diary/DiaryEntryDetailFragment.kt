@@ -17,6 +17,8 @@ import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.databinding.FragmentDiaryEntryDetailBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.resolveThemeColor
+import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONArray
 
 class DiaryEntryDetailFragment : Fragment() {
@@ -33,6 +35,8 @@ class DiaryEntryDetailFragment : Fragment() {
 
     private lateinit var photoAdapter: DiaryPhotoAdapter
 
+    private lateinit var markwon: Markwon
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +48,10 @@ class DiaryEntryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        markwon = Markwon.builder(requireContext())
+            .usePlugin(HtmlPlugin.create())
+            .build()
 
         binding.toolbarDiaryDetail.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -92,7 +100,7 @@ class DiaryEntryDetailFragment : Fragment() {
 
             if (entry.content.isNotBlank()) {
                 binding.textDetailDiaryContent.visibility = View.VISIBLE
-                binding.textDetailDiaryContent.text = entry.content
+                markwon.setMarkdown(binding.textDetailDiaryContent, entry.content)
                 binding.textDetailDiaryContent.setTextColor(contentColor)
             } else {
                 binding.textDetailDiaryContent.visibility = View.GONE
