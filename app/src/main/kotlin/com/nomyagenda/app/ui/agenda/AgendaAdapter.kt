@@ -14,6 +14,7 @@ import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
+import com.nomyagenda.app.ui.editor.RichTextConverter
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
@@ -49,7 +50,7 @@ class AgendaAdapter(
 
         fun bind(entry: AgendaEntry) {
             val context = binding.root.context
-            binding.textEntryTitle.text = entry.title
+            binding.textEntryTitle.text = RichTextConverter.markdownInlineToSpannable(entry.title)
 
             val titleColor = if (entry.color.isNotEmpty()) {
                 Color.parseColor(entry.color)

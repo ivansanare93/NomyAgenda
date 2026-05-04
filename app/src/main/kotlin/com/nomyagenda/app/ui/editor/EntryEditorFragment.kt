@@ -62,7 +62,7 @@ class EntryEditorFragment : Fragment() {
     private var selectedContentColor: String = ""
     private var selectedFontFamily: String = ""
 
-    // ---- WYSIWYG format toggle state ----
+    // ---- WYSIWYG format toggle state (note content) ----
     private var isBoldActive = false
     private var isItalicActive = false
     private var activeTextColor: Int? = null   // null = no colour mode active
@@ -72,6 +72,13 @@ class EntryEditorFragment : Fragment() {
     private var lastInsertCount = 0
     // Guard flag: prevents re-entrant span application in the TextWatcher
     private var isApplyingSpans = false
+
+    // ---- WYSIWYG format toggle state (title) ----
+    private var isTitleBoldActive = false
+    private var isTitleItalicActive = false
+    private var titleLastInsertStart = 0
+    private var titleLastInsertCount = 0
+    private var isTitleApplyingSpans = false
 
     /** Applies formatting spans to text inserted while a toggle is active. */
     private val formatWatcher = object : TextWatcher {
@@ -116,6 +123,42 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
+    /** Applies bold/italic spans to text inserted in the title while a toggle is active. */
+    private val titleFormatWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (!isTitleApplyingSpans) {
+                titleLastInsertStart = start
+                titleLastInsertCount = count
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s == null || titleLastInsertCount == 0 || isTitleApplyingSpans) return
+            isTitleApplyingSpans = true
+            try {
+                val end = titleLastInsertStart + titleLastInsertCount
+                if (isTitleBoldActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        titleLastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                if (isTitleItalicActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.ITALIC),
+                        titleLastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            } finally {
+                isTitleApplyingSpans = false
+            }
+        }
+    }
+
     private val advanceOptions by lazy {
         listOf(
             SettingsRepository.ADVANCE_NOTICE_NONE to getString(R.string.settings_advance_notice_none),
@@ -156,6 +199,13 @@ class EntryEditorFragment : Fragment() {
                 }
             }
         }
+
+        // Title format toolbar – bold / italic WYSIWYG toggles for the title field
+        binding.btnTitleFormatBold.setOnClickListener   { toggleTitleInlineFormat(Typeface.BOLD) }
+        binding.btnTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
+
+        // Attach the TextWatcher that applies active format spans while typing in the title
+        binding.editEntryTitle.addTextChangedListener(titleFormatWatcher)
 
         // Format toolbar – bold / italic are WYSIWYG toggles; others keep their
         // prefix-insertion behaviour (they operate at line level).
@@ -203,7 +253,8 @@ class EntryEditorFragment : Fragment() {
 
         viewModel.entry.observe(viewLifecycleOwner) { entry ->
             entry ?: return@observe
-            binding.editEntryTitle.setText(entry.title)
+            val titleSpannable = RichTextConverter.markdownInlineToSpannable(entry.title)
+            binding.editEntryTitle.setText(titleSpannable, android.widget.TextView.BufferType.EDITABLE)
             setType(entry.type)
             when (entry.type) {
                 EntryType.NOTE -> setNoteContent(entry.content)
@@ -358,6 +409,50 @@ class EntryEditorFragment : Fragment() {
         binding.btnFormatBold.isChecked = false
         binding.btnFormatItalic.isChecked = false
         binding.btnFormatColor.isChecked = false
+    }
+
+    /**
+     * Handles a click on a title checkable format button (bold / italic).
+     *
+     * • If there is a text selection, the span is toggled on/off for that range
+     *   without changing the typing-mode toggle.
+     * • If there is no selection, the typing-mode toggle is flipped.
+     */
+    private fun toggleTitleInlineFormat(style: Int) {
+        val editText = binding.editEntryTitle
+        val text = editText.text ?: return
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+
+        if (selStart != selEnd) {
+            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
+                .filter { it.style == style
+                        && text.getSpanStart(it) >= selStart
+                        && text.getSpanEnd(it) <= selEnd }
+            if (existing.isNotEmpty()) {
+                existing.forEach { text.removeSpan(it) }
+            } else {
+                text.setSpan(
+                    StyleSpan(style), selStart, selEnd,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            when (style) {
+                Typeface.BOLD   -> binding.btnTitleFormatBold.isChecked   = isTitleBoldActive
+                Typeface.ITALIC -> binding.btnTitleFormatItalic.isChecked = isTitleItalicActive
+            }
+        } else {
+            when (style) {
+                Typeface.BOLD -> {
+                    isTitleBoldActive = !isTitleBoldActive
+                    binding.btnTitleFormatBold.isChecked = isTitleBoldActive
+                }
+                Typeface.ITALIC -> {
+                    isTitleItalicActive = !isTitleItalicActive
+                    binding.btnTitleFormatItalic.isChecked = isTitleItalicActive
+                }
+            }
+        }
     }
 
     // ---------- line-level prefix formatting (unchanged) ----------
@@ -627,12 +722,14 @@ class EntryEditorFragment : Fragment() {
     // ---------- save ----------
 
     private fun saveEntry() {
-        val title = binding.editEntryTitle.text?.toString()?.trim()
-        if (title.isNullOrEmpty()) {
+        val titleEditable = binding.editEntryTitle.text
+        val titlePlain = titleEditable?.toString()?.trim() ?: ""
+        if (titlePlain.isEmpty()) {
             binding.inputLayoutTitle.error = getString(R.string.error_title_required)
             return
         }
         binding.inputLayoutTitle.error = null
+        val title = titleEditable?.let { RichTextConverter.spannableToMarkdown(it) } ?: titlePlain
 
         val tags = binding.editTags.text?.toString()?.trim() ?: ""
 
