@@ -16,6 +16,7 @@ import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.FragmentEntryDetailBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
+import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
@@ -64,7 +65,7 @@ class EntryDetailFragment : Fragment() {
             }
 
             // Title
-            binding.textDetailTitle.text = entry.title
+            binding.textDetailTitle.text = RichTextConverter.markdownInlineToSpannable(entry.title)
             if (entry.color.isNotEmpty()) {
                 binding.textDetailTitle.setTextColor(Color.parseColor(entry.color))
             }
