@@ -16,6 +16,7 @@ import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.FragmentEntryDetailBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
+import com.nomyagenda.app.ui.editor.EntryBackgroundCatalog
 import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
@@ -124,6 +125,15 @@ class EntryDetailFragment : Fragment() {
             val typeface = FontCatalog.resolve(requireContext(), entry.fontFamily)
             binding.textDetailTitle.typeface = typeface
             binding.textDetailContent.typeface = typeface
+
+            // Background
+            val bgRes = EntryBackgroundCatalog.resolveDrawable(entry.background)
+            if (bgRes != 0) {
+                binding.imageEntryBg.setImageResource(bgRes)
+                binding.imageEntryBg.visibility = View.VISIBLE
+            } else {
+                binding.imageEntryBg.visibility = View.GONE
+            }
         }
 
         binding.fabEditEntry.setOnClickListener {

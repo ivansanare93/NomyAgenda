@@ -225,4 +225,7 @@
     <string name="diary_bg_valentines_pastel">San Valentín pastel</string>
     <string name="diary_bg_new_year">Año Nuevo</string>
     <string name="diary_bg_spring">Primavera</string>
+
+    <!-- Entry backgrounds -->
+    <string name="entry_background_label">Fondo de la entrada</string>
 </resources>

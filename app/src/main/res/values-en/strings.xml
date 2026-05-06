@@ -207,4 +207,7 @@
     <string name="diary_bg_halloween">Halloween</string>
     <string name="diary_bg_valentines">Valentine\'s Day</string>
     <string name="diary_bg_easter">Easter</string>
+
+    <!-- Entry backgrounds -->
+    <string name="entry_background_label">Entry background</string>
 </resources>

@@ -14,6 +14,7 @@ import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.databinding.ItemAgendaEntryBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
+import com.nomyagenda.app.ui.editor.EntryBackgroundCatalog
 import com.nomyagenda.app.ui.editor.RichTextConverter
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
@@ -110,6 +111,15 @@ class AgendaAdapter(
             val typeface = FontCatalog.resolve(context, entry.fontFamily)
             binding.textEntryTitle.typeface = typeface
             binding.textEntryPreview.typeface = typeface
+
+            val bgRes = EntryBackgroundCatalog.resolveDrawable(entry.background)
+            if (bgRes != 0) {
+                binding.layoutCardContent.background = ContextCompat.getDrawable(context, bgRes)
+                binding.root.setCardBackgroundColor(Color.TRANSPARENT)
+            } else {
+                binding.layoutCardContent.background = null
+                binding.root.setCardBackgroundColor(Color.WHITE)
+            }
 
             binding.root.setOnClickListener { onClick(entry) }
             binding.root.setOnLongClickListener { onLongClick(entry); true }

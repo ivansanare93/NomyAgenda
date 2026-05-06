@@ -28,6 +28,7 @@ import com.nomyagenda.app.R
 import com.nomyagenda.app.ui.common.color.ColorPalette
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.data.local.entity.AgendaEntry
+import com.nomyagenda.app.ui.diary.DiaryBackgroundItem
 import com.nomyagenda.app.ui.resolveThemeColor
 import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.data.local.entity.ChecklistItem
@@ -61,6 +62,7 @@ class EntryEditorFragment : Fragment() {
     private var selectedColor: String = ""
     private var selectedContentColor: String = ""
     private var selectedFontFamily: String = ""
+    private var selectedBackground: String = ""
 
     // ---- WYSIWYG format toggle state (note content) ----
     private var isBoldActive = false
@@ -245,6 +247,7 @@ class EntryEditorFragment : Fragment() {
 
         setupEntryColorPicker()
         setupFontPicker()
+        setupBackgroundPicker()
         setType(currentType)
 
         if (args.entryId > 0) {
@@ -283,6 +286,9 @@ class EntryEditorFragment : Fragment() {
             }
             if (entry.fontFamily.isNotEmpty()) {
                 selectEntryFont(entry.fontFamily)
+            }
+            if (entry.background.isNotEmpty()) {
+                selectEntryBackground(entry.background)
             }
         }
 
@@ -602,6 +608,87 @@ class EntryEditorFragment : Fragment() {
         binding.editNoteContent.typeface = typeface
     }
 
+    // ---------- background picker ----------
+
+    private fun setupBackgroundPicker() {
+        setupBackgroundSwatches(binding.bgSwatchesEntryThematic, EntryBackgroundCatalog.thematicBackgrounds)
+        setupBackgroundSwatches(binding.bgSwatchesEntryFestive, EntryBackgroundCatalog.festiveBackgrounds)
+    }
+
+    private fun setupBackgroundSwatches(container: android.widget.LinearLayout, backgrounds: List<DiaryBackgroundItem>) {
+        val size = resources.getDimensionPixelSize(R.dimen.bg_swatch_size)
+        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+        val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
+
+        backgrounds.forEach { item ->
+            val swatch = FrameLayout(requireContext()).apply {
+                tag = item.key
+                layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
+                    setMargins(margin, margin, margin, margin)
+                }
+                clipToOutline = true
+                outlineProvider = android.view.ViewOutlineProvider.BACKGROUND
+                if (item.drawableRes != 0) {
+                    background = ContextCompat.getDrawable(requireContext(), item.drawableRes)
+                } else {
+                    background = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadii = FloatArray(8) { cornerRadius }
+                        setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                        setStroke(strokeWidth, Color.LTGRAY)
+                    }
+                    val noneLabel = android.widget.TextView(requireContext()).apply {
+                        text = "✕"
+                        textSize = 18f
+                        gravity = android.view.Gravity.CENTER
+                        setTextColor(Color.LTGRAY)
+                        layoutParams = FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.MATCH_PARENT
+                        )
+                    }
+                    addView(noneLabel)
+                }
+                setOnClickListener {
+                    selectEntryBackground(item.key)
+                }
+            }
+            container.addView(swatch)
+        }
+    }
+
+    private fun selectEntryBackground(key: String) {
+        selectedBackground = key
+        updateBackgroundSelection(key)
+    }
+
+    private fun updateBackgroundSelection(selectedKey: String) {
+        val containers = listOf(binding.bgSwatchesEntryThematic, binding.bgSwatchesEntryFestive)
+        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
+        val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
+
+        containers.forEach { container ->
+            for (i in 0 until container.childCount) {
+                val swatch = container.getChildAt(i) as? FrameLayout ?: continue
+                val key = swatch.tag as? String ?: continue
+                val isSelected = key == selectedKey
+
+                if (isSelected) {
+                    val selectionOverlay = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadii = FloatArray(8) { cornerRadius }
+                        setStroke(strokeWidth, requireContext().resolveThemeColor(com.google.android.material.R.attr.colorPrimary))
+                        setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+                    }
+                    swatch.foreground = selectionOverlay
+                } else {
+                    swatch.foreground = null
+                }
+            }
+        }
+    }
+
     private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
         for (i in 0 until container.childCount) {
@@ -749,7 +836,8 @@ class EntryEditorFragment : Fragment() {
             tags = tags,
             color = selectedColor,
             contentColor = selectedContentColor,
-            fontFamily = selectedFontFamily
+            fontFamily = selectedFontFamily,
+            background = selectedBackground
         )
 
         viewModel.save(entry)

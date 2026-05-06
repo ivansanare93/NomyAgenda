@@ -57,6 +57,8 @@ class FirestoreDataSource {
         "category" to category,
         "color" to color,
         "contentColor" to contentColor,
+        "fontFamily" to fontFamily,
+        "background" to background,
         "createdAt" to createdAt
     )
 
@@ -74,6 +76,8 @@ class FirestoreDataSource {
                 category = getString("category") ?: "",
                 color = getString("color") ?: "",
                 contentColor = getString("contentColor") ?: "",
+                fontFamily = getString("fontFamily") ?: "",
+                background = getString("background") ?: "",
                 createdAt = getLong("createdAt") ?: System.currentTimeMillis(),
                 firebaseId = docId
             )
