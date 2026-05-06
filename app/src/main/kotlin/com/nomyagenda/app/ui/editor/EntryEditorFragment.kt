@@ -274,7 +274,7 @@ class EntryEditorFragment : Fragment() {
             val editable = binding.editNewChecklistItem.text
             val plainText = editable?.toString()?.trim() ?: ""
             if (plainText.isNotBlank()) {
-                val markdownText = editable?.let { RichTextConverter.spannableToMarkdown(it) } ?: plainText
+                val markdownText = RichTextConverter.spannableToMarkdown(editable!!)
                 checklistAdapter.addItem(markdownText)
                 binding.editNewChecklistItem.setText("")
                 binding.editNewChecklistItem.clearFocus()

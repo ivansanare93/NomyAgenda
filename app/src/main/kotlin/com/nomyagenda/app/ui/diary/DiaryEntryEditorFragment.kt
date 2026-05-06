@@ -499,7 +499,7 @@ class DiaryEntryEditorFragment : Fragment() {
         viewModel.title.observe(viewLifecycleOwner) { t ->
             if (t == null) return@observe
             val spannable = RichTextConverter.markdownInlineToSpannable(t)
-            if (binding.editDiaryTitle.text?.toString() != t) {
+            if (binding.editDiaryTitle.text?.toString() != spannable.toString()) {
                 binding.editDiaryTitle.setText(spannable, android.widget.TextView.BufferType.EDITABLE)
             }
         }
