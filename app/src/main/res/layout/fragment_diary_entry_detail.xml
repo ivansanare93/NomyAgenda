@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_small"
-                    android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
                     android:visibility="gone" />
 
                 <!-- Content -->
@@ -80,7 +80,7 @@
                     android:id="@+id/text_detail_diary_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:visibility="gone" />
 
                 <!-- Photos section -->
