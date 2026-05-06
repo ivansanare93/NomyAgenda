@@ -16,6 +16,7 @@ import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.databinding.FragmentDiaryEntryDetailBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
+import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
@@ -84,7 +85,7 @@ class DiaryEntryDetailFragment : Fragment() {
 
             if (entry.title.isNotBlank()) {
                 binding.textDetailDiaryTitle.visibility = View.VISIBLE
-                binding.textDetailDiaryTitle.text = entry.title
+                binding.textDetailDiaryTitle.text = RichTextConverter.markdownInlineToSpannable(entry.title)
                 binding.textDetailDiaryTitle.setTextColor(titleColor)
             } else {
                 binding.textDetailDiaryTitle.visibility = View.GONE

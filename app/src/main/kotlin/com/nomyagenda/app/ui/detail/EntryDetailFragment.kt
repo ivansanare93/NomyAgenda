@@ -2,6 +2,7 @@ package com.nomyagenda.app.ui.detail
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,13 +108,14 @@ class EntryDetailFragment : Fragment() {
                     val items = ChecklistManager.fromJson(entry.checklistJson)
                     if (items.isNotEmpty()) {
                         binding.textDetailContent.visibility = View.VISIBLE
-                        val sb = StringBuilder()
+                        val ssb = SpannableStringBuilder()
                         items.forEachIndexed { index, item ->
                             val check = if (item.done) "☑" else "☐"
-                            sb.append("$check  ${item.text}")
-                            if (index < items.lastIndex) sb.append("\n")
+                            ssb.append("$check  ")
+                            ssb.append(RichTextConverter.markdownInlineToSpannable(item.text))
+                            if (index < items.lastIndex) ssb.append("\n")
                         }
-                        binding.textDetailContent.text = sb.toString()
+                        binding.textDetailContent.text = ssb
                         binding.textDetailContent.setTextColor(contentColor)
                     } else {
                         binding.textDetailContent.visibility = View.GONE

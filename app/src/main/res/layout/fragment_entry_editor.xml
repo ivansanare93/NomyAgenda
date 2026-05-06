@@ -288,6 +288,45 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
 
+            <!-- Checklist item formatting toolbar for bold/italic -->
+            <HorizontalScrollView
+                android:id="@+id/scroll_checklist_format_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_checklist_format_bold"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/format_bold"
+                        android:textStyle="bold"
+                        android:contentDescription="@string/format_bold_desc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_checklist_format_italic"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:checkable="true"
+                        android:text="@string/format_italic"
+                        android:textStyle="italic"
+                        android:contentDescription="@string/format_italic_desc" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

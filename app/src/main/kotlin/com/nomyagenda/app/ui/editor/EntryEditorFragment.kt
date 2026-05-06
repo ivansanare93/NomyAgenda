@@ -80,6 +80,49 @@ class EntryEditorFragment : Fragment() {
     private var titleLastInsertCount = 0
     private var isTitleApplyingSpans = false
 
+    // ---- WYSIWYG format toggle state (checklist item) ----
+    private var isChecklistBoldActive = false
+    private var isChecklistItalicActive = false
+    private var checklistLastInsertStart = 0
+    private var checklistLastInsertCount = 0
+    private var isChecklistApplyingSpans = false
+
+    /** Applies bold/italic spans to checklist item text inserted while a toggle is active. */
+    private val checklistFormatWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (!isChecklistApplyingSpans) {
+                checklistLastInsertStart = start
+                checklistLastInsertCount = count
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s == null || checklistLastInsertCount == 0 || isChecklistApplyingSpans) return
+            isChecklistApplyingSpans = true
+            try {
+                val end = checklistLastInsertStart + checklistLastInsertCount
+                if (isChecklistBoldActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        checklistLastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                if (isChecklistItalicActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.ITALIC),
+                        checklistLastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            } finally {
+                isChecklistApplyingSpans = false
+            }
+        }
+    }
+
     /** Applies formatting spans to text inserted while a toggle is active. */
     private val formatWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -220,12 +263,22 @@ class EntryEditorFragment : Fragment() {
         // Attach the TextWatcher that applies active format spans while typing
         binding.editNoteContent.addTextChangedListener(formatWatcher)
 
+        // Checklist format toolbar – bold / italic WYSIWYG toggles for checklist item input
+        binding.btnChecklistFormatBold.setOnClickListener   { toggleChecklistInlineFormat(Typeface.BOLD) }
+        binding.btnChecklistFormatItalic.setOnClickListener { toggleChecklistInlineFormat(Typeface.ITALIC) }
+
+        // Attach the TextWatcher that applies active format spans while typing in checklist item
+        binding.editNewChecklistItem.addTextChangedListener(checklistFormatWatcher)
+
         binding.buttonAddChecklistItem.setOnClickListener {
-            val text = binding.editNewChecklistItem.text?.toString()?.trim() ?: ""
-            if (text.isNotBlank()) {
-                checklistAdapter.addItem(text)
+            val editable = binding.editNewChecklistItem.text
+            val plainText = editable?.toString()?.trim() ?: ""
+            if (plainText.isNotBlank()) {
+                val markdownText = RichTextConverter.spannableToMarkdown(editable!!)
+                checklistAdapter.addItem(markdownText)
                 binding.editNewChecklistItem.setText("")
                 binding.editNewChecklistItem.clearFocus()
+                resetChecklistFormatToggles()
             }
         }
 
@@ -464,6 +517,60 @@ class EntryEditorFragment : Fragment() {
         val lineStart = (text.lastIndexOf('\n', cursor - 1) + 1).coerceAtLeast(0)
         text.insert(lineStart, prefix)
         editText.setSelection(cursor + prefix.length)
+    }
+
+    // ---------- checklist item inline-format toggle ----------
+
+    /**
+     * Handles a click on a checkable format button (bold / italic) for checklist item input.
+     *
+     * • If there is a text selection, the span is toggled on/off for that range
+     *   without changing the typing-mode toggle.
+     * • If there is no selection, the typing-mode toggle is flipped.
+     */
+    private fun toggleChecklistInlineFormat(style: Int) {
+        val editText = binding.editNewChecklistItem
+        val text = editText.text ?: return
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+
+        if (selStart != selEnd) {
+            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
+                .filter { it.style == style
+                        && text.getSpanStart(it) >= selStart
+                        && text.getSpanEnd(it) <= selEnd }
+            if (existing.isNotEmpty()) {
+                existing.forEach { text.removeSpan(it) }
+            } else {
+                text.setSpan(
+                    StyleSpan(style), selStart, selEnd,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            when (style) {
+                Typeface.BOLD   -> binding.btnChecklistFormatBold.isChecked   = isChecklistBoldActive
+                Typeface.ITALIC -> binding.btnChecklistFormatItalic.isChecked = isChecklistItalicActive
+            }
+        } else {
+            when (style) {
+                Typeface.BOLD -> {
+                    isChecklistBoldActive = !isChecklistBoldActive
+                    binding.btnChecklistFormatBold.isChecked = isChecklistBoldActive
+                }
+                Typeface.ITALIC -> {
+                    isChecklistItalicActive = !isChecklistItalicActive
+                    binding.btnChecklistFormatItalic.isChecked = isChecklistItalicActive
+                }
+            }
+        }
+    }
+
+    /** Clears all active checklist format toggles and syncs button states. */
+    private fun resetChecklistFormatToggles() {
+        isChecklistBoldActive = false
+        isChecklistItalicActive = false
+        binding.btnChecklistFormatBold.isChecked = false
+        binding.btnChecklistFormatItalic.isChecked = false
     }
 
     // ---------- entry colour picker (unchanged) ----------
