@@ -49,7 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold" />
 
@@ -69,7 +69,7 @@
             android:layout_marginTop="@dimen/spacing_xsmall"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
             android:textColor="?attr/colorOnSurface"
             android:visibility="gone" />
 
@@ -81,7 +81,7 @@
             android:layout_marginTop="@dimen/spacing_xsmall"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:visibility="gone" />
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xsmall"
             android:drawablePadding="@dimen/spacing_xsmall"
-            android:textAppearance="?attr/textAppearanceLabelSmall"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
             android:textColor="@color/md_theme_light_secondary"
             android:visibility="gone" />
 

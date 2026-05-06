@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/spacing_small"
-                        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                        android:textAppearance="?attr/textAppearanceHeadlineMedium"
                         android:textColor="?attr/colorOnBackground" />
 
                 </LinearLayout>
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:visibility="gone" />
 
@@ -91,7 +91,7 @@
                     android:id="@+id/text_detail_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:textColor="?attr/colorOnBackground"
                     android:visibility="gone" />
 
