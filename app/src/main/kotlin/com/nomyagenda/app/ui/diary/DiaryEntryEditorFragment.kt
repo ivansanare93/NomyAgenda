@@ -47,13 +47,57 @@ class DiaryEntryEditorFragment : Fragment() {
 
     private lateinit var photoAdapter: DiaryPhotoAdapter
 
-    // ---- WYSIWYG format toggle state ----
+    // ---- WYSIWYG format toggle state (content) ----
     private var isBoldActive = false
     private var isItalicActive = false
 
     private var lastInsertStart = 0
     private var lastInsertCount = 0
     private var isApplyingSpans = false
+
+    // ---- WYSIWYG format toggle state (title) ----
+    private var isTitleBoldActive = false
+    private var isTitleItalicActive = false
+
+    private var titleLastInsertStart = 0
+    private var titleLastInsertCount = 0
+    private var isTitleApplyingSpans = false
+
+    /** Applies bold/italic spans to title text inserted while a toggle is active. */
+    private val titleFormatWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (!isTitleApplyingSpans) {
+                titleLastInsertStart = start
+                titleLastInsertCount = count
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            if (s == null || titleLastInsertCount == 0 || isTitleApplyingSpans) return
+            isTitleApplyingSpans = true
+            try {
+                val end = titleLastInsertStart + titleLastInsertCount
+                if (isTitleBoldActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        titleLastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                if (isTitleItalicActive) {
+                    s.setSpan(
+                        StyleSpan(Typeface.ITALIC),
+                        titleLastInsertStart, end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            } finally {
+                isTitleApplyingSpans = false
+            }
+        }
+    }
 
     /** Applies formatting spans to text inserted while a toggle is active. */
     private val formatWatcher = object : TextWatcher {
@@ -137,9 +181,50 @@ class DiaryEntryEditorFragment : Fragment() {
     }
 
     private fun setupFormatToolbar() {
+        binding.editDiaryTitle.addTextChangedListener(titleFormatWatcher)
+        binding.btnDiaryTitleFormatBold.setOnClickListener { toggleTitleInlineFormat(Typeface.BOLD) }
+        binding.btnDiaryTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
+
         binding.editDiaryContent.addTextChangedListener(formatWatcher)
         binding.btnDiaryFormatBold.setOnClickListener { toggleInlineFormat(Typeface.BOLD) }
         binding.btnDiaryFormatItalic.setOnClickListener { toggleInlineFormat(Typeface.ITALIC) }
+    }
+
+    private fun toggleTitleInlineFormat(style: Int) {
+        val editText = binding.editDiaryTitle
+        val text = editText.text ?: return
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+
+        if (selStart != selEnd) {
+            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
+                .filter { it.style == style
+                        && text.getSpanStart(it) >= selStart
+                        && text.getSpanEnd(it) <= selEnd }
+            if (existing.isNotEmpty()) {
+                existing.forEach { text.removeSpan(it) }
+            } else {
+                text.setSpan(
+                    StyleSpan(style), selStart, selEnd,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            when (style) {
+                Typeface.BOLD   -> binding.btnDiaryTitleFormatBold.isChecked   = isTitleBoldActive
+                Typeface.ITALIC -> binding.btnDiaryTitleFormatItalic.isChecked = isTitleItalicActive
+            }
+        } else {
+            when (style) {
+                Typeface.BOLD -> {
+                    isTitleBoldActive = !isTitleBoldActive
+                    binding.btnDiaryTitleFormatBold.isChecked = isTitleBoldActive
+                }
+                Typeface.ITALIC -> {
+                    isTitleItalicActive = !isTitleItalicActive
+                    binding.btnDiaryTitleFormatItalic.isChecked = isTitleItalicActive
+                }
+            }
+        }
     }
 
     private fun toggleInlineFormat(style: Int) {
@@ -412,8 +497,10 @@ class DiaryEntryEditorFragment : Fragment() {
         }
 
         viewModel.title.observe(viewLifecycleOwner) { t ->
-            if (binding.editDiaryTitle.text.toString() != t) {
-                binding.editDiaryTitle.setText(t)
+            if (t == null) return@observe
+            val spannable = RichTextConverter.markdownInlineToSpannable(t)
+            if (binding.editDiaryTitle.text?.toString() != t) {
+                binding.editDiaryTitle.setText(spannable, android.widget.TextView.BufferType.EDITABLE)
             }
         }
 
@@ -512,7 +599,9 @@ class DiaryEntryEditorFragment : Fragment() {
     }
 
     private fun saveDiaryEntry() {
-        viewModel.title.value = binding.editDiaryTitle.text.toString()
+        viewModel.title.value = binding.editDiaryTitle.text
+            ?.let { RichTextConverter.spannableToMarkdown(it) }
+            ?: ""
         viewModel.content.value = binding.editDiaryContent.text
             ?.let { RichTextConverter.spannableToMarkdown(it) }
             ?: ""

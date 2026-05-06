@@ -38,7 +38,7 @@ class ChecklistAdapter(
         fun bind(item: ChecklistItem) {
             binding.checkboxItem.setOnCheckedChangeListener(null)
             binding.checkboxItem.isChecked = item.done
-            binding.checkboxItem.text = item.text
+            binding.checkboxItem.text = RichTextConverter.markdownInlineToSpannable(item.text)
             binding.checkboxItem.setOnCheckedChangeListener { _, isChecked ->
                 @Suppress("DEPRECATION")
                 val pos = adapterPosition
