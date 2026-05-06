@@ -16,6 +16,8 @@ import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.editor.ChecklistManager
 import com.nomyagenda.app.ui.editor.EntryBackgroundCatalog
 import com.nomyagenda.app.ui.editor.RichTextConverter
+import com.nomyagenda.app.ui.resolveThemeColor
+import com.google.android.material.R as MaterialR
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
@@ -118,7 +120,7 @@ class AgendaAdapter(
                 binding.root.setCardBackgroundColor(Color.TRANSPARENT)
             } else {
                 binding.layoutCardContent.background = null
-                binding.root.setCardBackgroundColor(Color.WHITE)
+                binding.root.setCardBackgroundColor(context.resolveThemeColor(MaterialR.attr.colorSurface))
             }
 
             binding.root.setOnClickListener { onClick(entry) }
