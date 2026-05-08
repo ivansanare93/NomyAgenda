@@ -95,11 +95,16 @@ class DiaryAdapter(
                 binding.textDiaryPhotoCount.visibility = View.GONE
             }
 
-            val typeface = FontCatalog.resolve(context, entry.fontFamily)
-            binding.textDiaryEntryDate.typeface = typeface
-            binding.textDiaryEntryTitle.typeface = typeface
-            binding.textDiaryEntryPreview.typeface = typeface
-            binding.textDiaryPhotoCount.typeface = typeface
+            val fontTag = entry.fontFamily
+            binding.textDiaryEntryTitle.tag = fontTag
+            FontCatalog.resolveAsync(context, entry.fontFamily) { typeface ->
+                if (binding.textDiaryEntryTitle.tag == fontTag) {
+                    binding.textDiaryEntryDate.typeface = typeface
+                    binding.textDiaryEntryTitle.typeface = typeface
+                    binding.textDiaryEntryPreview.typeface = typeface
+                    binding.textDiaryPhotoCount.typeface = typeface
+                }
+            }
 
             binding.root.setOnClickListener { onClick(entry) }
             binding.root.setOnLongClickListener { onLongClick(entry); true }

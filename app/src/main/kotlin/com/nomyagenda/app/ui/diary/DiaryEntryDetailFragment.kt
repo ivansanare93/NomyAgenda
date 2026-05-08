@@ -125,9 +125,10 @@ class DiaryEntryDetailFragment : Fragment() {
                 binding.imageDiaryBg.visibility = View.GONE
             }
 
-            val typeface = FontCatalog.resolve(requireContext(), entry.fontFamily)
-            binding.textDetailDiaryTitle.typeface = typeface
-            binding.textDetailDiaryContent.typeface = typeface
+            FontCatalog.resolveAsync(requireContext(), entry.fontFamily) { typeface ->
+                binding.textDetailDiaryTitle.typeface = typeface
+                binding.textDetailDiaryContent.typeface = typeface
+            }
         }
 
         binding.fabEditDiaryEntry.setOnClickListener {

@@ -666,7 +666,6 @@ class EntryEditorFragment : Fragment() {
 
     private fun setupFontPicker() {
         FontCatalog.fonts.forEach { fontItem ->
-            val typeface = FontCatalog.resolve(requireContext(), fontItem.id)
             val btn = com.google.android.material.button.MaterialButton(
                 requireContext(),
                 null,
@@ -674,7 +673,6 @@ class EntryEditorFragment : Fragment() {
             ).apply {
                 tag = fontItem.id
                 text = fontItem.displayName
-                this.typeface = typeface
                 isCheckable = true
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -692,6 +690,9 @@ class EntryEditorFragment : Fragment() {
                 }
             }
             binding.fontPickerContainerEntry.addView(btn)
+            FontCatalog.resolveAsync(requireContext(), fontItem.id) { typeface ->
+                btn.typeface = typeface
+            }
         }
     }
 
@@ -710,9 +711,10 @@ class EntryEditorFragment : Fragment() {
     }
 
     private fun applyFontToEditors(fontId: String) {
-        val typeface = FontCatalog.resolve(requireContext(), fontId)
-        binding.editEntryTitle.typeface = typeface
-        binding.editNoteContent.typeface = typeface
+        FontCatalog.resolveAsync(requireContext(), fontId) { typeface ->
+            binding.editEntryTitle.typeface = typeface
+            binding.editNoteContent.typeface = typeface
+        }
     }
 
     // ---------- background picker ----------

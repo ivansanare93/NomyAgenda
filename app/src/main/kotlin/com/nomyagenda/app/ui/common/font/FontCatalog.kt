@@ -36,4 +36,29 @@ object FontCatalog {
             null
         }
     }
+
+    /**
+     * Asynchronously loads the [Typeface] for [fontId] and delivers it via [onResolved].
+     *
+     * Downloadable fonts are fetched from the Google Fonts provider the first time they are
+     * used; the synchronous [resolve] may return `null` during that initial fetch.  This
+     * variant registers a [ResourcesCompat.FontCallback] so the typeface is delivered as soon
+     * as it is available (immediately when already cached, or after the download otherwise).
+     */
+    fun resolveAsync(context: Context, fontId: String, onResolved: (Typeface?) -> Unit) {
+        val item = fonts.firstOrNull { it.id == fontId }
+        if (item == null || item.fontResId == 0) {
+            onResolved(null)
+            return
+        }
+        ResourcesCompat.getFont(
+            context,
+            item.fontResId,
+            object : ResourcesCompat.FontCallback() {
+                override fun onFontRetrieved(typeface: Typeface) { onResolved(typeface) }
+                override fun onFontRetrievalFailed(reason: Int) { onResolved(null) }
+            },
+            null
+        )
+    }
 }
