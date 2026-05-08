@@ -228,4 +228,13 @@
 
     <!-- Entry backgrounds -->
     <string name="entry_background_label">Fondo de la entrada</string>
+
+    <!-- Premium backgrounds -->
+    <string name="diary_background_premium">Premium</string>
+    <string name="bg_premium_paper_lavender">Papel Lavanda</string>
+    <string name="bg_premium_botanical_soft">Botánico Suave</string>
+    <string name="bg_premium_dreamy_sky">Cielo Soñado</string>
+    <string name="bg_premium_vintage_journal">Diario Vintage</string>
+    <string name="bg_premium_rose_romantic">Rosas Románticas</string>
+    <string name="bg_premium_ocean_mist">Neblina Marina</string>
 </resources>

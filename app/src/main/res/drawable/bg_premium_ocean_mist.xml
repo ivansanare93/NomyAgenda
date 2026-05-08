@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base gradient: deep teal → mist blue → soft white-blue -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="160"
+                android:startColor="#E0F4F8"
+                android:centerColor="#B2DDE9"
+                android:endColor="#E8F6FA" />
+        </shape>
+    </item>
+
+    <!-- Misty radial glow center – lighter area for readability -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="70%p"
+                android:startColor="#25FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+
+    <!-- Ocean mist detailed illustration -->
+    <item>
+        <vector
+            android:width="360dp"
+            android:height="720dp"
+            android:viewportWidth="360"
+            android:viewportHeight="720">
+
+            <!-- Deep ocean wave layer 1 – bottom area -->
+            <path android:fillColor="#1A6F8A" android:alpha="0.35"
+                android:pathData="M0,580 C45,560 90,590 135,575 C180,560 225,590 270,575 C300,565 335,572 360,565
+                                   L360,720 L0,720 Z" />
+
+            <!-- Wave layer 2 -->
+            <path android:fillColor="#1A8FAA" android:alpha="0.28"
+                android:pathData="M0,510 C55,490 110,525 165,508 C220,491 275,520 330,506 L360,500 L360,560
+                                   C330,575 275,548 220,564 C165,580 110,548 55,568 L0,558 Z" />
+
+            <!-- Wave layer 3 – mid -->
+            <path android:fillColor="#2AB5D0" android:alpha="0.2"
+                android:pathData="M0,420 C60,400 120,432 180,415 C240,398 300,428 360,412
+                                   L360,470 C300,485 240,455 180,470 C120,485 60,455 0,470 Z" />
+
+            <!-- Mist/foam layer at top of waves -->
+            <path android:fillColor="#E8F6FA" android:alpha="0.4"
+                android:pathData="M0,575 C30,565 60,578 90,570 C120,562 150,575 180,568 C210,561 240,574 270,567 C300,560 330,572 360,565
+                                   L360,590 C330,597 300,585 270,592 C240,599 210,586 180,593 C150,600 120,587 90,594 C60,601 30,589 0,596 Z" />
+
+            <!-- Mist cloud streaks – upper area (sea mist) -->
+            <path android:fillColor="#FFFFFF" android:alpha="0.15"
+                android:pathData="M-10,180 C50,165 110,185 170,172 C230,159 290,178 370,165
+                                   L370,200 C290,213 230,194 170,207 C110,220 50,201 -10,214 Z" />
+            <path android:fillColor="#FFFFFF" android:alpha="0.12"
+                android:pathData="M-10,100 C40,88 95,108 150,96 C205,84 260,102 360,90
+                                   L360,125 C260,137 205,119 150,131 C95,143 40,125 -10,137 Z" />
+
+            <!-- Sea horizon shimmer line -->
+            <path android:strokeColor="#FFFFFF" android:strokeWidth="0.5" android:fillColor="#00000000"
+                android:alpha="0.3"
+                android:pathData="M0,390 C80,385 160,392 240,387 C290,383 330,389 360,386" />
+
+            <!-- Foam highlights on wave crests -->
+            <path android:fillColor="#FFFFFF" android:alpha="0.45"
+                android:pathData="M15,508 A5,2.5 0 1,1 25,508 A5,2.5 0 1,1 15,508 Z
+                                   M80,494 A6,2.5 0 1,1 92,494 A6,2.5 0 1,1 80,494 Z
+                                   M155,508 A5,2.5 0 1,1 165,508 A5,2.5 0 1,1 155,508 Z
+                                   M235,494 A7,2.5 0 1,1 249,494 A7,2.5 0 1,1 235,494 Z
+                                   M310,505 A5,2.5 0 1,1 320,505 A5,2.5 0 1,1 310,505 Z" />
+            <path android:fillColor="#FFFFFF" android:alpha="0.4"
+                android:pathData="M30,573 A6,2.5 0 1,1 42,573 A6,2.5 0 1,1 30,573 Z
+                                   M105,563 A5,2.5 0 1,1 115,563 A5,2.5 0 1,1 105,563 Z
+                                   M195,572 A7,2.5 0 1,1 209,572 A7,2.5 0 1,1 195,572 Z
+                                   M280,560 A5,2.5 0 1,1 290,560 A5,2.5 0 1,1 280,560 Z" />
+
+            <!-- Small bubbles -->
+            <path android:strokeColor="#8EC8DA" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M50,460 A4,4 0 1,1 58,460 A4,4 0 1,1 50,460 Z
+                                   M180,445 A3,3 0 1,1 186,445 A3,3 0 1,1 180,445 Z
+                                   M310,455 A4,4 0 1,1 318,455 A4,4 0 1,1 310,455 Z
+                                   M120,540 A3,3 0 1,1 126,540 A3,3 0 1,1 120,540 Z
+                                   M260,530 A4,4 0 1,1 268,530 A4,4 0 1,1 260,530 Z" />
+
+            <!-- Seagull silhouettes in distance -->
+            <path android:strokeColor="#5B8FA8" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:alpha="0.35"
+                android:pathData="M100,160 C105,155 112,155 118,160" />
+            <path android:strokeColor="#5B8FA8" android:strokeWidth="1" android:fillColor="#00000000"
+                android:alpha="0.3"
+                android:pathData="M130,145 C134,141 140,141 145,145" />
+            <path android:strokeColor="#5B8FA8" android:strokeWidth="1" android:fillColor="#00000000"
+                android:alpha="0.28"
+                android:pathData="M240,170 C244,166 250,166 255,170" />
+            <path android:strokeColor="#5B8FA8" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.25"
+                android:pathData="M275,150 C278,147 283,147 287,150" />
+
+            <!-- Sun/moon reflection shimmer on water -->
+            <path android:fillColor="#FFFFFF" android:alpha="0.2"
+                android:pathData="M165,420 C170,415 175,418 180,415 C185,412 190,415 195,420
+                                   C190,425 185,422 180,425 C175,428 170,425 165,420 Z" />
+            <path android:fillColor="#FFFFFF" android:alpha="0.12"
+                android:pathData="M160,435 C167,430 173,433 180,430 C187,427 193,430 200,435
+                                   C193,440 187,437 180,440 C173,443 167,440 160,435 Z" />
+
+            <!-- Soft horizon mist gradient strip -->
+            <path android:fillColor="#E0F4F8" android:alpha="0.35"
+                android:pathData="M0,360 H360 V400 H0 Z" />
+
+        </vector>
+    </item>
+
+</layer-list>

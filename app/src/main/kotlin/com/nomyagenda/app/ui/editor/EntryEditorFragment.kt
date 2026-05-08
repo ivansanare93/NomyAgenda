@@ -720,6 +720,7 @@ class EntryEditorFragment : Fragment() {
     private fun setupBackgroundPicker() {
         setupBackgroundSwatches(binding.bgSwatchesEntryThematic, EntryBackgroundCatalog.thematicBackgrounds)
         setupBackgroundSwatches(binding.bgSwatchesEntryFestive, EntryBackgroundCatalog.festiveBackgrounds)
+        setupBackgroundSwatches(binding.bgSwatchesEntryPremium, EntryBackgroundCatalog.premiumBackgrounds)
     }
 
     private fun setupBackgroundSwatches(container: android.widget.LinearLayout, backgrounds: List<DiaryBackgroundItem>) {
@@ -771,7 +772,7 @@ class EntryEditorFragment : Fragment() {
     }
 
     private fun updateBackgroundSelection(selectedKey: String) {
-        val containers = listOf(binding.bgSwatchesEntryThematic, binding.bgSwatchesEntryFestive)
+        val containers = listOf(binding.bgSwatchesEntryThematic, binding.bgSwatchesEntryFestive, binding.bgSwatchesEntryPremium)
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
         val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
 

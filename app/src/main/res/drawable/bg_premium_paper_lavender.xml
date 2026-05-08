@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base gradient: warm lavender paper -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#F5EEF8"
+                android:centerColor="#EDE0F5"
+                android:endColor="#E8D5F0" />
+        </shape>
+    </item>
+
+    <!-- Subtle radial vignette overlay for depth -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="120%p"
+                android:startColor="#00000000"
+                android:endColor="#18B39DBC" />
+        </shape>
+    </item>
+
+    <!-- Decorative botanical vector overlay -->
+    <item>
+        <vector
+            android:width="360dp"
+            android:height="720dp"
+            android:viewportWidth="360"
+            android:viewportHeight="720">
+
+            <!-- Corner bouquet – top-left -->
+            <!-- Stem -->
+            <path android:strokeColor="#C9A0DC" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M20,20 C25,35 18,55 22,75" />
+            <!-- Leaf left -->
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M22,75 C10,65 5,50 15,45 C20,43 25,48 22,55 Z" />
+            <!-- Leaf right -->
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M22,75 C34,65 38,50 28,45 C23,43 18,48 22,55 Z" />
+            <!-- Flower petals (5-petal rosette at 22,20) -->
+            <path android:fillColor="#DDB9E8" android:alpha="0.8"
+                android:pathData="M22,12 A4,4 0 1,1 22,20 A4,4 0 1,1 22,12 Z
+                                   M14,16 A4,4 0 1,1 22,16 A4,4 0 1,1 14,16 Z
+                                   M14,22 A4,4 0 1,1 22,22 A4,4 0 1,1 14,22 Z
+                                   M22,22 A4,4 0 1,1 30,22 A4,4 0 1,1 22,22 Z
+                                   M30,16 A4,4 0 1,1 30,22 A4,4 0 1,1 30,16 Z" />
+            <path android:fillColor="#9B59B6" android:alpha="0.7"
+                android:pathData="M22,14 A4,4 0 1,1 22,22 A4,4 0 1,1 22,14 Z" />
+
+            <!-- Small decorative sprigs top-left area -->
+            <path android:strokeColor="#B8A9C9" android:strokeWidth="1" android:fillColor="#00000000"
+                android:pathData="M8,30 C15,25 20,18 12,15" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.5"
+                android:pathData="M12,15 C8,12 5,16 9,18 Z" />
+            <path android:strokeColor="#B8A9C9" android:strokeWidth="1" android:fillColor="#00000000"
+                android:pathData="M35,8 C38,15 34,22 40,25" />
+            <path android:fillColor="#DDB9E8" android:alpha="0.5"
+                android:pathData="M40,25 A3,3 0 1,1 46,25 A3,3 0 1,1 40,25 Z" />
+
+            <!-- Corner bouquet – top-right -->
+            <path android:strokeColor="#C9A0DC" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M340,20 C335,35 342,55 338,75" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M338,75 C326,65 321,50 331,45 C336,43 341,48 338,55 Z" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M338,75 C350,65 354,50 344,45 C339,43 334,48 338,55 Z" />
+            <path android:fillColor="#DDB9E8" android:alpha="0.8"
+                android:pathData="M338,12 A4,4 0 1,1 338,20 A4,4 0 1,1 338,12 Z
+                                   M330,16 A4,4 0 1,1 338,16 A4,4 0 1,1 330,16 Z
+                                   M330,22 A4,4 0 1,1 338,22 A4,4 0 1,1 330,22 Z
+                                   M338,22 A4,4 0 1,1 346,22 A4,4 0 1,1 338,22 Z
+                                   M346,16 A4,4 0 1,1 346,22 A4,4 0 1,1 346,16 Z" />
+            <path android:fillColor="#9B59B6" android:alpha="0.7"
+                android:pathData="M338,14 A4,4 0 1,1 338,22 A4,4 0 1,1 338,14 Z" />
+
+            <!-- Corner bouquet – bottom-left -->
+            <path android:strokeColor="#C9A0DC" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M20,700 C25,685 18,665 22,645" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M22,645 C10,655 5,670 15,675 C20,677 25,672 22,665 Z" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M22,645 C34,655 38,670 28,675 C23,677 18,672 22,665 Z" />
+            <path android:fillColor="#DDB9E8" android:alpha="0.8"
+                android:pathData="M22,700 A4,4 0 1,1 22,708 A4,4 0 1,1 22,700 Z
+                                   M14,704 A4,4 0 1,1 22,704 A4,4 0 1,1 14,704 Z
+                                   M22,704 A4,4 0 1,1 30,704 A4,4 0 1,1 22,704 Z" />
+            <path android:fillColor="#9B59B6" android:alpha="0.7"
+                android:pathData="M18,702 A4,4 0 1,1 26,702 A4,4 0 1,1 18,702 Z" />
+
+            <!-- Corner bouquet – bottom-right -->
+            <path android:strokeColor="#C9A0DC" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M340,700 C335,685 342,665 338,645" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M338,645 C326,655 321,670 331,675 C336,677 341,672 338,665 Z" />
+            <path android:fillColor="#C3B1E1" android:alpha="0.6"
+                android:pathData="M338,645 C350,655 354,670 344,675 C339,677 334,672 338,665 Z" />
+            <path android:fillColor="#DDB9E8" android:alpha="0.8"
+                android:pathData="M338,700 A4,4 0 1,1 338,708 A4,4 0 1,1 338,700 Z
+                                   M330,704 A4,4 0 1,1 338,704 A4,4 0 1,1 330,704 Z
+                                   M338,704 A4,4 0 1,1 346,704 A4,4 0 1,1 338,704 Z" />
+            <path android:fillColor="#9B59B6" android:alpha="0.7"
+                android:pathData="M334,702 A4,4 0 1,1 342,702 A4,4 0 1,1 334,702 Z" />
+
+            <!-- Subtle horizontal ruling lines (mimicking paper) -->
+            <path android:strokeColor="#C3B1E1" android:strokeWidth="0.4" android:fillColor="#00000000"
+                android:alpha="0.3"
+                android:pathData="M30,150 H330 M30,190 H330 M30,230 H330 M30,270 H330 M30,310 H330
+                                   M30,350 H330 M30,390 H330 M30,430 H330 M30,470 H330 M30,510 H330
+                                   M30,550 H330 M30,590 H330" />
+
+            <!-- Scattered small lavender dots -->
+            <path android:fillColor="#C3B1E1" android:alpha="0.35"
+                android:pathData="M60,200 A2.5,2.5 0 1,1 65,200 A2.5,2.5 0 1,1 60,200 Z
+                                   M290,245 A2,2 0 1,1 294,245 A2,2 0 1,1 290,245 Z
+                                   M155,380 A2.5,2.5 0 1,1 160,380 A2.5,2.5 0 1,1 155,380 Z
+                                   M230,500 A2,2 0 1,1 234,500 A2,2 0 1,1 230,500 Z
+                                   M80,530 A2.5,2.5 0 1,1 85,530 A2.5,2.5 0 1,1 80,530 Z
+                                   M315,430 A2,2 0 1,1 319,430 A2,2 0 1,1 315,430 Z" />
+
+        </vector>
+    </item>
+
+</layer-list>
