@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base gradient: deep rose → blush pink → warm ivory -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="150"
+                android:startColor="#FCE4EC"
+                android:centerColor="#F8BBD0"
+                android:endColor="#FFF0F4" />
+        </shape>
+    </item>
+
+    <!-- Soft radial blush glow from upper-left -->
+    <item android:right="200dp" android:bottom="500dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="100%p"
+                android:startColor="#30F48FB1"
+                android:endColor="#00F48FB1" />
+        </shape>
+    </item>
+
+    <!-- Romantic rose illustration overlay -->
+    <item>
+        <vector
+            android:width="360dp"
+            android:height="720dp"
+            android:viewportWidth="360"
+            android:viewportHeight="720">
+
+            <!-- Large open rose – top-left, decorative -->
+            <!-- Outer petals -->
+            <path android:fillColor="#F48FB1" android:alpha="0.5"
+                android:pathData="M35,55 C20,40 8,55 18,68 C10,72 15,85 28,80 C30,90 42,92 48,82 C55,90 68,86 65,74 C75,72 75,58 64,56 C65,44 52,38 45,48 C40,38 27,36 35,55 Z" />
+            <!-- Mid petals -->
+            <path android:fillColor="#EC407A" android:alpha="0.45"
+                android:pathData="M35,58 C24,46 18,60 28,69 C22,73 26,83 37,78 C38,86 48,87 52,79 C58,86 68,81 65,71 C72,68 71,57 62,56 C62,46 51,42 45,52 C40,42 30,41 35,58 Z" />
+            <!-- Inner petals / center -->
+            <path android:fillColor="#C2185B" android:alpha="0.4"
+                android:pathData="M42,58 C36,50 30,58 36,66 C31,69 34,77 42,73 C43,79 50,79 53,73 C58,77 62,70 58,63 C63,61 62,53 55,53 C54,46 46,44 42,58 Z" />
+            <!-- Rose center -->
+            <path android:fillColor="#AD1457" android:alpha="0.55"
+                android:pathData="M42,62 A8,8 0 1,1 58,62 A8,8 0 1,1 42,62 Z" />
+
+            <!-- Rose stem and leaves – top-left -->
+            <path android:strokeColor="#4CAF50" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M44,88 C44,100 42,115 40,130" />
+            <path android:fillColor="#66BB6A" android:alpha="0.45"
+                android:pathData="M40,110 C28,100 22,108 30,116 Z" />
+            <path android:fillColor="#66BB6A" android:alpha="0.45"
+                android:pathData="M42,125 C54,115 58,123 50,131 Z" />
+
+            <!-- Large open rose – bottom-right, decorative -->
+            <path android:fillColor="#F48FB1" android:alpha="0.45"
+                android:pathData="M315,635 C300,620 288,635 298,648 C290,652 295,665 308,660 C310,670 322,672 328,662 C335,670 348,666 345,654 C355,652 355,638 344,636 C345,624 332,618 325,628 C320,618 307,616 315,635 Z" />
+            <path android:fillColor="#EC407A" android:alpha="0.4"
+                android:pathData="M315,638 C304,626 298,640 308,649 C302,653 306,663 317,658 C318,666 328,667 332,659 C338,666 348,661 345,651 C352,648 351,637 342,636 C342,626 331,622 325,632 C320,622 310,621 315,638 Z" />
+            <path android:fillColor="#AD1457" android:alpha="0.5"
+                android:pathData="M322,642 A8,8 0 1,1 338,642 A8,8 0 1,1 322,642 Z" />
+            <!-- Stem -->
+            <path android:strokeColor="#4CAF50" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M323,668 C323,680 322,695 320,710" />
+            <path android:fillColor="#66BB6A" android:alpha="0.45"
+                android:pathData="M320,686 C308,676 302,684 310,692 Z" />
+
+            <!-- Small rose buds scattered -->
+            <!-- Bud at (280, 80) -->
+            <path android:fillColor="#F06292" android:alpha="0.55"
+                android:pathData="M280,70 C274,74 272,82 278,86 C282,88 288,84 288,78 C286,72 283,68 280,70 Z" />
+            <path android:strokeColor="#4CAF50" android:strokeWidth="1" android:fillColor="#00000000"
+                android:alpha="0.45"
+                android:pathData="M280,86 C280,94 279,102" />
+
+            <!-- Bud at (60, 580) -->
+            <path android:fillColor="#F06292" android:alpha="0.5"
+                android:pathData="M60,570 C54,574 52,582 58,586 C62,588 68,584 68,578 C66,572 63,568 60,570 Z" />
+            <path android:strokeColor="#4CAF50" android:strokeWidth="1" android:fillColor="#00000000"
+                android:alpha="0.45"
+                android:pathData="M60,586 C60,594 59,602" />
+            <path android:fillColor="#66BB6A" android:alpha="0.4"
+                android:pathData="M57,596 C50,590 46,597 52,603 Z" />
+
+            <!-- Scattered rose petals (fallen petals effect) -->
+            <path android:fillColor="#F48FB1" android:alpha="0.3"
+                android:pathData="M100,200 C98,193 104,190 108,196 C109,203 104,207 100,200 Z" />
+            <path android:fillColor="#F48FB1" android:alpha="0.25"
+                android:pathData="M250,350 C248,343 254,340 258,346 C259,353 254,357 250,350 Z" />
+            <path android:fillColor="#EC407A" android:alpha="0.2"
+                android:pathData="M150,450 C148,443 154,440 158,446 C159,453 154,457 150,450 Z" />
+            <path android:fillColor="#F48FB1" android:alpha="0.3"
+                android:pathData="M300,500 C298,493 304,490 308,496 C309,503 304,507 300,500 Z" />
+            <path android:fillColor="#F48FB1" android:alpha="0.25"
+                android:pathData="M80,380 C78,373 84,370 88,376 C89,383 84,387 80,380 Z" />
+            <path android:fillColor="#EC407A" android:alpha="0.22"
+                android:pathData="M190,280 C188,273 194,270 198,276 C199,283 194,287 190,280 Z" />
+
+            <!-- Delicate heart accents -->
+            <path android:fillColor="#F48FB1" android:alpha="0.35"
+                android:pathData="M340,100 C338,96 332,96 330,100 C326,104 330,112 340,118 C350,112 354,104 350,100 C348,96 342,96 340,100 Z" />
+            <path android:fillColor="#F48FB1" android:alpha="0.28"
+                android:pathData="M20,480 C18,476 12,476 10,480 C6,484 10,492 20,498 C30,492 34,484 30,480 C28,476 22,476 20,480 Z" />
+
+        </vector>
+    </item>
+
+</layer-list>

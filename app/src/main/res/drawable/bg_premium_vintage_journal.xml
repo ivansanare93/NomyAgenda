@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base warm sepia gradient (aged paper) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="150"
+                android:startColor="#F5ECD7"
+                android:centerColor="#EFE0C2"
+                android:endColor="#E8D5B0" />
+        </shape>
+    </item>
+
+    <!-- Top-left corner dark vignette (aged look) -->
+    <item android:right="270dp" android:bottom="540dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="100%p"
+                android:startColor="#30A0784A"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Bottom-right corner dark vignette -->
+    <item android:left="270dp" android:top="540dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="100%p"
+                android:startColor="#28A0784A"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Vintage decorative elements overlay -->
+    <item>
+        <vector
+            android:width="360dp"
+            android:height="720dp"
+            android:viewportWidth="360"
+            android:viewportHeight="720">
+
+            <!-- Aged paper texture: horizontal grain strokes (ruling lines) -->
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,200 C120,198 240,202 355,199" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,240 C100,242 220,238 355,241" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,280 C110,277 230,282 355,280" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,320 C90,322 210,318 355,320" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,360 C115,358 235,362 355,360" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,400 C95,402 215,398 355,400" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,440 C105,438 225,442 355,440" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,480 C100,482 220,478 355,480" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,520 C112,518 232,522 355,520" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,560 C98,562 218,558 355,560" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,600 C108,598 228,602 355,600" />
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.3" android:fillColor="#00000000"
+                android:alpha="0.2" android:pathData="M5,640 C104,642 224,638 355,640" />
+
+            <!-- Decorative ornamental border – outer frame -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:alpha="0.4"
+                android:pathData="M12,12 H348 V708 H12 Z" />
+            <!-- Inner frame line -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="0.6" android:fillColor="#00000000"
+                android:alpha="0.25"
+                android:pathData="M18,18 H342 V702 H18 Z" />
+
+            <!-- Corner ornaments – top-left -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M12,40 C22,30 30,22 40,12" />
+            <path android:fillColor="#A0784A" android:alpha="0.45"
+                android:pathData="M12,12 A5,5 0 1,1 22,12 A5,5 0 1,1 12,12 Z" />
+            <path android:strokeColor="#A0784A" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.35"
+                android:pathData="M22,12 C24,18 18,24 12,22" />
+
+            <!-- Corner ornaments – top-right -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M348,40 C338,30 330,22 320,12" />
+            <path android:fillColor="#A0784A" android:alpha="0.45"
+                android:pathData="M338,12 A5,5 0 1,1 348,12 A5,5 0 1,1 338,12 Z" />
+            <path android:strokeColor="#A0784A" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.35"
+                android:pathData="M338,12 C336,18 342,24 348,22" />
+
+            <!-- Corner ornaments – bottom-left -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M12,680 C22,690 30,698 40,708" />
+            <path android:fillColor="#A0784A" android:alpha="0.45"
+                android:pathData="M12,708 A5,5 0 1,1 22,708 A5,5 0 1,1 12,708 Z" />
+
+            <!-- Corner ornaments – bottom-right -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:alpha="0.5"
+                android:pathData="M348,680 C338,690 330,698 320,708" />
+            <path android:fillColor="#A0784A" android:alpha="0.45"
+                android:pathData="M338,708 A5,5 0 1,1 348,708 A5,5 0 1,1 338,708 Z" />
+
+            <!-- Coffee / ink stain circles (aged marks) -->
+            <path android:strokeColor="#C8A96E" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.18"
+                android:pathData="M55,120 A22,22 0 1,1 99,120 A22,22 0 1,1 55,120 Z" />
+            <path android:fillColor="#C8A96E" android:alpha="0.06"
+                android:pathData="M60,120 A17,17 0 1,1 94,120 A17,17 0 1,1 60,120 Z" />
+
+            <path android:strokeColor="#B89860" android:strokeWidth="0.6" android:fillColor="#00000000"
+                android:alpha="0.14"
+                android:pathData="M290,580 A18,18 0 1,1 326,580 A18,18 0 1,1 290,580 Z" />
+            <path android:fillColor="#B89860" android:alpha="0.05"
+                android:pathData="M294,580 A14,14 0 1,1 322,580 A14,14 0 1,1 294,580 Z" />
+
+            <!-- Small ink splatter dots -->
+            <path android:fillColor="#8B6343" android:alpha="0.15"
+                android:pathData="M270,95 A2,2 0 1,1 274,95 A2,2 0 1,1 270,95 Z
+                                   M285,88 A1.5,1.5 0 1,1 288,88 A1.5,1.5 0 1,1 285,88 Z
+                                   M278,102 A1,1 0 1,1 280,102 A1,1 0 1,1 278,102 Z
+                                   M50,580 A2,2 0 1,1 54,580 A2,2 0 1,1 50,580 Z
+                                   M40,590 A1.5,1.5 0 1,1 43,590 A1.5,1.5 0 1,1 40,590 Z
+                                   M58,572 A1,1 0 1,1 60,572 A1,1 0 1,1 58,572 Z" />
+
+            <!-- Subtle calligraphic flourish top-center -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.3"
+                android:pathData="M140,30 C160,22 200,22 220,30 C200,38 160,38 140,30 Z" />
+            <path android:strokeColor="#A0784A" android:strokeWidth="0.5" android:fillColor="#00000000"
+                android:alpha="0.2"
+                android:pathData="M155,26 C180,20 185,20 205,26" />
+
+            <!-- Subtle calligraphic flourish bottom-center -->
+            <path android:strokeColor="#A0784A" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.3"
+                android:pathData="M140,690 C160,698 200,698 220,690 C200,682 160,682 140,690 Z" />
+
+        </vector>
+    </item>
+
+</layer-list>

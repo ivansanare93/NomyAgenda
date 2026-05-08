@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base pastel sky gradient: soft lilac top → periwinkle center → blush bottom -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#EAE0FF"
+                android:centerColor="#DDE8FF"
+                android:endColor="#F0EAF8" />
+        </shape>
+    </item>
+
+    <!-- Soft nebula glow – upper left (warm violet) -->
+    <item android:right="200dp" android:bottom="400dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="100%p"
+                android:startColor="#25C5A0DC"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Soft nebula glow – lower right (cool blue) -->
+    <item android:left="200dp" android:top="400dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="100%p"
+                android:startColor="#2090B8E0"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Dreamy stars and elements overlay -->
+    <item>
+        <vector
+            android:width="360dp"
+            android:height="720dp"
+            android:viewportWidth="360"
+            android:viewportHeight="720">
+
+            <!-- Large soft-star shapes (4-pointed sparkles) -->
+            <!-- Sparkle at (40, 60) -->
+            <path android:fillColor="#B39DDB" android:alpha="0.8"
+                android:pathData="M40,52 L41.5,58 L48,60 L41.5,62 L40,68 L38.5,62 L32,60 L38.5,58 Z" />
+            <!-- Sparkle at (320, 80) -->
+            <path android:fillColor="#9FA8DA" android:alpha="0.75"
+                android:pathData="M320,72 L321.5,78 L328,80 L321.5,82 L320,88 L318.5,82 L312,80 L318.5,78 Z" />
+            <!-- Sparkle at (180, 40) -->
+            <path android:fillColor="#CE93D8" android:alpha="0.7"
+                android:pathData="M180,33 L181.5,38 L187,40 L181.5,42 L180,47 L178.5,42 L173,40 L178.5,38 Z" />
+
+            <!-- Medium stars/dots (gentle) -->
+            <path android:fillColor="#B39DDB" android:alpha="0.6"
+                android:pathData="M120,90 A3,3 0 1,1 126,90 A3,3 0 1,1 120,90 Z" />
+            <path android:fillColor="#CE93D8" android:alpha="0.4"
+                android:pathData="M120,90 A6,6 0 1,1 132,90 A6,6 0 1,1 120,90 Z" />
+
+            <path android:fillColor="#9FA8DA" android:alpha="0.65"
+                android:pathData="M240,110 A2.5,2.5 0 1,1 245,110 A2.5,2.5 0 1,1 240,110 Z" />
+            <path android:fillColor="#9FA8DA" android:alpha="0.6"
+                android:pathData="M60,220 A2.5,2.5 0 1,1 65,220 A2.5,2.5 0 1,1 60,220 Z" />
+            <path android:fillColor="#CE93D8" android:alpha="0.55"
+                android:pathData="M300,250 A2,2 0 1,1 304,250 A2,2 0 1,1 300,250 Z" />
+            <path android:fillColor="#B39DDB" android:alpha="0.5"
+                android:pathData="M155,180 A2,2 0 1,1 159,180 A2,2 0 1,1 155,180 Z" />
+            <path android:fillColor="#9FA8DA" android:alpha="0.5"
+                android:pathData="M200,300 A1.5,1.5 0 1,1 203,300 A1.5,1.5 0 1,1 200,300 Z" />
+            <path android:fillColor="#B39DDB" android:alpha="0.45"
+                android:pathData="M330,340 A2,2 0 1,1 334,340 A2,2 0 1,1 330,340 Z" />
+
+            <!-- Tiny stars scattered -->
+            <path android:fillColor="#C5CAE9" android:alpha="0.55"
+                android:pathData="M75,50 A1,1 0 1,1 77,50 A1,1 0 1,1 75,50 Z
+                                   M200,70 A1,1 0 1,1 202,70 A1,1 0 1,1 200,70 Z
+                                   M280,55 A1,1 0 1,1 282,55 A1,1 0 1,1 280,55 Z
+                                   M145,100 A1,1 0 1,1 147,100 A1,1 0 1,1 145,100 Z
+                                   M355,120 A1,1 0 1,1 357,120 A1,1 0 1,1 355,120 Z
+                                   M10,150 A1,1 0 1,1 12,150 A1,1 0 1,1 10,150 Z
+                                   M220,165 A1.5,1.5 0 1,1 223,165 A1.5,1.5 0 1,1 220,165 Z
+                                   M340,190 A1,1 0 1,1 342,190 A1,1 0 1,1 340,190 Z
+                                   M105,210 A1,1 0 1,1 107,210 A1,1 0 1,1 105,210 Z
+                                   M258,235 A1,1 0 1,1 260,235 A1,1 0 1,1 258,235 Z
+                                   M40,270 A1,1 0 1,1 42,270 A1,1 0 1,1 40,270 Z
+                                   M175,290 A1.5,1.5 0 1,1 178,290 A1.5,1.5 0 1,1 175,290 Z
+                                   M310,310 A1,1 0 1,1 312,310 A1,1 0 1,1 310,310 Z" />
+
+            <!-- Crescent moon – upper right, soft pastel -->
+            <path android:fillColor="#F3E5F5" android:alpha="0.9"
+                android:pathData="M298,50 A20,20 0 1,1 298,90 A14,14 0 1,0 298,50 Z" />
+            <path android:strokeColor="#CE93D8" android:strokeWidth="0.8" android:fillColor="#00000000"
+                android:alpha="0.4"
+                android:pathData="M298,50 A20,20 0 1,1 298,90 A14,14 0 1,0 298,50 Z" />
+
+            <!-- Soft dreamy cloud puffs (light, pastel) -->
+            <path android:fillColor="#FFFFFF" android:alpha="0.35"
+                android:pathData="M20,340 C30,330 50,325 70,330 C85,326 100,332 110,340
+                                   C100,350 80,348 65,352 C45,356 25,350 20,340 Z" />
+            <path android:fillColor="#FFFFFF" android:alpha="0.3"
+                android:pathData="M230,280 C240,270 260,265 280,270 C295,266 310,272 320,280
+                                   C310,290 290,288 275,292 C255,296 235,290 230,280 Z" />
+            <path android:fillColor="#FFFFFF" android:alpha="0.28"
+                android:pathData="M60,460 C75,450 100,447 120,452 C135,448 150,454 160,462
+                                   C148,472 128,470 110,474 C88,478 68,472 60,462 Z" />
+            <path android:fillColor="#FFFFFF" android:alpha="0.25"
+                android:pathData="M200,540 C215,530 240,527 260,532 C275,528 290,534 300,542
+                                   C288,552 268,550 250,554 C228,558 208,552 200,542 Z" />
+
+            <!-- Soft shooting star (subtle diagonal streak) -->
+            <path android:strokeColor="#CE93D8" android:strokeWidth="1" android:fillColor="#00000000"
+                android:alpha="0.4"
+                android:pathData="M80,130 L115,112" />
+            <path android:fillColor="#CE93D8" android:alpha="0.6"
+                android:pathData="M78,128 A2,2 0 1,1 82,128 A2,2 0 1,1 78,128 Z" />
+
+        </vector>
+    </item>
+
+</layer-list>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base gradient: soft sage-cream background -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="160"
+                android:startColor="#F0F7EE"
+                android:centerColor="#E8F5E3"
+                android:endColor="#EFF7EA" />
+        </shape>
+    </item>
+
+    <!-- Soft radial warm center glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="80%p"
+                android:startColor="#18FFFFFF"
+                android:endColor="#00E8F5E3" />
+        </shape>
+    </item>
+
+    <!-- Botanical illustration overlay -->
+    <item>
+        <vector
+            android:width="360dp"
+            android:height="720dp"
+            android:viewportWidth="360"
+            android:viewportHeight="720">
+
+            <!-- Large fern branch – upper left -->
+            <path android:strokeColor="#7BAE7F" android:strokeWidth="2" android:fillColor="#00000000"
+                android:pathData="M15,80 C30,60 50,40 70,20" />
+            <!-- Fern leaflets left -->
+            <path android:fillColor="#9DC89F" android:alpha="0.65"
+                android:pathData="M25,68 C18,58 12,60 14,68 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.65"
+                android:pathData="M35,55 C28,45 22,47 24,55 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.65"
+                android:pathData="M45,42 C38,32 32,34 34,42 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.65"
+                android:pathData="M58,30 C51,20 45,22 47,30 Z" />
+            <!-- Fern leaflets right -->
+            <path android:fillColor="#B2D8B4" android:alpha="0.55"
+                android:pathData="M25,68 C32,58 38,60 36,68 Z" />
+            <path android:fillColor="#B2D8B4" android:alpha="0.55"
+                android:pathData="M35,55 C42,45 48,47 46,55 Z" />
+            <path android:fillColor="#B2D8B4" android:alpha="0.55"
+                android:pathData="M45,42 C52,32 58,34 56,42 Z" />
+
+            <!-- Large leaf cluster – upper right -->
+            <path android:strokeColor="#7BAE7F" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M345,30 C330,50 310,60 295,80" />
+            <path android:fillColor="#A8D5A2" android:alpha="0.6"
+                android:pathData="M340,40 C355,30 360,42 350,48 Z" />
+            <path android:fillColor="#A8D5A2" android:alpha="0.6"
+                android:pathData="M326,58 C340,50 345,62 335,66 Z" />
+            <path android:fillColor="#C5E8C2" android:alpha="0.5"
+                android:pathData="M310,70 C325,64 328,75 318,78 Z" />
+
+            <!-- Botanical accent flowers top-left -->
+            <!-- Small daisy at (50, 120) -->
+            <path android:fillColor="#F9E4B7" android:alpha="0.8"
+                android:pathData="M50,112 A4,4 0 1,1 50,120 Z
+                                   M42,116 A4,4 0 1,1 50,116 Z
+                                   M42,120 A4,4 0 1,1 50,120 Z
+                                   M50,120 A4,4 0 1,1 58,120 Z
+                                   M58,116 A4,4 0 1,1 58,124 Z" />
+            <path android:fillColor="#F5C842" android:alpha="0.9"
+                android:pathData="M46,116 A4,4 0 1,1 54,116 A4,4 0 1,1 46,116 Z" />
+
+            <!-- Small daisy at (315, 130) -->
+            <path android:fillColor="#F9E4B7" android:alpha="0.8"
+                android:pathData="M315,122 A4,4 0 1,1 315,130 Z
+                                   M307,126 A4,4 0 1,1 315,126 Z
+                                   M307,130 A4,4 0 1,1 315,130 Z
+                                   M315,130 A4,4 0 1,1 323,130 Z
+                                   M323,126 A4,4 0 1,1 323,134 Z" />
+            <path android:fillColor="#F5C842" android:alpha="0.9"
+                android:pathData="M311,126 A4,4 0 1,1 319,126 A4,4 0 1,1 311,126 Z" />
+
+            <!-- Mid-page leaf detail – left margin -->
+            <path android:strokeColor="#7BAE7F" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:pathData="M10,280 C20,260 18,240 12,220" />
+            <path android:fillColor="#B2D8B4" android:alpha="0.5"
+                android:pathData="M10,280 C0,270 -2,255 8,252 C13,251 16,258 12,266 Z" />
+            <path android:fillColor="#B2D8B4" android:alpha="0.5"
+                android:pathData="M14,258 C4,248 2,235 12,233 C17,232 20,239 16,247 Z" />
+
+            <!-- Mid-page leaf detail – right margin -->
+            <path android:strokeColor="#7BAE7F" android:strokeWidth="1.2" android:fillColor="#00000000"
+                android:pathData="M350,360 C340,380 342,400 348,420" />
+            <path android:fillColor="#B2D8B4" android:alpha="0.5"
+                android:pathData="M350,360 C360,370 362,385 352,388 C347,389 344,382 348,374 Z" />
+            <path android:fillColor="#B2D8B4" android:alpha="0.5"
+                android:pathData="M348,386 C358,396 360,409 350,411 C345,412 342,405 346,397 Z" />
+
+            <!-- Bottom botanical spray – left -->
+            <path android:strokeColor="#7BAE7F" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M20,680 C35,660 45,640 55,620" />
+            <path android:fillColor="#9DC89F" android:alpha="0.6"
+                android:pathData="M28,668 C20,660 15,664 18,670 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.6"
+                android:pathData="M38,651 C30,643 25,647 28,653 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.6"
+                android:pathData="M48,634 C40,626 35,630 38,636 Z" />
+            <!-- Small flower at bottom-left spray -->
+            <path android:fillColor="#F4A460" android:alpha="0.75"
+                android:pathData="M55,615 A5,5 0 1,1 65,615 A5,5 0 1,1 55,615 Z" />
+            <path android:fillColor="#F9E4B7" android:alpha="0.8"
+                android:pathData="M60,608 A3.5,3.5 0 1,1 60,615 Z
+                                   M53,612 A3.5,3.5 0 1,1 60,612 Z
+                                   M60,616 A3.5,3.5 0 1,1 60,623 Z
+                                   M67,612 A3.5,3.5 0 1,1 60,612 Z" />
+
+            <!-- Bottom botanical spray – right -->
+            <path android:strokeColor="#7BAE7F" android:strokeWidth="1.5" android:fillColor="#00000000"
+                android:pathData="M340,680 C325,660 315,640 305,620" />
+            <path android:fillColor="#9DC89F" android:alpha="0.6"
+                android:pathData="M332,668 C340,660 345,664 342,670 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.6"
+                android:pathData="M322,651 C330,643 335,647 332,653 Z" />
+            <path android:fillColor="#9DC89F" android:alpha="0.6"
+                android:pathData="M312,634 C320,626 325,630 322,636 Z" />
+
+            <!-- Scattered tiny dots for organic texture -->
+            <path android:fillColor="#7BAE7F" android:alpha="0.25"
+                android:pathData="M90,200 A2,2 0 1,1 94,200 A2,2 0 1,1 90,200 Z
+                                   M270,310 A1.5,1.5 0 1,1 273,310 A1.5,1.5 0 1,1 270,310 Z
+                                   M145,450 A2,2 0 1,1 149,450 A2,2 0 1,1 145,450 Z
+                                   M220,520 A1.5,1.5 0 1,1 223,520 A1.5,1.5 0 1,1 220,520 Z
+                                   M300,580 A2,2 0 1,1 304,580 A2,2 0 1,1 300,580 Z
+                                   M70,490 A1.5,1.5 0 1,1 73,490 A1.5,1.5 0 1,1 70,490 Z" />
+
+        </vector>
+    </item>
+
+</layer-list>
