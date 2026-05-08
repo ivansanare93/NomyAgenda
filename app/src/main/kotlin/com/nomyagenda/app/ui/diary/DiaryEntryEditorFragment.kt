@@ -361,7 +361,6 @@ class DiaryEntryEditorFragment : Fragment() {
 
     private fun setupFontPicker() {
         FontCatalog.fonts.forEach { fontItem ->
-            val typeface = FontCatalog.resolve(requireContext(), fontItem.id)
             val btn = com.google.android.material.button.MaterialButton(
                 requireContext(),
                 null,
@@ -369,7 +368,6 @@ class DiaryEntryEditorFragment : Fragment() {
             ).apply {
                 tag = fontItem.id
                 text = fontItem.displayName
-                this.typeface = typeface
                 isCheckable = true
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -387,6 +385,9 @@ class DiaryEntryEditorFragment : Fragment() {
                 }
             }
             binding.fontPickerContainer.addView(btn)
+            FontCatalog.resolveAsync(requireContext(), fontItem.id) { typeface ->
+                btn.typeface = typeface
+            }
         }
     }
 
@@ -399,9 +400,10 @@ class DiaryEntryEditorFragment : Fragment() {
     }
 
     private fun applyFontToViews(fontId: String) {
-        val typeface = FontCatalog.resolve(requireContext(), fontId)
-        binding.editDiaryTitle.typeface = typeface
-        binding.editDiaryContent.typeface = typeface
+        FontCatalog.resolveAsync(requireContext(), fontId) { typeface ->
+            binding.editDiaryTitle.typeface = typeface
+            binding.editDiaryContent.typeface = typeface
+        }
     }
 
     private fun setupBackgroundPicker() {

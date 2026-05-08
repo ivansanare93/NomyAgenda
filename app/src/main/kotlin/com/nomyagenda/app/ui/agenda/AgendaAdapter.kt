@@ -110,9 +110,14 @@ class AgendaAdapter(
 
             binding.textEntryCategory.visibility = View.GONE
 
-            val typeface = FontCatalog.resolve(context, entry.fontFamily)
-            binding.textEntryTitle.typeface = typeface
-            binding.textEntryPreview.typeface = typeface
+            val fontTag = entry.fontFamily
+            binding.textEntryTitle.tag = fontTag
+            FontCatalog.resolveAsync(context, entry.fontFamily) { typeface ->
+                if (binding.textEntryTitle.tag == fontTag) {
+                    binding.textEntryTitle.typeface = typeface
+                    binding.textEntryPreview.typeface = typeface
+                }
+            }
 
             val bgRes = EntryBackgroundCatalog.resolveDrawable(entry.background)
             if (bgRes != 0) {

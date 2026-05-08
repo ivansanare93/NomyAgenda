@@ -124,9 +124,10 @@ class EntryDetailFragment : Fragment() {
                 }
             }
             // Font
-            val typeface = FontCatalog.resolve(requireContext(), entry.fontFamily)
-            binding.textDetailTitle.typeface = typeface
-            binding.textDetailContent.typeface = typeface
+            FontCatalog.resolveAsync(requireContext(), entry.fontFamily) { typeface ->
+                binding.textDetailTitle.typeface = typeface
+                binding.textDetailContent.typeface = typeface
+            }
 
             // Background
             val bgRes = EntryBackgroundCatalog.resolveDrawable(entry.background)
