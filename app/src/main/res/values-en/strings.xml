@@ -207,7 +207,11 @@
     <string name="diary_bg_halloween">Halloween</string>
     <string name="diary_bg_valentines">Valentine\'s Day</string>
     <string name="diary_bg_easter">Easter</string>
+    <string name="diary_bg_birthday_illustrated">Illustrated Birthday</string>
+    <string name="diary_bg_christmas_illustrated">Illustrated Christmas</string>
+    <string name="diary_bg_halloween_illustrated">Illustrated Halloween</string>
 
     <!-- Entry backgrounds -->
     <string name="entry_background_label">Entry background</string>
+    <string name="bg_premium_fox_autumn_illustrated">Autumn Fox</string>
 </resources>

@@ -225,6 +225,9 @@
     <string name="diary_bg_valentines_pastel">San Valentín pastel</string>
     <string name="diary_bg_new_year">Año Nuevo</string>
     <string name="diary_bg_spring">Primavera</string>
+    <string name="diary_bg_birthday_illustrated">Cumpleaños ilustrado</string>
+    <string name="diary_bg_christmas_illustrated">Navidad ilustrada</string>
+    <string name="diary_bg_halloween_illustrated">Halloween ilustrado</string>
 
     <!-- Entry backgrounds -->
     <string name="entry_background_label">Fondo de la entrada</string>
@@ -237,4 +240,5 @@
     <string name="bg_premium_vintage_journal">Diario Vintage</string>
     <string name="bg_premium_rose_romantic">Rosas Románticas</string>
     <string name="bg_premium_ocean_mist">Neblina Marina</string>
+    <string name="bg_premium_fox_autumn_illustrated">Zorro de otoño</string>
 </resources>

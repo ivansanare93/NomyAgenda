@@ -29,7 +29,10 @@ object EntryBackgroundCatalog {
         DiaryBackgroundItem("birthday", R.drawable.bg_festivity_birthday, R.string.diary_bg_birthday),
         DiaryBackgroundItem("birthday_pastel", R.drawable.bg_festivity_birthday_pastel, R.string.diary_bg_birthday_pastel),
         DiaryBackgroundItem("new_year", R.drawable.bg_festivity_new_year, R.string.diary_bg_new_year),
-        DiaryBackgroundItem("spring", R.drawable.bg_festivity_spring, R.string.diary_bg_spring)
+        DiaryBackgroundItem("spring", R.drawable.bg_festivity_spring, R.string.diary_bg_spring),
+        DiaryBackgroundItem("birthday_illustrated", R.drawable.bg_festivity_birthday_illustrated, R.string.diary_bg_birthday_illustrated),
+        DiaryBackgroundItem("christmas_illustrated", R.drawable.bg_festivity_christmas_illustrated, R.string.diary_bg_christmas_illustrated),
+        DiaryBackgroundItem("halloween_illustrated", R.drawable.bg_festivity_halloween_illustrated, R.string.diary_bg_halloween_illustrated)
     )
 
     val premiumBackgrounds: List<DiaryBackgroundItem> = listOf(
@@ -38,7 +41,8 @@ object EntryBackgroundCatalog {
         DiaryBackgroundItem("premium_dreamy_sky", R.drawable.bg_premium_dreamy_sky, R.string.bg_premium_dreamy_sky),
         DiaryBackgroundItem("premium_vintage_journal", R.drawable.bg_premium_vintage_journal, R.string.bg_premium_vintage_journal),
         DiaryBackgroundItem("premium_rose_romantic", R.drawable.bg_premium_rose_romantic, R.string.bg_premium_rose_romantic),
-        DiaryBackgroundItem("premium_ocean_mist", R.drawable.bg_premium_ocean_mist, R.string.bg_premium_ocean_mist)
+        DiaryBackgroundItem("premium_ocean_mist", R.drawable.bg_premium_ocean_mist, R.string.bg_premium_ocean_mist),
+        DiaryBackgroundItem("premium_fox_autumn_illustrated", R.drawable.bg_premium_fox_autumn_illustrated, R.string.bg_premium_fox_autumn_illustrated)
     )
 
     private val allBackgrounds = thematicBackgrounds + festiveBackgrounds + premiumBackgrounds
