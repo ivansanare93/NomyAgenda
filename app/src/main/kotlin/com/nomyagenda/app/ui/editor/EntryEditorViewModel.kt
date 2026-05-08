@@ -24,7 +24,11 @@ class EntryEditorViewModel(
 
     fun load(id: Int) {
         viewModelScope.launch {
-            _entry.value = repository.getById(id)
+            try {
+                _entry.value = repository.getById(id)
+            } catch (_: Exception) {
+                _saveErrorEvent.value = "No se pudo cargar la entrada"
+            }
         }
     }
 

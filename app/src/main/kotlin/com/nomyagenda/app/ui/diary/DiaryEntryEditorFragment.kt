@@ -426,7 +426,15 @@ class DiaryEntryEditorFragment : Fragment() {
                 clipToOutline = true
                 outlineProvider = android.view.ViewOutlineProvider.BACKGROUND
                 if (item.drawableRes != 0) {
-                    background = ContextCompat.getDrawable(requireContext(), item.drawableRes)
+                    background = try {
+                        ContextCompat.getDrawable(requireContext(), item.drawableRes)
+                    } catch (_: Exception) {
+                        GradientDrawable().apply {
+                            shape = GradientDrawable.RECTANGLE
+                            cornerRadii = FloatArray(8) { cornerRadius }
+                            setColor(Color.LTGRAY)
+                        }
+                    }
                 } else {
                     background = GradientDrawable().apply {
                         shape = GradientDrawable.RECTANGLE
