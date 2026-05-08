@@ -32,22 +32,26 @@ class DiaryEntryEditorViewModel(
 
     fun loadEntry(entryId: Int, defaultDateKey: String) {
         viewModelScope.launch {
-            if (entryId > 0) {
-                val entry = repository.getById(entryId)
-                if (entry != null) {
-                    currentEntry = entry
-                    dateKey.value = entry.dateKey
-                    title.value = entry.title
-                    content.value = entry.content
-                    mood.value = entry.mood
-                    color.value = entry.color
-                    contentColor.value = entry.contentColor
-                    background.value = entry.background
-                    fontFamily.value = entry.fontFamily
-                    photoPaths.value = parsePhotoPaths(entry.photoPaths)
+            try {
+                if (entryId > 0) {
+                    val entry = repository.getById(entryId)
+                    if (entry != null) {
+                        currentEntry = entry
+                        dateKey.value = entry.dateKey
+                        title.value = entry.title
+                        content.value = entry.content
+                        mood.value = entry.mood
+                        color.value = entry.color
+                        contentColor.value = entry.contentColor
+                        background.value = entry.background
+                        fontFamily.value = entry.fontFamily
+                        photoPaths.value = parsePhotoPaths(entry.photoPaths)
+                    }
+                } else {
+                    dateKey.value = defaultDateKey
                 }
-            } else {
-                dateKey.value = defaultDateKey
+            } catch (_: Exception) {
+                _saveErrorEvent.value = "No se pudo cargar el diario"
             }
         }
     }
