@@ -121,10 +121,11 @@ class AgendaAdapter(
 
             val bgRes = EntryBackgroundCatalog.resolveDrawable(entry.background)
             if (bgRes != 0) {
-                binding.layoutCardContent.background = ContextCompat.getDrawable(context, bgRes)
+                binding.imageEntryBackground.setImageResource(bgRes)
+                binding.imageEntryBackground.visibility = View.VISIBLE
                 binding.root.setCardBackgroundColor(Color.TRANSPARENT)
             } else {
-                binding.layoutCardContent.background = null
+                binding.imageEntryBackground.visibility = View.GONE
                 binding.root.setCardBackgroundColor(context.resolveThemeColor(MaterialR.attr.colorSurface))
             }
 
