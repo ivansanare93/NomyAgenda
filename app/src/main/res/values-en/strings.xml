@@ -223,4 +223,11 @@
     <string name="diary_bg_photo_cumpleanos">Birthday</string>
     <string name="diary_bg_photo_navidad">Christmas</string>
     <string name="diary_bg_photo_halloween">Halloween</string>
+    <string name="diary_bg_photo_ardilla">Squirrel</string>
+    <string name="diary_bg_photo_primavera">Spring</string>
+    <string name="diary_bg_photo_koala">Koala</string>
+    <string name="diary_bg_photo_hamster">Hamster</string>
+    <string name="diary_bg_photo_invierno">Winter</string>
+    <string name="diary_bg_photo_otono">Autumn</string>
+    <string name="diary_bg_photo_verano">Summer</string>
 </resources>
