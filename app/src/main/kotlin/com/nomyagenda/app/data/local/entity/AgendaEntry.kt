@@ -18,6 +18,8 @@ data class AgendaEntry(
     val contentColor: String = "",
     val fontFamily: String = "",
     val background: String = "",
+    val titleFontSize: Float = 0f,
+    val contentFontSize: Float = 0f,
     val createdAt: Long = System.currentTimeMillis(),
     val firebaseId: String = ""
 )

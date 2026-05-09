@@ -128,6 +128,12 @@ class EntryDetailFragment : Fragment() {
                 binding.textDetailTitle.typeface = typeface
                 binding.textDetailContent.typeface = typeface
             }
+            if (entry.titleFontSize > 0f) {
+                binding.textDetailTitle.textSize = entry.titleFontSize
+            }
+            if (entry.contentFontSize > 0f) {
+                binding.textDetailContent.textSize = entry.contentFontSize
+            }
 
             // Background
             val bgRes = EntryBackgroundCatalog.resolveDrawable(entry.background)

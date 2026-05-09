@@ -15,6 +15,8 @@ data class DiaryEntry(
     val contentColor: String = "",
     val background: String = "",
     val fontFamily: String = "",
+    val titleFontSize: Float = 0f,
+    val contentFontSize: Float = 0f,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

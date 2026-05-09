@@ -15,7 +15,7 @@ import com.nomyagenda.app.data.local.entity.Converters
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.data.local.entity.PendingDelete
 
-@Database(entities = [AgendaEntry::class, DiaryEntry::class, PendingDelete::class], version = 12, exportSchema = false)
+@Database(entities = [AgendaEntry::class, DiaryEntry::class, PendingDelete::class], version = 13, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NomyAgendaDatabase : RoomDatabase() {
 
@@ -110,6 +110,23 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_12_13 = object : Migration(12, 13) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE agenda_entries ADD COLUMN titleFontSize REAL NOT NULL DEFAULT 0"
+                )
+                database.execSQL(
+                    "ALTER TABLE agenda_entries ADD COLUMN contentFontSize REAL NOT NULL DEFAULT 0"
+                )
+                database.execSQL(
+                    "ALTER TABLE diary_entries ADD COLUMN titleFontSize REAL NOT NULL DEFAULT 0"
+                )
+                database.execSQL(
+                    "ALTER TABLE diary_entries ADD COLUMN contentFontSize REAL NOT NULL DEFAULT 0"
+                )
+            }
+        }
+
         fun getDatabase(context: Context): NomyAgendaDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -117,7 +134,7 @@ abstract class NomyAgendaDatabase : RoomDatabase() {
                     NomyAgendaDatabase::class.java,
                     "nomy_agenda_db"
                 )
-                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12)
+                    .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

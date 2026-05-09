@@ -47,6 +47,14 @@ class DiaryEntryEditorFragment : Fragment() {
 
     private lateinit var photoAdapter: DiaryPhotoAdapter
 
+    // ---- Default text sizes (captured before any customisation) ----
+    private var defaultTitleTextSize: Float = 0f
+    private var defaultContentTextSize: Float = 0f
+
+    // ---- Font size button lists (initialised in onViewCreated after binding is ready) ----
+    private lateinit var titleSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
+    private lateinit var contentSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
+
     // ---- WYSIWYG format toggle state (content) ----
     private var isBoldActive = false
     private var isItalicActive = false
@@ -153,6 +161,28 @@ class DiaryEntryEditorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Capture default text sizes before any custom size is applied
+        defaultTitleTextSize = binding.editDiaryTitle.textSize / resources.displayMetrics.scaledDensity
+        defaultContentTextSize = binding.editDiaryContent.textSize / resources.displayMetrics.scaledDensity
+
+        // Initialise font size button lists once (used in setup, observeViewModel, and helpers)
+        titleSizeButtons = listOf(
+            binding.btnDiaryTitleSize12 to 12f,
+            binding.btnDiaryTitleSize14 to 14f,
+            binding.btnDiaryTitleSize16 to 16f,
+            binding.btnDiaryTitleSize18 to 18f,
+            binding.btnDiaryTitleSize20 to 20f,
+            binding.btnDiaryTitleSize24 to 24f
+        )
+        contentSizeButtons = listOf(
+            binding.btnDiaryContentSize12 to 12f,
+            binding.btnDiaryContentSize14 to 14f,
+            binding.btnDiaryContentSize16 to 16f,
+            binding.btnDiaryContentSize18 to 18f,
+            binding.btnDiaryContentSize20 to 20f,
+            binding.btnDiaryContentSize24 to 24f
+        )
+
         setupToolbar()
         setupMoodChips()
         setupColorPicker()
@@ -185,9 +215,53 @@ class DiaryEntryEditorFragment : Fragment() {
         binding.btnDiaryTitleFormatBold.setOnClickListener { toggleTitleInlineFormat(Typeface.BOLD) }
         binding.btnDiaryTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
 
+        setupFontSizeButtons(
+            buttons = titleSizeButtons,
+            onSizeSelected = { size ->
+                viewModel.titleFontSize.value = size
+            }
+        )
+
         binding.editDiaryContent.addTextChangedListener(formatWatcher)
         binding.btnDiaryFormatBold.setOnClickListener { toggleInlineFormat(Typeface.BOLD) }
         binding.btnDiaryFormatItalic.setOnClickListener { toggleInlineFormat(Typeface.ITALIC) }
+
+        setupFontSizeButtons(
+            buttons = contentSizeButtons,
+            onSizeSelected = { size ->
+                viewModel.contentFontSize.value = size
+            }
+        )
+    }
+
+    private fun setupFontSizeButtons(
+        buttons: List<Pair<com.google.android.material.button.MaterialButton, Float>>,
+        onSizeSelected: (Float) -> Unit
+    ) {
+        buttons.forEach { (btn, size) ->
+            btn.setOnClickListener {
+                // MaterialButton auto-toggles isChecked before listener fires
+                val isNowChecked = btn.isChecked
+                buttons.forEach { (b, _) -> b.isChecked = false }
+                if (isNowChecked) {
+                    // User turned this size on
+                    btn.isChecked = true
+                    onSizeSelected(size)
+                } else {
+                    // User tapped the already-selected button → revert to default
+                    onSizeSelected(0f)
+                }
+            }
+        }
+    }
+
+    private fun updateFontSizeSelection(
+        buttons: List<Pair<com.google.android.material.button.MaterialButton, Float>>,
+        selectedSize: Float
+    ) {
+        buttons.forEach { (btn, size) ->
+            btn.isChecked = selectedSize > 0f && size == selectedSize
+        }
     }
 
     private fun toggleTitleInlineFormat(style: Int) {
@@ -574,6 +648,20 @@ class DiaryEntryEditorFragment : Fragment() {
         viewModel.fontFamily.observe(viewLifecycleOwner) { fontId ->
             updateFontSelection(fontId ?: "")
             applyFontToViews(fontId ?: "")
+        }
+
+        viewModel.titleFontSize.observe(viewLifecycleOwner) { size ->
+            val resolvedSize = size ?: 0f
+            updateFontSizeSelection(titleSizeButtons, resolvedSize)
+            if (resolvedSize > 0f) binding.editDiaryTitle.textSize = resolvedSize
+            else binding.editDiaryTitle.textSize = defaultTitleTextSize
+        }
+
+        viewModel.contentFontSize.observe(viewLifecycleOwner) { size ->
+            val resolvedSize = size ?: 0f
+            updateFontSizeSelection(contentSizeButtons, resolvedSize)
+            if (resolvedSize > 0f) binding.editDiaryContent.textSize = resolvedSize
+            else binding.editDiaryContent.textSize = defaultContentTextSize
         }
 
         viewModel.saveSuccessEvent.observe(viewLifecycleOwner) { saved ->

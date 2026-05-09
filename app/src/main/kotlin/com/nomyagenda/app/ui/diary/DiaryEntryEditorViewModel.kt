@@ -24,6 +24,8 @@ class DiaryEntryEditorViewModel(
     val contentColor = MutableLiveData("")
     val background = MutableLiveData("")
     val fontFamily = MutableLiveData("")
+    val titleFontSize = MutableLiveData(0f)
+    val contentFontSize = MutableLiveData(0f)
     val photoPaths = MutableLiveData<List<String>>(emptyList())
     private val _saveSuccessEvent = MutableLiveData(false)
     val saveSuccessEvent: LiveData<Boolean> = _saveSuccessEvent
@@ -45,6 +47,8 @@ class DiaryEntryEditorViewModel(
                         contentColor.value = entry.contentColor
                         background.value = entry.background
                         fontFamily.value = entry.fontFamily
+                        titleFontSize.value = entry.titleFontSize
+                        contentFontSize.value = entry.contentFontSize
                         photoPaths.value = parsePhotoPaths(entry.photoPaths)
                     }
                 } else {
@@ -83,6 +87,8 @@ class DiaryEntryEditorViewModel(
             contentColor = contentColor.value ?: "",
             background = background.value ?: "",
             fontFamily = fontFamily.value ?: "",
+            titleFontSize = titleFontSize.value ?: 0f,
+            contentFontSize = contentFontSize.value ?: 0f,
             photoPaths = pathsJson,
             updatedAt = now
         ) ?: DiaryEntry(
@@ -94,6 +100,8 @@ class DiaryEntryEditorViewModel(
             contentColor = contentColor.value ?: "",
             background = background.value ?: "",
             fontFamily = fontFamily.value ?: "",
+            titleFontSize = titleFontSize.value ?: 0f,
+            contentFontSize = contentFontSize.value ?: 0f,
             photoPaths = pathsJson,
             createdAt = now,
             updatedAt = now

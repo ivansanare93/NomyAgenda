@@ -129,6 +129,12 @@ class DiaryEntryDetailFragment : Fragment() {
                 binding.textDetailDiaryTitle.typeface = typeface
                 binding.textDetailDiaryContent.typeface = typeface
             }
+            if (entry.titleFontSize > 0f) {
+                binding.textDetailDiaryTitle.textSize = entry.titleFontSize
+            }
+            if (entry.contentFontSize > 0f) {
+                binding.textDetailDiaryContent.textSize = entry.contentFontSize
+            }
         }
 
         binding.fabEditDiaryEntry.setOnClickListener {
