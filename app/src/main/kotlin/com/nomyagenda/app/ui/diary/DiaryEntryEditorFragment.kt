@@ -411,6 +411,7 @@ class DiaryEntryEditorFragment : Fragment() {
         setupBackgroundSwatches(binding.bgSwatchesThematic, DiaryBackgroundCatalog.thematicBackgrounds)
         setupBackgroundSwatches(binding.bgSwatchesFestive, DiaryBackgroundCatalog.festiveBackgrounds)
         setupBackgroundSwatches(binding.bgSwatchesPremium, DiaryBackgroundCatalog.premiumBackgrounds)
+        setupBackgroundSwatches(binding.bgSwatchesPhotos, DiaryBackgroundCatalog.photoBackgrounds)
     }
 
     private fun setupBackgroundSwatches(container: LinearLayout, backgrounds: List<DiaryBackgroundItem>) {

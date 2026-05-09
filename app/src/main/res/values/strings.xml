@@ -232,6 +232,13 @@
     <!-- Entry backgrounds -->
     <string name="entry_background_label">Fondo de la entrada</string>
 
+    <!-- Photo backgrounds -->
+    <string name="diary_background_photos">Fotos</string>
+    <string name="diary_bg_photo_fox">Zorro</string>
+    <string name="diary_bg_photo_cumpleanos">Cumpleaños</string>
+    <string name="diary_bg_photo_navidad">Navidad</string>
+    <string name="diary_bg_photo_halloween">Halloween</string>
+
     <!-- Premium backgrounds -->
     <string name="diary_background_premium">Premium</string>
     <string name="bg_premium_paper_lavender">Papel Lavanda</string>
