@@ -8,13 +8,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.R
 import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.databinding.ItemDiaryEntryBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.ui.resolveThemeColor
-import com.google.android.material.R as MaterialR
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONArray
