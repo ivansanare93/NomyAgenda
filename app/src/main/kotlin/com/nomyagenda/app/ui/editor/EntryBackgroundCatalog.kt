@@ -45,7 +45,14 @@ object EntryBackgroundCatalog {
         DiaryBackgroundItem("premium_fox_autumn_illustrated", R.drawable.bg_premium_fox_autumn_illustrated, R.string.bg_premium_fox_autumn_illustrated)
     )
 
-    private val allBackgrounds = thematicBackgrounds + festiveBackgrounds + premiumBackgrounds
+    val photoBackgrounds: List<DiaryBackgroundItem> = listOf(
+        DiaryBackgroundItem("photo_fox", R.drawable.fox, R.string.diary_bg_photo_fox),
+        DiaryBackgroundItem("photo_cumpleanos", R.drawable.cumpleanos, R.string.diary_bg_photo_cumpleanos),
+        DiaryBackgroundItem("photo_navidad", R.drawable.navidad, R.string.diary_bg_photo_navidad),
+        DiaryBackgroundItem("photo_halloween", R.drawable.halloween, R.string.diary_bg_photo_halloween)
+    )
+
+    private val allBackgrounds = thematicBackgrounds + festiveBackgrounds + premiumBackgrounds + photoBackgrounds
 
     @DrawableRes
     fun resolveDrawable(key: String): Int =

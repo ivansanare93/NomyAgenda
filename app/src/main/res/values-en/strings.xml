@@ -214,4 +214,11 @@
     <!-- Entry backgrounds -->
     <string name="entry_background_label">Entry background</string>
     <string name="bg_premium_fox_autumn_illustrated">Autumn Fox</string>
+
+    <!-- Photo backgrounds -->
+    <string name="diary_background_photos">Photos</string>
+    <string name="diary_bg_photo_fox">Fox</string>
+    <string name="diary_bg_photo_cumpleanos">Birthday</string>
+    <string name="diary_bg_photo_navidad">Christmas</string>
+    <string name="diary_bg_photo_halloween">Halloween</string>
 </resources>

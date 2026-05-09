@@ -723,6 +723,7 @@ class EntryEditorFragment : Fragment() {
         setupBackgroundSwatches(binding.bgSwatchesEntryThematic, EntryBackgroundCatalog.thematicBackgrounds)
         setupBackgroundSwatches(binding.bgSwatchesEntryFestive, EntryBackgroundCatalog.festiveBackgrounds)
         setupBackgroundSwatches(binding.bgSwatchesEntryPremium, EntryBackgroundCatalog.premiumBackgrounds)
+        setupBackgroundSwatches(binding.bgSwatchesEntryPhotos, EntryBackgroundCatalog.photoBackgrounds)
     }
 
     private fun setupBackgroundSwatches(container: android.widget.LinearLayout, backgrounds: List<DiaryBackgroundItem>) {
