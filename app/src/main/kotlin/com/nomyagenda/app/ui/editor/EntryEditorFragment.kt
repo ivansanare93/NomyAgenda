@@ -70,6 +70,10 @@ class EntryEditorFragment : Fragment() {
     private var defaultTitleTextSize: Float = 0f
     private var defaultContentTextSize: Float = 0f
 
+    // ---- Font size button lists (initialised in onViewCreated after binding is ready) ----
+    private lateinit var titleSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
+    private lateinit var contentSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
+
     // ---- WYSIWYG format toggle state (note content) ----
     private var isBoldActive = false
     private var isItalicActive = false
@@ -230,6 +234,24 @@ class EntryEditorFragment : Fragment() {
         // Capture default text sizes before any custom size is applied
         defaultTitleTextSize = binding.editEntryTitle.textSize / resources.displayMetrics.scaledDensity
         defaultContentTextSize = binding.editNoteContent.textSize / resources.displayMetrics.scaledDensity
+
+        // Initialise font size button lists once (reused in setup and helpers)
+        titleSizeButtons = listOf(
+            binding.btnEntryTitleSize12 to 12f,
+            binding.btnEntryTitleSize14 to 14f,
+            binding.btnEntryTitleSize16 to 16f,
+            binding.btnEntryTitleSize18 to 18f,
+            binding.btnEntryTitleSize20 to 20f,
+            binding.btnEntryTitleSize24 to 24f
+        )
+        contentSizeButtons = listOf(
+            binding.btnEntryContentSize12 to 12f,
+            binding.btnEntryContentSize14 to 14f,
+            binding.btnEntryContentSize16 to 16f,
+            binding.btnEntryContentSize18 to 18f,
+            binding.btnEntryContentSize20 to 20f,
+            binding.btnEntryContentSize24 to 24f
+        )
 
         markwon = Markwon.builder(requireContext())
             .usePlugin(HtmlPlugin.create())
@@ -737,23 +759,6 @@ class EntryEditorFragment : Fragment() {
     // ---------- font size picker ----------
 
     private fun setupFontSizePickers() {
-        val titleSizeButtons = listOf(
-            binding.btnEntryTitleSize12 to 12f,
-            binding.btnEntryTitleSize14 to 14f,
-            binding.btnEntryTitleSize16 to 16f,
-            binding.btnEntryTitleSize18 to 18f,
-            binding.btnEntryTitleSize20 to 20f,
-            binding.btnEntryTitleSize24 to 24f
-        )
-        val contentSizeButtons = listOf(
-            binding.btnEntryContentSize12 to 12f,
-            binding.btnEntryContentSize14 to 14f,
-            binding.btnEntryContentSize16 to 16f,
-            binding.btnEntryContentSize18 to 18f,
-            binding.btnEntryContentSize20 to 20f,
-            binding.btnEntryContentSize24 to 24f
-        )
-
         titleSizeButtons.forEach { (btn, size) ->
             btn.setOnClickListener {
                 val isNowChecked = btn.isChecked
@@ -787,14 +792,6 @@ class EntryEditorFragment : Fragment() {
 
     private fun selectEntryTitleFontSize(size: Float) {
         selectedTitleFontSize = size
-        val titleSizeButtons = listOf(
-            binding.btnEntryTitleSize12 to 12f,
-            binding.btnEntryTitleSize14 to 14f,
-            binding.btnEntryTitleSize16 to 16f,
-            binding.btnEntryTitleSize18 to 18f,
-            binding.btnEntryTitleSize20 to 20f,
-            binding.btnEntryTitleSize24 to 24f
-        )
         titleSizeButtons.forEach { (btn, s) ->
             btn.isChecked = size > 0f && s == size
         }
@@ -803,14 +800,6 @@ class EntryEditorFragment : Fragment() {
 
     private fun selectEntryContentFontSize(size: Float) {
         selectedContentFontSize = size
-        val contentSizeButtons = listOf(
-            binding.btnEntryContentSize12 to 12f,
-            binding.btnEntryContentSize14 to 14f,
-            binding.btnEntryContentSize16 to 16f,
-            binding.btnEntryContentSize18 to 18f,
-            binding.btnEntryContentSize20 to 20f,
-            binding.btnEntryContentSize24 to 24f
-        )
         contentSizeButtons.forEach { (btn, s) ->
             btn.isChecked = size > 0f && s == size
         }

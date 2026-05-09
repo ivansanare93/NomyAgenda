@@ -51,6 +51,10 @@ class DiaryEntryEditorFragment : Fragment() {
     private var defaultTitleTextSize: Float = 0f
     private var defaultContentTextSize: Float = 0f
 
+    // ---- Font size button lists (initialised in onViewCreated after binding is ready) ----
+    private lateinit var titleSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
+    private lateinit var contentSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
+
     // ---- WYSIWYG format toggle state (content) ----
     private var isBoldActive = false
     private var isItalicActive = false
@@ -161,6 +165,24 @@ class DiaryEntryEditorFragment : Fragment() {
         defaultTitleTextSize = binding.editDiaryTitle.textSize / resources.displayMetrics.scaledDensity
         defaultContentTextSize = binding.editDiaryContent.textSize / resources.displayMetrics.scaledDensity
 
+        // Initialise font size button lists once (used in setup, observeViewModel, and helpers)
+        titleSizeButtons = listOf(
+            binding.btnDiaryTitleSize12 to 12f,
+            binding.btnDiaryTitleSize14 to 14f,
+            binding.btnDiaryTitleSize16 to 16f,
+            binding.btnDiaryTitleSize18 to 18f,
+            binding.btnDiaryTitleSize20 to 20f,
+            binding.btnDiaryTitleSize24 to 24f
+        )
+        contentSizeButtons = listOf(
+            binding.btnDiaryContentSize12 to 12f,
+            binding.btnDiaryContentSize14 to 14f,
+            binding.btnDiaryContentSize16 to 16f,
+            binding.btnDiaryContentSize18 to 18f,
+            binding.btnDiaryContentSize20 to 20f,
+            binding.btnDiaryContentSize24 to 24f
+        )
+
         setupToolbar()
         setupMoodChips()
         setupColorPicker()
@@ -194,14 +216,7 @@ class DiaryEntryEditorFragment : Fragment() {
         binding.btnDiaryTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
 
         setupFontSizeButtons(
-            buttons = listOf(
-                binding.btnDiaryTitleSize12 to 12f,
-                binding.btnDiaryTitleSize14 to 14f,
-                binding.btnDiaryTitleSize16 to 16f,
-                binding.btnDiaryTitleSize18 to 18f,
-                binding.btnDiaryTitleSize20 to 20f,
-                binding.btnDiaryTitleSize24 to 24f
-            ),
+            buttons = titleSizeButtons,
             onSizeSelected = { size ->
                 viewModel.titleFontSize.value = size
             }
@@ -212,14 +227,7 @@ class DiaryEntryEditorFragment : Fragment() {
         binding.btnDiaryFormatItalic.setOnClickListener { toggleInlineFormat(Typeface.ITALIC) }
 
         setupFontSizeButtons(
-            buttons = listOf(
-                binding.btnDiaryContentSize12 to 12f,
-                binding.btnDiaryContentSize14 to 14f,
-                binding.btnDiaryContentSize16 to 16f,
-                binding.btnDiaryContentSize18 to 18f,
-                binding.btnDiaryContentSize20 to 20f,
-                binding.btnDiaryContentSize24 to 24f
-            ),
+            buttons = contentSizeButtons,
             onSizeSelected = { size ->
                 viewModel.contentFontSize.value = size
             }
@@ -641,23 +649,6 @@ class DiaryEntryEditorFragment : Fragment() {
             updateFontSelection(fontId ?: "")
             applyFontToViews(fontId ?: "")
         }
-
-        val titleSizeButtons = listOf(
-            binding.btnDiaryTitleSize12 to 12f,
-            binding.btnDiaryTitleSize14 to 14f,
-            binding.btnDiaryTitleSize16 to 16f,
-            binding.btnDiaryTitleSize18 to 18f,
-            binding.btnDiaryTitleSize20 to 20f,
-            binding.btnDiaryTitleSize24 to 24f
-        )
-        val contentSizeButtons = listOf(
-            binding.btnDiaryContentSize12 to 12f,
-            binding.btnDiaryContentSize14 to 14f,
-            binding.btnDiaryContentSize16 to 16f,
-            binding.btnDiaryContentSize18 to 18f,
-            binding.btnDiaryContentSize20 to 20f,
-            binding.btnDiaryContentSize24 to 24f
-        )
 
         viewModel.titleFontSize.observe(viewLifecycleOwner) { size ->
             val resolvedSize = size ?: 0f
