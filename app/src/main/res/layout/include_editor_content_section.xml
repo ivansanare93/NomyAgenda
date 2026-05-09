@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Content format toolbar label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:text="@string/hint_content_font_size"
+        android:textAppearance="?attr/textAppearanceLabelMedium" />
+
+    <!-- Content format toolbar: bold / italic / WYSIWYG-color / size -->
+    <HorizontalScrollView
+        android:id="@+id/editor_scroll_content_format"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginBottom="@dimen/spacing_small">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_bold"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/format_bold"
+                android:textStyle="bold"
+                android:contentDescription="@string/format_bold_desc" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_italic"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="@string/format_italic"
+                android:textStyle="italic"
+                android:contentDescription="@string/format_italic_desc" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_color"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="@string/format_color"
+                android:contentDescription="@string/format_color_desc" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:background="?attr/colorOutline" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_size_12"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="12" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_size_14"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="14" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_size_16"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="16" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_size_18"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="18" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_size_20"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="20" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editor_btn_content_size_24"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:checkable="true"
+                android:text="24" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Content -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editor_content_input_layout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_note_content_editor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editor_edit_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="4"
+            android:gravity="top" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

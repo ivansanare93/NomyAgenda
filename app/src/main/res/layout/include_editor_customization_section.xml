@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Title colour picker -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:text="@string/hint_title_color"
+        android:textAppearance="?attr/textAppearanceLabelMedium" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/editor_color_swatches_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
+
+    <!-- Content colour picker -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:text="@string/hint_content_color"
+        android:textAppearance="?attr/textAppearanceLabelMedium" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/editor_color_swatches_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
+
+    <!-- Background picker label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:text="@string/diary_background_label"
+        android:textAppearance="?attr/textAppearanceLabelMedium" />
+
+    <!-- Dynamic container: each fragment adds its background category rows here -->
+    <LinearLayout
+        android:id="@+id/editor_bg_categories_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/spacing_medium" />
+
+    <!-- Font picker -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:text="@string/hint_font_family"
+        android:textAppearance="?attr/textAppearanceLabelMedium" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginBottom="@dimen/spacing_medium">
+
+        <LinearLayout
+            android:id="@+id/editor_font_picker_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" />
+
+    </HorizontalScrollView>
+
+</LinearLayout>
