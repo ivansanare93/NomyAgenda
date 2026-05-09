@@ -87,6 +87,15 @@
                     android:textStyle="italic"
                     android:contentDescription="@string/format_italic_desc" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_title_format_color"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:text="@string/format_color"
+                    android:contentDescription="@string/format_color_desc" />
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="24dp"
@@ -256,42 +265,6 @@
                         android:text="@string/format_italic"
                         android:textStyle="italic"
                         android:contentDescription="@string/format_italic_desc" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_format_heading"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xsmall"
-                        android:text="@string/format_heading"
-                        android:contentDescription="@string/format_heading_desc" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_format_bullet"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xsmall"
-                        android:text="@string/format_bullet"
-                        android:contentDescription="@string/format_bullet_desc" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_format_numbered"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xsmall"
-                        android:text="@string/format_numbered"
-                        android:contentDescription="@string/format_numbered_desc" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_format_quote"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_xsmall"
-                        android:text="@string/format_quote"
-                        android:contentDescription="@string/format_quote_desc" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_format_color"
@@ -559,58 +532,6 @@
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Entry color pickers: title and content -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_title_color"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
-                android:layout_marginBottom="@dimen/spacing_xsmall" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/color_swatches_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical" />
-
-            </HorizontalScrollView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_content_color"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/spacing_xsmall" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/color_swatches_container_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical" />
-
-            </HorizontalScrollView>
-
-        </LinearLayout>
 
         <!-- Font picker -->
         <LinearLayout
