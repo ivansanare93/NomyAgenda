@@ -240,6 +240,13 @@
     <string name="diary_bg_photo_cumpleanos">Cumpleaños</string>
     <string name="diary_bg_photo_navidad">Navidad</string>
     <string name="diary_bg_photo_halloween">Halloween</string>
+    <string name="diary_bg_photo_ardilla">Ardilla</string>
+    <string name="diary_bg_photo_primavera">Primavera</string>
+    <string name="diary_bg_photo_koala">Koala</string>
+    <string name="diary_bg_photo_hamster">Hámster</string>
+    <string name="diary_bg_photo_invierno">Invierno</string>
+    <string name="diary_bg_photo_otono">Otoño</string>
+    <string name="diary_bg_photo_verano">Verano</string>
 
     <!-- Premium backgrounds -->
     <string name="diary_background_premium">Premium</string>
