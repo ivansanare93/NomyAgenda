@@ -2,22 +2,15 @@ package com.nomyagenda.app.ui.editor
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
 import android.text.TextWatcher
-import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.FrameLayout
-import android.widget.GridLayout
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,12 +18,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nomyagenda.app.NomyAgendaApp
 import com.nomyagenda.app.R
-import com.nomyagenda.app.ui.common.color.ColorPalette
-import com.nomyagenda.app.ui.common.font.FontCatalog
 import com.nomyagenda.app.data.local.entity.AgendaEntry
-import com.nomyagenda.app.ui.diary.DiaryBackgroundItem
-import com.nomyagenda.app.ui.resolveThemeColor
-import com.google.android.material.R as MaterialR
 import com.nomyagenda.app.data.local.entity.ChecklistItem
 import com.nomyagenda.app.data.local.entity.EntryType
 import com.nomyagenda.app.data.preferences.SettingsRepository
@@ -52,45 +40,23 @@ class EntryEditorFragment : Fragment() {
         EntryEditorViewModelFactory(app.agendaRepository, app.reminderService)
     }
 
+    private lateinit var editorHelper: RichTextEditorHelper
     private lateinit var checklistAdapter: ChecklistAdapter
     private lateinit var markwon: Markwon
     private lateinit var advanceNoticeAdapter: ArrayAdapter<String>
     private val checklistItems = mutableListOf<ChecklistItem>()
+
     private var selectedDueAt: Long? = null
     private var currentType: EntryType = EntryType.NOTE
     private var selectedAdvanceNoticeMinutes: Int = SettingsRepository.ADVANCE_NOTICE_NONE
+
+    // Style properties tracked via editorHelper callbacks
     private var selectedColor: String = ""
     private var selectedContentColor: String = ""
     private var selectedFontFamily: String = ""
     private var selectedBackground: String = ""
     private var selectedTitleFontSize: Float = 0f
     private var selectedContentFontSize: Float = 0f
-
-    // ---- Default text sizes (captured before any customisation) ----
-    private var defaultTitleTextSize: Float = 0f
-    private var defaultContentTextSize: Float = 0f
-
-    // ---- Font size button lists (initialised in onViewCreated after binding is ready) ----
-    private lateinit var titleSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
-    private lateinit var contentSizeButtons: List<Pair<com.google.android.material.button.MaterialButton, Float>>
-
-    // ---- WYSIWYG format toggle state (note content) ----
-    private var isBoldActive = false
-    private var isItalicActive = false
-    private var activeTextColor: Int? = null   // null = no colour mode active
-
-    // Tracked inside TextWatcher to know the range of the latest insertion
-    private var lastInsertStart = 0
-    private var lastInsertCount = 0
-    // Guard flag: prevents re-entrant span application in the TextWatcher
-    private var isApplyingSpans = false
-
-    // ---- WYSIWYG format toggle state (title) ----
-    private var isTitleBoldActive = false
-    private var isTitleItalicActive = false
-    private var titleLastInsertStart = 0
-    private var titleLastInsertCount = 0
-    private var isTitleApplyingSpans = false
 
     // ---- WYSIWYG format toggle state (checklist item) ----
     private var isChecklistBoldActive = false
@@ -115,101 +81,12 @@ class EntryEditorFragment : Fragment() {
             isChecklistApplyingSpans = true
             try {
                 val end = checklistLastInsertStart + checklistLastInsertCount
-                if (isChecklistBoldActive) {
-                    s.setSpan(
-                        StyleSpan(Typeface.BOLD),
-                        checklistLastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                if (isChecklistItalicActive) {
-                    s.setSpan(
-                        StyleSpan(Typeface.ITALIC),
-                        checklistLastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
+                if (isChecklistBoldActive)
+                    s.setSpan(StyleSpan(Typeface.BOLD), checklistLastInsertStart, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                if (isChecklistItalicActive)
+                    s.setSpan(StyleSpan(Typeface.ITALIC), checklistLastInsertStart, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             } finally {
                 isChecklistApplyingSpans = false
-            }
-        }
-    }
-
-    /** Applies formatting spans to text inserted while a toggle is active. */
-    private val formatWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (!isApplyingSpans) {
-                lastInsertStart = start
-                lastInsertCount = count
-            }
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            if (s == null || lastInsertCount == 0 || isApplyingSpans) return
-            isApplyingSpans = true
-            try {
-                val end = lastInsertStart + lastInsertCount
-                if (isBoldActive) {
-                    s.setSpan(
-                        StyleSpan(Typeface.BOLD),
-                        lastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                if (isItalicActive) {
-                    s.setSpan(
-                        StyleSpan(Typeface.ITALIC),
-                        lastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                activeTextColor?.let { color ->
-                    s.setSpan(
-                        ForegroundColorSpan(color),
-                        lastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-            } finally {
-                isApplyingSpans = false
-            }
-        }
-    }
-
-    /** Applies bold/italic spans to text inserted in the title while a toggle is active. */
-    private val titleFormatWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (!isTitleApplyingSpans) {
-                titleLastInsertStart = start
-                titleLastInsertCount = count
-            }
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            if (s == null || titleLastInsertCount == 0 || isTitleApplyingSpans) return
-            isTitleApplyingSpans = true
-            try {
-                val end = titleLastInsertStart + titleLastInsertCount
-                if (isTitleBoldActive) {
-                    s.setSpan(
-                        StyleSpan(Typeface.BOLD),
-                        titleLastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                if (isTitleItalicActive) {
-                    s.setSpan(
-                        StyleSpan(Typeface.ITALIC),
-                        titleLastInsertStart, end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-            } finally {
-                isTitleApplyingSpans = false
             }
         }
     }
@@ -231,28 +108,30 @@ class EntryEditorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Capture default text sizes before any custom size is applied
-        defaultTitleTextSize = binding.editEntryTitle.textSize / resources.displayMetrics.scaledDensity
-        defaultContentTextSize = binding.editNoteContent.textSize / resources.displayMetrics.scaledDensity
-
-        // Initialise font size button lists once (reused in setup and helpers)
-        titleSizeButtons = listOf(
-            binding.btnEntryTitleSize12 to 12f,
-            binding.btnEntryTitleSize14 to 14f,
-            binding.btnEntryTitleSize16 to 16f,
-            binding.btnEntryTitleSize18 to 18f,
-            binding.btnEntryTitleSize20 to 20f,
-            binding.btnEntryTitleSize24 to 24f
+        // ── Shared rich-text editor ──────────────────────────────────────
+        editorHelper = RichTextEditorHelper(
+            context        = requireContext(),
+            titleBinding   = binding.editorTitle,
+            contentBinding = binding.editorContent,
+            customBinding  = binding.editorCustomization
         )
-        contentSizeButtons = listOf(
-            binding.btnEntryContentSize12 to 12f,
-            binding.btnEntryContentSize14 to 14f,
-            binding.btnEntryContentSize16 to 16f,
-            binding.btnEntryContentSize18 to 18f,
-            binding.btnEntryContentSize20 to 20f,
-            binding.btnEntryContentSize24 to 24f
-        )
+        editorHelper.onTitleColorChanged      = { hex -> selectedColor          = hex }
+        editorHelper.onContentColorChanged    = { hex -> selectedContentColor   = hex }
+        editorHelper.onFontFamilyChanged      = { id  -> selectedFontFamily     = id  }
+        editorHelper.onBackgroundChanged      = { key -> selectedBackground     = key }
+        editorHelper.onTitleFontSizeChanged   = { sp  -> selectedTitleFontSize  = sp  }
+        editorHelper.onContentFontSizeChanged = { sp  -> selectedContentFontSize = sp }
+        editorHelper.setup()
 
+        // Configure background categories for entries (no "basic" palette)
+        editorHelper.setBackgroundCategories(listOf(
+            getString(R.string.diary_background_thematic) to EntryBackgroundCatalog.thematicBackgrounds,
+            getString(R.string.diary_background_festive)  to EntryBackgroundCatalog.festiveBackgrounds,
+            getString(R.string.diary_background_premium)  to EntryBackgroundCatalog.premiumBackgrounds,
+            getString(R.string.diary_background_photos)   to EntryBackgroundCatalog.photoBackgrounds
+        ))
+
+        // ── Entry-specific setup ─────────────────────────────────────────
         markwon = Markwon.builder(requireContext())
             .usePlugin(HtmlPlugin.create())
             .build()
@@ -263,41 +142,23 @@ class EntryEditorFragment : Fragment() {
         binding.recyclerChecklist.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerChecklist.adapter = checklistAdapter
 
-        binding.chipNote.setOnClickListener { setType(EntryType.NOTE) }
-        binding.chipTask.setOnClickListener { setType(EntryType.TASK) }
+        binding.chipNote.setOnClickListener     { setType(EntryType.NOTE) }
+        binding.chipTask.setOnClickListener     { setType(EntryType.TASK) }
         binding.chipReminder.setOnClickListener { setType(EntryType.REMINDER) }
 
         binding.btnNoteEdit.isChecked = true
         binding.toggleNoteMode.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
-                    R.id.btn_note_edit -> showNoteEditMode()
+                    R.id.btn_note_edit    -> showNoteEditMode()
                     R.id.btn_note_preview -> showNotePreviewMode()
                 }
             }
         }
 
-        // Title format toolbar – bold / italic WYSIWYG toggles for the title field
-        binding.btnTitleFormatBold.setOnClickListener   { toggleTitleInlineFormat(Typeface.BOLD) }
-        binding.btnTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
-        binding.btnTitleFormatColor.setOnClickListener  { showTitleColorPicker() }
-
-        // Attach the TextWatcher that applies active format spans while typing in the title
-        binding.editEntryTitle.addTextChangedListener(titleFormatWatcher)
-
-        // Format toolbar – bold / italic are WYSIWYG toggles.
-        binding.btnFormatBold.setOnClickListener    { toggleInlineFormat(Typeface.BOLD) }
-        binding.btnFormatItalic.setOnClickListener  { toggleInlineFormat(Typeface.ITALIC) }
-        binding.btnFormatColor.setOnClickListener    { showColorPicker() }
-
-        // Attach the TextWatcher that applies active format spans while typing
-        binding.editNoteContent.addTextChangedListener(formatWatcher)
-
         // Checklist format toolbar – bold / italic WYSIWYG toggles for checklist item input
         binding.btnChecklistFormatBold.setOnClickListener   { toggleChecklistInlineFormat(Typeface.BOLD) }
         binding.btnChecklistFormatItalic.setOnClickListener { toggleChecklistInlineFormat(Typeface.ITALIC) }
-
-        // Attach the TextWatcher that applies active format spans while typing in checklist item
         binding.editNewChecklistItem.addTextChangedListener(checklistFormatWatcher)
 
         binding.buttonAddChecklistItem.setOnClickListener {
@@ -325,10 +186,6 @@ class EntryEditorFragment : Fragment() {
         binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
 
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
-
-        setupFontPicker()
-        setupFontSizePickers()
-        setupBackgroundPicker()
         setType(currentType)
 
         if (args.entryId > 0) {
@@ -337,18 +194,17 @@ class EntryEditorFragment : Fragment() {
 
         viewModel.entry.observe(viewLifecycleOwner) { entry ->
             entry ?: return@observe
-            val titleSpannable = RichTextConverter.markdownInlineToSpannable(entry.title)
-            binding.editEntryTitle.setText(titleSpannable, android.widget.TextView.BufferType.EDITABLE)
+            editorHelper.setTitle(entry.title)
             setType(entry.type)
             when (entry.type) {
-                EntryType.NOTE -> setNoteContent(entry.content)
-                EntryType.TASK -> {
+                EntryType.NOTE     -> editorHelper.setContent(entry.content)
+                EntryType.TASK     -> {
                     checklistItems.clear()
                     checklistItems.addAll(ChecklistManager.fromJson(entry.checklistJson))
                     checklistAdapter.notifyDataSetChanged()
                 }
                 EntryType.REMINDER -> {
-                    setNoteContent(entry.content)
+                    editorHelper.setContent(entry.content)
                     selectedAdvanceNoticeMinutes = entry.advanceNoticeMinutes
                     val label = advanceOptions.firstOrNull { it.first == entry.advanceNoticeMinutes }?.second
                         ?: advanceOptions[0].second
@@ -359,23 +215,25 @@ class EntryEditorFragment : Fragment() {
             selectedDueAt = entry.dueAt ?: selectedDueAt ?: System.currentTimeMillis()
             binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
             binding.editTags.setText(entry.tags)
-            if (entry.color.isNotEmpty()) {
-                selectEntryColor(entry.color)
+
+            // Restore style – also sync local vars since helpers don't fire callbacks here
+            selectedColor = entry.color.also {
+                if (it.isNotEmpty()) editorHelper.setTitleColor(it)
             }
-            if (entry.contentColor.isNotEmpty()) {
-                selectEntryContentColor(entry.contentColor)
+            selectedContentColor = entry.contentColor.also {
+                if (it.isNotEmpty()) editorHelper.setContentColor(it)
             }
-            if (entry.fontFamily.isNotEmpty()) {
-                selectEntryFont(entry.fontFamily)
+            selectedFontFamily = entry.fontFamily.also {
+                if (it.isNotEmpty()) editorHelper.setFontFamily(it)
             }
-            if (entry.background.isNotEmpty()) {
-                selectEntryBackground(entry.background)
+            selectedBackground = entry.background.also {
+                if (it.isNotEmpty()) editorHelper.setBackground(it)
             }
-            if (entry.titleFontSize > 0f) {
-                selectEntryTitleFontSize(entry.titleFontSize)
+            selectedTitleFontSize = entry.titleFontSize.also {
+                if (it > 0f) editorHelper.setTitleFontSize(it)
             }
-            if (entry.contentFontSize > 0f) {
-                selectEntryContentFontSize(entry.contentFontSize)
+            selectedContentFontSize = entry.contentFontSize.also {
+                if (it > 0f) editorHelper.setContentFontSize(it)
             }
         }
 
@@ -395,29 +253,12 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
-    // ---------- content helpers ----------
-
-    /**
-     * Converts inline Markdown in [markdown] to spans and sets the result as the
-     * EditText content so the user sees visual formatting instead of raw markers.
-     */
-    private fun setNoteContent(markdown: String) {
-        val spannable = RichTextConverter.markdownInlineToSpannable(markdown)
-        binding.editNoteContent.setText(spannable, android.widget.TextView.BufferType.EDITABLE)
-    }
-
-    /** Returns the current note content serialised as a Markdown string. */
-    private fun getNoteContentAsMarkdown(): String =
-        binding.editNoteContent.text
-            ?.let { RichTextConverter.spannableToMarkdown(it) }
-            ?: ""
-
     // ---------- type / mode switching ----------
 
     private fun setType(type: EntryType) {
         currentType = type
-        binding.chipNote.isChecked = type == EntryType.NOTE
-        binding.chipTask.isChecked = type == EntryType.TASK
+        binding.chipNote.isChecked     = type == EntryType.NOTE
+        binding.chipTask.isChecked     = type == EntryType.TASK
         binding.chipReminder.isChecked = type == EntryType.REMINDER
         binding.layoutNoteContent.visibility = if (type == EntryType.NOTE || type == EntryType.REMINDER) View.VISIBLE else View.GONE
         binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
@@ -430,128 +271,21 @@ class EntryEditorFragment : Fragment() {
     }
 
     private fun showNoteEditMode() {
-        binding.scrollFormatToolbar.visibility = View.VISIBLE
-        binding.inputLayoutNoteContent.visibility = View.VISIBLE
-        binding.cardNotePreview.visibility = View.GONE
+        binding.editorContent.root.visibility = View.VISIBLE
+        binding.cardNotePreview.visibility    = View.GONE
     }
 
     private fun showNotePreviewMode() {
-        markwon.setMarkdown(binding.textNotePreview, getNoteContentAsMarkdown())
-        binding.scrollFormatToolbar.visibility = View.GONE
-        binding.inputLayoutNoteContent.visibility = View.GONE
-        binding.cardNotePreview.visibility = View.VISIBLE
-        // Reset toggles when entering preview (they make no sense outside edit mode)
-        resetFormatToggles()
+        markwon.setMarkdown(binding.textNotePreview, editorHelper.getContent())
+        binding.editorContent.root.visibility = View.GONE
+        binding.cardNotePreview.visibility    = View.VISIBLE
+        editorHelper.resetContentFormatToggles()
     }
 
-    // ---------- WYSIWYG inline-format toggle ----------
-
-    /**
-     * Handles a click on a checkable format button (bold / italic).
-     *
-     * • If there is a text selection, the span is toggled on/off for that range
-     *   without changing the typing-mode toggle.
-     * • If there is no selection, the typing-mode toggle is flipped.
-     */
-    private fun toggleInlineFormat(style: Int) {
-        val editText = binding.editNoteContent
-        val text = editText.text ?: return
-        val selStart = editText.selectionStart.coerceAtLeast(0)
-        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
-
-        if (selStart != selEnd) {
-            // Toggle the span on the selection; only remove spans fully within the selection
-            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
-                .filter { it.style == style
-                        && text.getSpanStart(it) >= selStart
-                        && text.getSpanEnd(it) <= selEnd }
-            if (existing.isNotEmpty()) {
-                existing.forEach { text.removeSpan(it) }
-            } else {
-                text.setSpan(
-                    StyleSpan(style), selStart, selEnd,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-            // MaterialButton auto-toggles isChecked before the listener fires; reset it
-            // so the button always reflects the actual typing-mode state, not the selection op.
-            when (style) {
-                Typeface.BOLD   -> binding.btnFormatBold.isChecked   = isBoldActive
-                Typeface.ITALIC -> binding.btnFormatItalic.isChecked = isItalicActive
-            }
-        } else {
-            // No selection – flip the typing-mode toggle
-            when (style) {
-                Typeface.BOLD -> {
-                    isBoldActive = !isBoldActive
-                    binding.btnFormatBold.isChecked = isBoldActive
-                }
-                Typeface.ITALIC -> {
-                    isItalicActive = !isItalicActive
-                    binding.btnFormatItalic.isChecked = isItalicActive
-                }
-            }
-        }
-    }
-
-    /** Clears all active format toggles and syncs button states. */
-    private fun resetFormatToggles() {
-        isBoldActive = false
-        isItalicActive = false
-        activeTextColor = null
-        binding.btnFormatBold.isChecked = false
-        binding.btnFormatItalic.isChecked = false
-        binding.btnFormatColor.isChecked = false
-    }
-
-    /**
-     * Handles a click on a title checkable format button (bold / italic).
-     *
-     * • If there is a text selection, the span is toggled on/off for that range
-     *   without changing the typing-mode toggle.
-     * • If there is no selection, the typing-mode toggle is flipped.
-     */
-    private fun toggleTitleInlineFormat(style: Int) {
-        val editText = binding.editEntryTitle
-        val text = editText.text ?: return
-        val selStart = editText.selectionStart.coerceAtLeast(0)
-        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
-
-        if (selStart != selEnd) {
-            val existing = text.getSpans(selStart, selEnd, StyleSpan::class.java)
-                .filter { it.style == style
-                        && text.getSpanStart(it) >= selStart
-                        && text.getSpanEnd(it) <= selEnd }
-            if (existing.isNotEmpty()) {
-                existing.forEach { text.removeSpan(it) }
-            } else {
-                text.setSpan(
-                    StyleSpan(style), selStart, selEnd,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-            when (style) {
-                Typeface.BOLD   -> binding.btnTitleFormatBold.isChecked   = isTitleBoldActive
-                Typeface.ITALIC -> binding.btnTitleFormatItalic.isChecked = isTitleItalicActive
-            }
-        } else {
-            when (style) {
-                Typeface.BOLD -> {
-                    isTitleBoldActive = !isTitleBoldActive
-                    binding.btnTitleFormatBold.isChecked = isTitleBoldActive
-                }
-                Typeface.ITALIC -> {
-                    isTitleItalicActive = !isTitleItalicActive
-                    binding.btnTitleFormatItalic.isChecked = isTitleItalicActive
-                }
-            }
-        }
-    }
-
-    // ---------- line-level prefix formatting (unchanged) ----------
+    // ---------- line-level prefix formatting ----------
 
     private fun applyLinePrefix(prefix: String) {
-        val editText = binding.editNoteContent
+        val editText = binding.editorContent.editorEditContent
         val text = editText.text ?: return
         val cursor = editText.selectionStart.coerceAtLeast(0)
         val lineStart = (text.lastIndexOf('\n', cursor - 1) + 1).coerceAtLeast(0)
@@ -561,13 +295,6 @@ class EntryEditorFragment : Fragment() {
 
     // ---------- checklist item inline-format toggle ----------
 
-    /**
-     * Handles a click on a checkable format button (bold / italic) for checklist item input.
-     *
-     * • If there is a text selection, the span is toggled on/off for that range
-     *   without changing the typing-mode toggle.
-     * • If there is no selection, the typing-mode toggle is flipped.
-     */
     private fun toggleChecklistInlineFormat(style: Int) {
         val editText = binding.editNewChecklistItem
         val text = editText.text ?: return
@@ -579,14 +306,8 @@ class EntryEditorFragment : Fragment() {
                 .filter { it.style == style
                         && text.getSpanStart(it) >= selStart
                         && text.getSpanEnd(it) <= selEnd }
-            if (existing.isNotEmpty()) {
-                existing.forEach { text.removeSpan(it) }
-            } else {
-                text.setSpan(
-                    StyleSpan(style), selStart, selEnd,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
+            if (existing.isNotEmpty()) existing.forEach { text.removeSpan(it) }
+            else text.setSpan(StyleSpan(style), selStart, selEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             when (style) {
                 Typeface.BOLD   -> binding.btnChecklistFormatBold.isChecked   = isChecklistBoldActive
                 Typeface.ITALIC -> binding.btnChecklistFormatItalic.isChecked = isChecklistItalicActive
@@ -605,382 +326,11 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
-    /** Clears all active checklist format toggles and syncs button states. */
     private fun resetChecklistFormatToggles() {
         isChecklistBoldActive = false
         isChecklistItalicActive = false
-        binding.btnChecklistFormatBold.isChecked = false
+        binding.btnChecklistFormatBold.isChecked   = false
         binding.btnChecklistFormatItalic.isChecked = false
-    }
-
-    // ---------- entry colour picker (unchanged) ----------
-
-    private fun applyTitleColorPreview(hexColor: String) {
-        applyTextColorToView(binding.editEntryTitle, hexColor)
-    }
-
-    private fun applyContentColorPreview(hexColor: String) {
-        applyTextColorToView(binding.editNoteContent, hexColor)
-    }
-
-    private fun applyTextColorToView(view: android.widget.TextView, hexColor: String) {
-        if (hexColor.isNotEmpty()) {
-            try {
-                view.setTextColor(Color.parseColor(hexColor))
-            } catch (_: IllegalArgumentException) { /* ignore invalid colour */ }
-        } else {
-            view.setTextColor(
-                requireContext().resolveThemeColor(MaterialR.attr.colorOnBackground)
-            )
-        }
-    }
-
-    private fun selectEntryColor(hexColor: String) {
-        selectedColor = hexColor
-        applyTitleColorPreview(hexColor)
-    }
-
-    private fun selectEntryContentColor(hexColor: String) {
-        selectedContentColor = hexColor
-        applyContentColorPreview(hexColor)
-    }
-
-    private fun setupFontPicker() {
-        FontCatalog.fonts.forEach { fontItem ->
-            val btn = com.google.android.material.button.MaterialButton(
-                requireContext(),
-                null,
-                com.google.android.material.R.attr.materialButtonOutlinedStyle
-            ).apply {
-                tag = fontItem.id
-                text = fontItem.displayName
-                isCheckable = true
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
-                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(
-                        resources.getDimensionPixelSize(R.dimen.color_swatch_margin),
-                        0,
-                        resources.getDimensionPixelSize(R.dimen.color_swatch_margin),
-                        0
-                    )
-                }
-                setOnClickListener {
-                    selectEntryFont(fontItem.id)
-                }
-            }
-            binding.fontPickerContainerEntry.addView(btn)
-            FontCatalog.resolveAsync(requireContext(), fontItem.id) { typeface ->
-                btn.typeface = typeface
-            }
-        }
-    }
-
-    private fun selectEntryFont(fontId: String) {
-        selectedFontFamily = fontId
-        updateFontSelection(fontId)
-        applyFontToEditors(fontId)
-    }
-
-    private fun updateFontSelection(fontId: String) {
-        for (i in 0 until binding.fontPickerContainerEntry.childCount) {
-            val btn = binding.fontPickerContainerEntry.getChildAt(i)
-                as? com.google.android.material.button.MaterialButton ?: continue
-            btn.isChecked = btn.tag as? String == fontId
-        }
-    }
-
-    private fun applyFontToEditors(fontId: String) {
-        FontCatalog.resolveAsync(requireContext(), fontId) { typeface ->
-            binding.editEntryTitle.typeface = typeface
-            binding.editNoteContent.typeface = typeface
-        }
-    }
-
-    // ---------- font size picker ----------
-
-    private fun setupFontSizePickers() {
-        titleSizeButtons.forEach { (btn, size) ->
-            btn.setOnClickListener {
-                val isNowChecked = btn.isChecked
-                titleSizeButtons.forEach { (b, _) -> b.isChecked = false }
-                if (isNowChecked) {
-                    btn.isChecked = true
-                    selectedTitleFontSize = size
-                    binding.editEntryTitle.textSize = size
-                } else {
-                    selectedTitleFontSize = 0f
-                    binding.editEntryTitle.textSize = defaultTitleTextSize
-                }
-            }
-        }
-
-        contentSizeButtons.forEach { (btn, size) ->
-            btn.setOnClickListener {
-                val isNowChecked = btn.isChecked
-                contentSizeButtons.forEach { (b, _) -> b.isChecked = false }
-                if (isNowChecked) {
-                    btn.isChecked = true
-                    selectedContentFontSize = size
-                    binding.editNoteContent.textSize = size
-                } else {
-                    selectedContentFontSize = 0f
-                    binding.editNoteContent.textSize = defaultContentTextSize
-                }
-            }
-        }
-    }
-
-    private fun selectEntryTitleFontSize(size: Float) {
-        selectedTitleFontSize = size
-        titleSizeButtons.forEach { (btn, s) ->
-            btn.isChecked = size > 0f && s == size
-        }
-        if (size > 0f) binding.editEntryTitle.textSize = size
-    }
-
-    private fun selectEntryContentFontSize(size: Float) {
-        selectedContentFontSize = size
-        contentSizeButtons.forEach { (btn, s) ->
-            btn.isChecked = size > 0f && s == size
-        }
-        if (size > 0f) binding.editNoteContent.textSize = size
-    }
-
-    // ---------- background picker ----------
-
-    private fun setupBackgroundPicker() {
-        setupBackgroundSwatches(binding.bgSwatchesEntryThematic, EntryBackgroundCatalog.thematicBackgrounds)
-        setupBackgroundSwatches(binding.bgSwatchesEntryFestive, EntryBackgroundCatalog.festiveBackgrounds)
-        setupBackgroundSwatches(binding.bgSwatchesEntryPremium, EntryBackgroundCatalog.premiumBackgrounds)
-        setupBackgroundSwatches(binding.bgSwatchesEntryPhotos, EntryBackgroundCatalog.photoBackgrounds)
-    }
-
-    private fun setupBackgroundSwatches(container: android.widget.LinearLayout, backgrounds: List<DiaryBackgroundItem>) {
-        val size = resources.getDimensionPixelSize(R.dimen.bg_swatch_size)
-        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
-        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-        val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
-
-        backgrounds.forEach { item ->
-            val swatch = FrameLayout(requireContext()).apply {
-                tag = item.key
-                layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
-                    setMargins(margin, margin, margin, margin)
-                }
-                clipToOutline = true
-                outlineProvider = android.view.ViewOutlineProvider.BACKGROUND
-                if (item.drawableRes != 0) {
-                    background = try {
-                        ContextCompat.getDrawable(requireContext(), item.drawableRes)
-                    } catch (_: Exception) {
-                        GradientDrawable().apply {
-                            shape = GradientDrawable.RECTANGLE
-                            cornerRadii = FloatArray(8) { cornerRadius }
-                            setColor(Color.LTGRAY)
-                        }
-                    }
-                } else {
-                    background = GradientDrawable().apply {
-                        shape = GradientDrawable.RECTANGLE
-                        cornerRadii = FloatArray(8) { cornerRadius }
-                        setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
-                        setStroke(strokeWidth, Color.LTGRAY)
-                    }
-                    val noneLabel = android.widget.TextView(requireContext()).apply {
-                        text = "✕"
-                        textSize = 18f
-                        gravity = android.view.Gravity.CENTER
-                        setTextColor(Color.LTGRAY)
-                        layoutParams = FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT,
-                            FrameLayout.LayoutParams.MATCH_PARENT
-                        )
-                    }
-                    addView(noneLabel)
-                }
-                setOnClickListener {
-                    selectEntryBackground(item.key)
-                }
-            }
-            container.addView(swatch)
-        }
-    }
-
-    private fun selectEntryBackground(key: String) {
-        selectedBackground = key
-        updateBackgroundSelection(key)
-    }
-
-    private fun updateBackgroundSelection(selectedKey: String) {
-        val containers = listOf(
-            binding.bgSwatchesEntryThematic,
-            binding.bgSwatchesEntryFestive,
-            binding.bgSwatchesEntryPremium,
-            binding.bgSwatchesEntryPhotos
-        )
-        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-        val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
-
-        containers.forEach { container ->
-            for (i in 0 until container.childCount) {
-                val swatch = container.getChildAt(i) as? FrameLayout ?: continue
-                val key = swatch.tag as? String ?: continue
-                val isSelected = key == selectedKey
-
-                if (isSelected) {
-                    val selectionOverlay = GradientDrawable().apply {
-                        shape = GradientDrawable.RECTANGLE
-                        cornerRadii = FloatArray(8) { cornerRadius }
-                        setStroke(strokeWidth, requireContext().resolveThemeColor(com.google.android.material.R.attr.colorPrimary))
-                        setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
-                    }
-                    swatch.foreground = selectionOverlay
-                } else {
-                    swatch.foreground = null
-                }
-            }
-        }
-    }
-
-    // ---------- title colour picker ----------
-
-    /** Shows a colour-picker dialog for the entry title.
-     *  The selected colour is stored in [selectedColor] and previewed on the title field.
-     *  This is distinct from [showColorPicker] which applies WYSIWYG inline spans to note content. */
-    private fun showTitleColorPicker() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_color_picker, null)
-        val grid = dialogView.findViewById<GridLayout>(R.id.grid_colors)
-
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle(R.string.color_picker_title)
-            .setView(dialogView)
-            .setNegativeButton(R.string.cancel, null)
-            .create()
-
-        val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
-        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
-        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-
-        // "None" / reset swatch
-        val noneDrawable = GradientDrawable().apply {
-            shape = GradientDrawable.OVAL
-            setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
-            setStroke(strokeWidth, Color.LTGRAY)
-        }
-        val noneSwatch = FrameLayout(requireContext()).apply {
-            background = noneDrawable
-            layoutParams = GridLayout.LayoutParams().apply {
-                width = size
-                height = size
-                setMargins(margin, margin, margin, margin)
-            }
-            setOnClickListener {
-                selectEntryColor("")
-                dialog.dismiss()
-            }
-        }
-        grid.addView(noneSwatch)
-
-        ColorPalette.COLORS.forEach { hexColor ->
-            val circle = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(Color.parseColor(hexColor))
-            }
-            val swatch = FrameLayout(requireContext()).apply {
-                background = circle
-                layoutParams = GridLayout.LayoutParams().apply {
-                    width = size
-                    height = size
-                    setMargins(margin, margin, margin, margin)
-                }
-                setOnClickListener {
-                    selectEntryColor(hexColor)
-                    dialog.dismiss()
-                }
-            }
-            grid.addView(swatch)
-        }
-
-        dialog.show()
-    }
-
-    // ---------- text-colour picker (WYSIWYG) ----------
-
-    private fun showColorPicker() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_color_picker, null)
-        val grid = dialogView.findViewById<GridLayout>(R.id.grid_colors)
-
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle(R.string.color_picker_title)
-            .setView(dialogView)
-            .setNegativeButton(R.string.cancel, null)
-            .create()
-
-        ColorPalette.COLORS.forEach { hexColor ->
-            val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
-            val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
-
-            val circle = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(Color.parseColor(hexColor))
-            }
-
-            val swatch = FrameLayout(requireContext()).apply {
-                background = circle
-                layoutParams = GridLayout.LayoutParams().apply {
-                    width = size
-                    height = size
-                    setMargins(margin, margin, margin, margin)
-                }
-                setOnClickListener {
-                    applyTextColor(hexColor)
-                    dialog.dismiss()
-                }
-            }
-            grid.addView(swatch)
-        }
-
-        dialog.show()
-    }
-
-    /**
-     * If there is a text selection the colour span is applied immediately.
-     * Otherwise, colour-typing mode is toggled: subsequent characters will
-     * receive a [ForegroundColorSpan] until the user taps the colour button again
-     * (or taps the same colour to deactivate it).
-     */
-    private fun applyTextColor(hexColor: String) {
-        val editText = binding.editNoteContent
-        val text = editText.text ?: return
-        val selStart = editText.selectionStart.coerceAtLeast(0)
-        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
-        val color = try {
-            Color.parseColor(hexColor)
-        } catch (_: IllegalArgumentException) {
-            return
-        }
-
-        if (selStart != selEnd) {
-            // Apply immediately to the selection
-            text.setSpan(
-                ForegroundColorSpan(color), selStart, selEnd,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            // Deactivate colour-typing mode when we operate on a selection
-            activeTextColor = null
-            binding.btnFormatColor.isChecked = false
-        } else {
-            // Toggle colour-typing mode
-            if (activeTextColor == color) {
-                activeTextColor = null
-                binding.btnFormatColor.isChecked = false
-            } else {
-                activeTextColor = color
-                binding.btnFormatColor.isChecked = true
-            }
-        }
     }
 
     // ---------- date/time picker ----------
@@ -1007,37 +357,32 @@ class EntryEditorFragment : Fragment() {
     // ---------- save ----------
 
     private fun saveEntry() {
-        val titleEditable = binding.editEntryTitle.text
-        val titlePlain = titleEditable?.toString()?.trim() ?: ""
+        val titleInputLayout = editorHelper.getTitleInputLayout()
+        val titlePlain = binding.editorTitle.editorEditTitle.text?.toString()?.trim() ?: ""
         if (titlePlain.isEmpty()) {
-            binding.inputLayoutTitle.error = getString(R.string.error_title_required)
+            titleInputLayout.error = getString(R.string.error_title_required)
             return
         }
-        binding.inputLayoutTitle.error = null
-        val title = titleEditable?.let { RichTextConverter.spannableToMarkdown(it) } ?: titlePlain
-
-        val tags = binding.editTags.text?.toString()?.trim() ?: ""
-
-        val noteContent: String = getNoteContentAsMarkdown()
+        titleInputLayout.error = null
 
         val entry = AgendaEntry(
-            id = args.entryId.takeIf { it > 0 } ?: 0,
-            title = title,
-            type = currentType,
-            content = when (currentType) {
-                EntryType.NOTE, EntryType.REMINDER -> noteContent
-                EntryType.TASK -> ""
+            id                   = args.entryId.takeIf { it > 0 } ?: 0,
+            title                = editorHelper.getTitle(),
+            type                 = currentType,
+            content              = when (currentType) {
+                EntryType.NOTE, EntryType.REMINDER -> editorHelper.getContent()
+                EntryType.TASK                     -> ""
             },
-            checklistJson = if (currentType == EntryType.TASK) ChecklistManager.toJson(checklistAdapter.getItems()) else "[]",
-            dueAt = selectedDueAt ?: System.currentTimeMillis(),
+            checklistJson        = if (currentType == EntryType.TASK) ChecklistManager.toJson(checklistAdapter.getItems()) else "[]",
+            dueAt                = selectedDueAt ?: System.currentTimeMillis(),
             advanceNoticeMinutes = if (currentType == EntryType.REMINDER) selectedAdvanceNoticeMinutes else 0,
-            tags = tags,
-            color = selectedColor,
-            contentColor = selectedContentColor,
-            fontFamily = selectedFontFamily,
-            background = selectedBackground,
-            titleFontSize = selectedTitleFontSize,
-            contentFontSize = selectedContentFontSize
+            tags                 = binding.editTags.text?.toString()?.trim() ?: "",
+            color                = selectedColor,
+            contentColor         = selectedContentColor,
+            fontFamily           = selectedFontFamily,
+            background           = selectedBackground,
+            titleFontSize        = selectedTitleFontSize,
+            contentFontSize      = selectedContentFontSize
         )
 
         viewModel.save(entry)
