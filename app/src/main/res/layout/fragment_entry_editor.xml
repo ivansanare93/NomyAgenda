@@ -45,12 +45,20 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Title format toolbar -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xsmall"
+            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:text="@string/hint_title_font_size"
+            android:textAppearance="?attr/textAppearanceLabelMedium" />
+
         <HorizontalScrollView
             android:id="@+id/scroll_title_format_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:layout_marginTop="@dimen/spacing_xsmall">
+            android:layout_marginBottom="@dimen/spacing_small">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -78,6 +86,66 @@
                     android:text="@string/format_italic"
                     android:textStyle="italic"
                     android:contentDescription="@string/format_italic_desc" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:background="?attr/colorOutline" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_entry_title_size_12"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="12" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_entry_title_size_14"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:checkable="true"
+                    android:text="14" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_entry_title_size_16"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:checkable="true"
+                    android:text="16" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_entry_title_size_18"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:checkable="true"
+                    android:text="18" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_entry_title_size_20"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:checkable="true"
+                    android:text="20" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_entry_title_size_24"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xsmall"
+                    android:checkable="true"
+                    android:text="24" />
 
             </LinearLayout>
 
@@ -148,6 +216,13 @@
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <!-- Formatting toolbar -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xsmall"
+                android:text="@string/hint_content_font_size"
+                android:textAppearance="?attr/textAppearanceLabelMedium" />
+
             <HorizontalScrollView
                 android:id="@+id/scroll_format_toolbar"
                 android:layout_width="match_parent"
@@ -227,6 +302,66 @@
                         android:checkable="true"
                         android:text="@string/format_color"
                         android:contentDescription="@string/format_color_desc" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:background="?attr/colorOutline" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_entry_content_size_12"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="12" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_entry_content_size_14"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:checkable="true"
+                        android:text="14" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_entry_content_size_16"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:checkable="true"
+                        android:text="16" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_entry_content_size_18"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:checkable="true"
+                        android:text="18" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_entry_content_size_20"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:checkable="true"
+                        android:text="20" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_entry_content_size_24"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xsmall"
+                        android:checkable="true"
+                        android:text="24" />
 
                 </LinearLayout>
 

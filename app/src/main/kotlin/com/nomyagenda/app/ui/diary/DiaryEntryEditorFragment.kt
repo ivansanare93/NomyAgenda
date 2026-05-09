@@ -185,9 +185,67 @@ class DiaryEntryEditorFragment : Fragment() {
         binding.btnDiaryTitleFormatBold.setOnClickListener { toggleTitleInlineFormat(Typeface.BOLD) }
         binding.btnDiaryTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
 
+        setupFontSizeButtons(
+            buttons = listOf(
+                binding.btnDiaryTitleSize12 to 12f,
+                binding.btnDiaryTitleSize14 to 14f,
+                binding.btnDiaryTitleSize16 to 16f,
+                binding.btnDiaryTitleSize18 to 18f,
+                binding.btnDiaryTitleSize20 to 20f,
+                binding.btnDiaryTitleSize24 to 24f
+            ),
+            onSizeSelected = { size ->
+                viewModel.titleFontSize.value = size
+            }
+        )
+
         binding.editDiaryContent.addTextChangedListener(formatWatcher)
         binding.btnDiaryFormatBold.setOnClickListener { toggleInlineFormat(Typeface.BOLD) }
         binding.btnDiaryFormatItalic.setOnClickListener { toggleInlineFormat(Typeface.ITALIC) }
+
+        setupFontSizeButtons(
+            buttons = listOf(
+                binding.btnDiaryContentSize12 to 12f,
+                binding.btnDiaryContentSize14 to 14f,
+                binding.btnDiaryContentSize16 to 16f,
+                binding.btnDiaryContentSize18 to 18f,
+                binding.btnDiaryContentSize20 to 20f,
+                binding.btnDiaryContentSize24 to 24f
+            ),
+            onSizeSelected = { size ->
+                viewModel.contentFontSize.value = size
+            }
+        )
+    }
+
+    private fun setupFontSizeButtons(
+        buttons: List<Pair<com.google.android.material.button.MaterialButton, Float>>,
+        onSizeSelected: (Float) -> Unit
+    ) {
+        buttons.forEach { (btn, size) ->
+            btn.setOnClickListener {
+                // MaterialButton auto-toggles isChecked before listener fires
+                val isNowChecked = btn.isChecked
+                buttons.forEach { (b, _) -> b.isChecked = false }
+                if (isNowChecked) {
+                    // User turned this size on
+                    btn.isChecked = true
+                    onSizeSelected(size)
+                } else {
+                    // User tapped the already-selected button → revert to default
+                    onSizeSelected(0f)
+                }
+            }
+        }
+    }
+
+    private fun updateFontSizeSelection(
+        buttons: List<Pair<com.google.android.material.button.MaterialButton, Float>>,
+        selectedSize: Float
+    ) {
+        buttons.forEach { (btn, size) ->
+            btn.isChecked = selectedSize > 0f && size == selectedSize
+        }
     }
 
     private fun toggleTitleInlineFormat(style: Int) {
@@ -574,6 +632,33 @@ class DiaryEntryEditorFragment : Fragment() {
         viewModel.fontFamily.observe(viewLifecycleOwner) { fontId ->
             updateFontSelection(fontId ?: "")
             applyFontToViews(fontId ?: "")
+        }
+
+        val titleSizeButtons = listOf(
+            binding.btnDiaryTitleSize12 to 12f,
+            binding.btnDiaryTitleSize14 to 14f,
+            binding.btnDiaryTitleSize16 to 16f,
+            binding.btnDiaryTitleSize18 to 18f,
+            binding.btnDiaryTitleSize20 to 20f,
+            binding.btnDiaryTitleSize24 to 24f
+        )
+        val contentSizeButtons = listOf(
+            binding.btnDiaryContentSize12 to 12f,
+            binding.btnDiaryContentSize14 to 14f,
+            binding.btnDiaryContentSize16 to 16f,
+            binding.btnDiaryContentSize18 to 18f,
+            binding.btnDiaryContentSize20 to 20f,
+            binding.btnDiaryContentSize24 to 24f
+        )
+
+        viewModel.titleFontSize.observe(viewLifecycleOwner) { size ->
+            updateFontSizeSelection(titleSizeButtons, size ?: 0f)
+            if ((size ?: 0f) > 0f) binding.editDiaryTitle.textSize = size!!
+        }
+
+        viewModel.contentFontSize.observe(viewLifecycleOwner) { size ->
+            updateFontSizeSelection(contentSizeButtons, size ?: 0f)
+            if ((size ?: 0f) > 0f) binding.editDiaryContent.textSize = size!!
         }
 
         viewModel.saveSuccessEvent.observe(viewLifecycleOwner) { saved ->

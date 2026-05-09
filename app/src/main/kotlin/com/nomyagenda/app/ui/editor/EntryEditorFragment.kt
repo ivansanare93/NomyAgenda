@@ -63,6 +63,8 @@ class EntryEditorFragment : Fragment() {
     private var selectedContentColor: String = ""
     private var selectedFontFamily: String = ""
     private var selectedBackground: String = ""
+    private var selectedTitleFontSize: Float = 0f
+    private var selectedContentFontSize: Float = 0f
 
     // ---- WYSIWYG format toggle state (note content) ----
     private var isBoldActive = false
@@ -300,6 +302,7 @@ class EntryEditorFragment : Fragment() {
 
         setupEntryColorPicker()
         setupFontPicker()
+        setupFontSizePickers()
         setupBackgroundPicker()
         setType(currentType)
 
@@ -342,6 +345,12 @@ class EntryEditorFragment : Fragment() {
             }
             if (entry.background.isNotEmpty()) {
                 selectEntryBackground(entry.background)
+            }
+            if (entry.titleFontSize > 0f) {
+                selectEntryTitleFontSize(entry.titleFontSize)
+            }
+            if (entry.contentFontSize > 0f) {
+                selectEntryContentFontSize(entry.contentFontSize)
             }
         }
 
@@ -717,6 +726,87 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
+    // ---------- font size picker ----------
+
+    private fun setupFontSizePickers() {
+        val titleSizeButtons = listOf(
+            binding.btnEntryTitleSize12 to 12f,
+            binding.btnEntryTitleSize14 to 14f,
+            binding.btnEntryTitleSize16 to 16f,
+            binding.btnEntryTitleSize18 to 18f,
+            binding.btnEntryTitleSize20 to 20f,
+            binding.btnEntryTitleSize24 to 24f
+        )
+        val contentSizeButtons = listOf(
+            binding.btnEntryContentSize12 to 12f,
+            binding.btnEntryContentSize14 to 14f,
+            binding.btnEntryContentSize16 to 16f,
+            binding.btnEntryContentSize18 to 18f,
+            binding.btnEntryContentSize20 to 20f,
+            binding.btnEntryContentSize24 to 24f
+        )
+
+        titleSizeButtons.forEach { (btn, size) ->
+            btn.setOnClickListener {
+                val isNowChecked = btn.isChecked
+                titleSizeButtons.forEach { (b, _) -> b.isChecked = false }
+                if (isNowChecked) {
+                    btn.isChecked = true
+                    selectedTitleFontSize = size
+                    binding.editEntryTitle.textSize = size
+                } else {
+                    selectedTitleFontSize = 0f
+                }
+            }
+        }
+
+        contentSizeButtons.forEach { (btn, size) ->
+            btn.setOnClickListener {
+                val isNowChecked = btn.isChecked
+                contentSizeButtons.forEach { (b, _) -> b.isChecked = false }
+                if (isNowChecked) {
+                    btn.isChecked = true
+                    selectedContentFontSize = size
+                    binding.editNoteContent.textSize = size
+                } else {
+                    selectedContentFontSize = 0f
+                }
+            }
+        }
+    }
+
+    private fun selectEntryTitleFontSize(size: Float) {
+        selectedTitleFontSize = size
+        val titleSizeButtons = listOf(
+            binding.btnEntryTitleSize12 to 12f,
+            binding.btnEntryTitleSize14 to 14f,
+            binding.btnEntryTitleSize16 to 16f,
+            binding.btnEntryTitleSize18 to 18f,
+            binding.btnEntryTitleSize20 to 20f,
+            binding.btnEntryTitleSize24 to 24f
+        )
+        titleSizeButtons.forEach { (btn, s) ->
+            btn.isChecked = size > 0f && s == size
+        }
+        if (size > 0f) binding.editEntryTitle.textSize = size
+    }
+
+    private fun selectEntryContentFontSize(size: Float) {
+        selectedContentFontSize = size
+        val contentSizeButtons = listOf(
+            binding.btnEntryContentSize12 to 12f,
+            binding.btnEntryContentSize14 to 14f,
+            binding.btnEntryContentSize16 to 16f,
+            binding.btnEntryContentSize18 to 18f,
+            binding.btnEntryContentSize20 to 20f,
+            binding.btnEntryContentSize24 to 24f
+        )
+        contentSizeButtons.forEach { (btn, s) ->
+            btn.isChecked = size > 0f && s == size
+        }
+        if (size > 0f) binding.editNoteContent.textSize = size
+    }
+
     // ---------- background picker ----------
 
     private fun setupBackgroundPicker() {
@@ -961,7 +1051,9 @@ class EntryEditorFragment : Fragment() {
             color = selectedColor,
             contentColor = selectedContentColor,
             fontFamily = selectedFontFamily,
-            background = selectedBackground
+            background = selectedBackground,
+            titleFontSize = selectedTitleFontSize,
+            contentFontSize = selectedContentFontSize
         )
 
         viewModel.save(entry)
