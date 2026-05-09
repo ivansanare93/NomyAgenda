@@ -52,8 +52,9 @@ class RichTextEditorHelper(
     // WYSIWYG state – title
     // ──────────────────────────────────────────────────────────────────────
 
-    private var isTitleBoldActive   = false
-    private var isTitleItalicActive = false
+    private var isTitleBoldActive    = false
+    private var isTitleItalicActive  = false
+    private var activeTitleTextColor: Int? = null
     private var titleLastInsertStart = 0
     private var titleLastInsertCount = 0
     private var isTitleApplyingSpans = false
@@ -113,6 +114,9 @@ class RichTextEditorHelper(
                     s.setSpan(StyleSpan(Typeface.BOLD), titleLastInsertStart, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                 if (isTitleItalicActive)
                     s.setSpan(StyleSpan(Typeface.ITALIC), titleLastInsertStart, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                activeTitleTextColor?.let { color ->
+                    s.setSpan(ForegroundColorSpan(color), titleLastInsertStart, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
             } finally {
                 isTitleApplyingSpans = false
             }
@@ -180,7 +184,6 @@ class RichTextEditorHelper(
 
         setupTitleToolbar()
         setupContentToolbar()
-        setupColorSwatches()
         setupFontPicker()
     }
 
@@ -196,6 +199,9 @@ class RichTextEditorHelper(
         }
         titleBinding.editorBtnTitleItalic.setOnClickListener {
             toggleTitleInlineFormat(Typeface.ITALIC)
+        }
+        titleBinding.editorBtnTitleColor.setOnClickListener {
+            showTitleColorPicker()
         }
 
         setupFontSizeButtons(titleSizeButtons, isTitle = true)
@@ -312,8 +318,68 @@ class RichTextEditorHelper(
     }
 
     // ──────────────────────────────────────────────────────────────────────
-    // Private – WYSIWYG inline colour picker (content only)
+    // Private – WYSIWYG inline colour pickers (title and content)
     // ──────────────────────────────────────────────────────────────────────
+
+    private fun showTitleColorPicker() {
+        val dialogView = android.view.LayoutInflater.from(context).inflate(R.layout.dialog_color_picker, null)
+        val grid = dialogView.findViewById<android.widget.GridLayout>(R.id.grid_colors)
+
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(R.string.color_picker_title)
+            .setView(dialogView)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+
+        val size   = context.resources.getDimensionPixelSize(R.dimen.color_swatch_size)
+        val margin = context.resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
+
+        ColorPalette.COLORS.forEach { hexColor ->
+            val circle = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.parseColor(hexColor))
+            }
+            val swatch = FrameLayout(context).apply {
+                background = circle
+                layoutParams = android.widget.GridLayout.LayoutParams().apply {
+                    width = size; height = size
+                    setMargins(margin, margin, margin, margin)
+                }
+                setOnClickListener {
+                    applyTitleTextColor(hexColor)
+                    dialog.dismiss()
+                }
+            }
+            grid.addView(swatch)
+        }
+
+        dialog.show()
+    }
+
+    private fun applyTitleTextColor(hexColor: String) {
+        val editText = titleBinding.editorEditTitle
+        val text     = editText.text ?: return
+        val color = try { Color.parseColor(hexColor) } catch (_: IllegalArgumentException) { return }
+        val selStart = editText.selectionStart.coerceAtLeast(0)
+        val selEnd   = editText.selectionEnd.coerceAtLeast(0)
+
+        if (selStart != selEnd) {
+            text.setSpan(ForegroundColorSpan(color), selStart, selEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            activeTitleTextColor = null
+            titleBinding.editorBtnTitleColor.isChecked = false
+            onTitleColorChanged(hexColor)
+        } else {
+            if (activeTitleTextColor == color) {
+                activeTitleTextColor = null
+                titleBinding.editorBtnTitleColor.isChecked = false
+                onTitleColorChanged("")
+            } else {
+                activeTitleTextColor = color
+                titleBinding.editorBtnTitleColor.isChecked = true
+                onTitleColorChanged(hexColor)
+            }
+        }
+    }
 
     private fun showContentColorPicker() {
         val dialogView = android.view.LayoutInflater.from(context).inflate(R.layout.dialog_color_picker, null)
@@ -368,86 +434,6 @@ class RichTextEditorHelper(
             } else {
                 activeTextColor = color
                 contentBinding.editorBtnContentColor.isChecked = true
-            }
-        }
-    }
-
-    // ──────────────────────────────────────────────────────────────────────
-    // Private – colour swatches
-    // ──────────────────────────────────────────────────────────────────────
-
-    private fun setupColorSwatches() {
-        setupColorSwatchRow(
-            container = customBinding.editorColorSwatchesTitle,
-            onSelect  = { hex ->
-                applyTextColorToView(titleBinding.editorEditTitle, hex)
-                updateSwatchSelection(customBinding.editorColorSwatchesTitle, hex)
-                onTitleColorChanged(hex)
-            }
-        )
-        setupColorSwatchRow(
-            container = customBinding.editorColorSwatchesContent,
-            onSelect  = { hex ->
-                applyTextColorToView(contentBinding.editorEditContent, hex)
-                updateSwatchSelection(customBinding.editorColorSwatchesContent, hex)
-                onContentColorChanged(hex)
-            }
-        )
-        updateSwatchSelection(customBinding.editorColorSwatchesTitle, "")
-        updateSwatchSelection(customBinding.editorColorSwatchesContent, "")
-    }
-
-    private fun setupColorSwatchRow(container: LinearLayout, onSelect: (String) -> Unit) {
-        val size        = context.resources.getDimensionPixelSize(R.dimen.color_swatch_size)
-        val margin      = context.resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
-        val strokeWidth = context.resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-
-        // "None" swatch
-        val noneSwatch = FrameLayout(context).apply {
-            tag = ""
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(ContextCompat.getColor(context, android.R.color.transparent))
-                setStroke(strokeWidth, Color.LTGRAY)
-            }
-            layoutParams = LinearLayout.LayoutParams(size, size).apply {
-                setMargins(margin, margin, margin, margin)
-            }
-            setOnClickListener { onSelect("") }
-        }
-        container.addView(noneSwatch)
-
-        ColorPalette.COLORS.forEach { hexColor ->
-            val swatch = FrameLayout(context).apply {
-                tag = hexColor
-                background = GradientDrawable().apply {
-                    shape = GradientDrawable.OVAL
-                    setColor(Color.parseColor(hexColor))
-                }
-                layoutParams = LinearLayout.LayoutParams(size, size).apply {
-                    setMargins(margin, margin, margin, margin)
-                }
-                setOnClickListener { onSelect(hexColor) }
-            }
-            container.addView(swatch)
-        }
-    }
-
-    private fun updateSwatchSelection(container: LinearLayout, hexColor: String) {
-        val strokeWidth = context.resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-        for (i in 0 until container.childCount) {
-            val swatch = container.getChildAt(i) as? FrameLayout ?: continue
-            val swatchColor = swatch.tag as? String ?: ""
-            val isSelected  = swatchColor == hexColor
-            swatch.background = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                if (swatchColor.isEmpty()) {
-                    setColor(ContextCompat.getColor(context, android.R.color.transparent))
-                    setStroke(strokeWidth, if (isSelected) Color.BLACK else Color.LTGRAY)
-                } else {
-                    setColor(Color.parseColor(swatchColor))
-                    if (isSelected) setStroke(strokeWidth, Color.WHITE)
-                }
             }
         }
     }
@@ -618,7 +604,6 @@ class RichTextEditorHelper(
     }
 
     fun setTitleColor(hex: String) {
-        updateSwatchSelection(customBinding.editorColorSwatchesTitle, hex)
         applyTextColorToView(titleBinding.editorEditTitle, hex)
     }
 
@@ -639,7 +624,6 @@ class RichTextEditorHelper(
     }
 
     fun setContentColor(hex: String) {
-        updateSwatchSelection(customBinding.editorColorSwatchesContent, hex)
         applyTextColorToView(contentBinding.editorEditContent, hex)
     }
 
