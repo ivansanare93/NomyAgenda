@@ -783,7 +783,12 @@ class EntryEditorFragment : Fragment() {
     }
 
     private fun updateBackgroundSelection(selectedKey: String) {
-        val containers = listOf(binding.bgSwatchesEntryThematic, binding.bgSwatchesEntryFestive, binding.bgSwatchesEntryPremium)
+        val containers = listOf(
+            binding.bgSwatchesEntryThematic,
+            binding.bgSwatchesEntryFestive,
+            binding.bgSwatchesEntryPremium,
+            binding.bgSwatchesEntryPhotos
+        )
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
         val cornerRadius = resources.getDimension(R.dimen.card_corner_radius)
 
@@ -971,4 +976,3 @@ class EntryEditorFragment : Fragment() {
         private val DATE_FORMAT = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     }
 }
-
