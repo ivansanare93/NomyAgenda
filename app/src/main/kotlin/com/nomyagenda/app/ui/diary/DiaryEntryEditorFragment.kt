@@ -47,6 +47,10 @@ class DiaryEntryEditorFragment : Fragment() {
 
     private lateinit var photoAdapter: DiaryPhotoAdapter
 
+    // ---- Default text sizes (captured before any customisation) ----
+    private var defaultTitleTextSize: Float = 0f
+    private var defaultContentTextSize: Float = 0f
+
     // ---- WYSIWYG format toggle state (content) ----
     private var isBoldActive = false
     private var isItalicActive = false
@@ -152,6 +156,10 @@ class DiaryEntryEditorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Capture default text sizes before any custom size is applied
+        defaultTitleTextSize = binding.editDiaryTitle.textSize / resources.displayMetrics.scaledDensity
+        defaultContentTextSize = binding.editDiaryContent.textSize / resources.displayMetrics.scaledDensity
 
         setupToolbar()
         setupMoodChips()
@@ -652,13 +660,17 @@ class DiaryEntryEditorFragment : Fragment() {
         )
 
         viewModel.titleFontSize.observe(viewLifecycleOwner) { size ->
-            updateFontSizeSelection(titleSizeButtons, size ?: 0f)
-            if ((size ?: 0f) > 0f) binding.editDiaryTitle.textSize = size!!
+            val resolvedSize = size ?: 0f
+            updateFontSizeSelection(titleSizeButtons, resolvedSize)
+            if (resolvedSize > 0f) binding.editDiaryTitle.textSize = resolvedSize
+            else binding.editDiaryTitle.textSize = defaultTitleTextSize
         }
 
         viewModel.contentFontSize.observe(viewLifecycleOwner) { size ->
-            updateFontSizeSelection(contentSizeButtons, size ?: 0f)
-            if ((size ?: 0f) > 0f) binding.editDiaryContent.textSize = size!!
+            val resolvedSize = size ?: 0f
+            updateFontSizeSelection(contentSizeButtons, resolvedSize)
+            if (resolvedSize > 0f) binding.editDiaryContent.textSize = resolvedSize
+            else binding.editDiaryContent.textSize = defaultContentTextSize
         }
 
         viewModel.saveSuccessEvent.observe(viewLifecycleOwner) { saved ->

@@ -66,6 +66,10 @@ class EntryEditorFragment : Fragment() {
     private var selectedTitleFontSize: Float = 0f
     private var selectedContentFontSize: Float = 0f
 
+    // ---- Default text sizes (captured before any customisation) ----
+    private var defaultTitleTextSize: Float = 0f
+    private var defaultContentTextSize: Float = 0f
+
     // ---- WYSIWYG format toggle state (note content) ----
     private var isBoldActive = false
     private var isItalicActive = false
@@ -222,6 +226,10 @@ class EntryEditorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Capture default text sizes before any custom size is applied
+        defaultTitleTextSize = binding.editEntryTitle.textSize / resources.displayMetrics.scaledDensity
+        defaultContentTextSize = binding.editNoteContent.textSize / resources.displayMetrics.scaledDensity
 
         markwon = Markwon.builder(requireContext())
             .usePlugin(HtmlPlugin.create())
@@ -756,6 +764,7 @@ class EntryEditorFragment : Fragment() {
                     binding.editEntryTitle.textSize = size
                 } else {
                     selectedTitleFontSize = 0f
+                    binding.editEntryTitle.textSize = defaultTitleTextSize
                 }
             }
         }
@@ -770,6 +779,7 @@ class EntryEditorFragment : Fragment() {
                     binding.editNoteContent.textSize = size
                 } else {
                     selectedContentFontSize = 0f
+                    binding.editNoteContent.textSize = defaultContentTextSize
                 }
             }
         }
