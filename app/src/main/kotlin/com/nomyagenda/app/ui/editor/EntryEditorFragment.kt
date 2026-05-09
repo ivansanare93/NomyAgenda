@@ -846,6 +846,9 @@ class EntryEditorFragment : Fragment() {
 
     // ---------- title colour picker ----------
 
+    /** Shows a colour-picker dialog for the entry title.
+     *  The selected colour is stored in [selectedColor] and previewed on the title field.
+     *  This is distinct from [showColorPicker] which applies WYSIWYG inline spans to note content. */
     private fun showTitleColorPicker() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_color_picker, null)
         val grid = dialogView.findViewById<GridLayout>(R.id.grid_colors)
