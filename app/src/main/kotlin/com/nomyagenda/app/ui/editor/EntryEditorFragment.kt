@@ -280,18 +280,14 @@ class EntryEditorFragment : Fragment() {
         // Title format toolbar – bold / italic WYSIWYG toggles for the title field
         binding.btnTitleFormatBold.setOnClickListener   { toggleTitleInlineFormat(Typeface.BOLD) }
         binding.btnTitleFormatItalic.setOnClickListener { toggleTitleInlineFormat(Typeface.ITALIC) }
+        binding.btnTitleFormatColor.setOnClickListener  { showTitleColorPicker() }
 
         // Attach the TextWatcher that applies active format spans while typing in the title
         binding.editEntryTitle.addTextChangedListener(titleFormatWatcher)
 
-        // Format toolbar – bold / italic are WYSIWYG toggles; others keep their
-        // prefix-insertion behaviour (they operate at line level).
+        // Format toolbar – bold / italic are WYSIWYG toggles.
         binding.btnFormatBold.setOnClickListener    { toggleInlineFormat(Typeface.BOLD) }
         binding.btnFormatItalic.setOnClickListener  { toggleInlineFormat(Typeface.ITALIC) }
-        binding.btnFormatHeading.setOnClickListener  { applyLinePrefix("# ") }
-        binding.btnFormatBullet.setOnClickListener   { applyLinePrefix("- ") }
-        binding.btnFormatNumbered.setOnClickListener { applyLinePrefix("1. ") }
-        binding.btnFormatQuote.setOnClickListener    { applyLinePrefix("> ") }
         binding.btnFormatColor.setOnClickListener    { showColorPicker() }
 
         // Attach the TextWatcher that applies active format spans while typing
@@ -330,7 +326,6 @@ class EntryEditorFragment : Fragment() {
 
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
 
-        setupEntryColorPicker()
         setupFontPicker()
         setupFontSizePickers()
         setupBackgroundPicker()
@@ -620,21 +615,6 @@ class EntryEditorFragment : Fragment() {
 
     // ---------- entry colour picker (unchanged) ----------
 
-    private fun setupEntryColorPicker() {
-        setupColorSwatches(binding.colorSwatchesContainer) { hex ->
-            selectedColor = hex
-            updateSwatchSelection(binding.colorSwatchesContainer, hex)
-            applyTitleColorPreview(hex)
-        }
-        setupColorSwatches(binding.colorSwatchesContainerContent) { hex ->
-            selectedContentColor = hex
-            updateSwatchSelection(binding.colorSwatchesContainerContent, hex)
-            applyContentColorPreview(hex)
-        }
-        updateSwatchSelection(binding.colorSwatchesContainer, "")
-        updateSwatchSelection(binding.colorSwatchesContainerContent, "")
-    }
-
     private fun applyTitleColorPreview(hexColor: String) {
         applyTextColorToView(binding.editEntryTitle, hexColor)
     }
@@ -655,51 +635,13 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
-    private fun setupColorSwatches(container: android.widget.LinearLayout, onSelect: (String) -> Unit) {
-        val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
-        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
-        val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-
-        val noneDrawable = GradientDrawable().apply {
-            shape = GradientDrawable.OVAL
-            setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
-            setStroke(strokeWidth, Color.LTGRAY)
-        }
-        val noneSwatch = FrameLayout(requireContext()).apply {
-            tag = ""
-            background = noneDrawable
-            layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
-                setMargins(margin, margin, margin, margin)
-            }
-            setOnClickListener { onSelect("") }
-        }
-        container.addView(noneSwatch)
-
-        ColorPalette.COLORS.forEach { hexColor ->
-            val swatch = FrameLayout(requireContext()).apply {
-                tag = hexColor
-                background = GradientDrawable().apply {
-                    shape = GradientDrawable.OVAL
-                    setColor(Color.parseColor(hexColor))
-                }
-                layoutParams = android.widget.LinearLayout.LayoutParams(size, size).apply {
-                    setMargins(margin, margin, margin, margin)
-                }
-                setOnClickListener { onSelect(hexColor) }
-            }
-            container.addView(swatch)
-        }
-    }
-
     private fun selectEntryColor(hexColor: String) {
         selectedColor = hexColor
-        updateSwatchSelection(binding.colorSwatchesContainer, hexColor)
         applyTitleColorPreview(hexColor)
     }
 
     private fun selectEntryContentColor(hexColor: String) {
         selectedContentColor = hexColor
-        updateSwatchSelection(binding.colorSwatchesContainerContent, hexColor)
         applyContentColorPreview(hexColor)
     }
 
@@ -902,23 +844,63 @@ class EntryEditorFragment : Fragment() {
         }
     }
 
-    private fun updateSwatchSelection(container: android.widget.LinearLayout, hexColor: String) {
+    // ---------- title colour picker ----------
+
+    private fun showTitleColorPicker() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_color_picker, null)
+        val grid = dialogView.findViewById<GridLayout>(R.id.grid_colors)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.color_picker_title)
+            .setView(dialogView)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+
+        val size = resources.getDimensionPixelSize(R.dimen.color_swatch_size)
+        val margin = resources.getDimensionPixelSize(R.dimen.color_swatch_margin)
         val strokeWidth = resources.getDimensionPixelSize(R.dimen.color_swatch_stroke_width)
-        for (i in 0 until container.childCount) {
-            val swatch = container.getChildAt(i) as? FrameLayout ?: continue
-            val swatchColor = swatch.tag as? String ?: ""
-            val isSelected = swatchColor == hexColor
-            swatch.background = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                if (swatchColor.isEmpty()) {
-                    setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
-                    setStroke(strokeWidth, if (isSelected) Color.BLACK else Color.LTGRAY)
-                } else {
-                    setColor(Color.parseColor(swatchColor))
-                    if (isSelected) setStroke(strokeWidth, Color.WHITE)
-                }
+
+        // "None" / reset swatch
+        val noneDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+            setStroke(strokeWidth, Color.LTGRAY)
+        }
+        val noneSwatch = FrameLayout(requireContext()).apply {
+            background = noneDrawable
+            layoutParams = GridLayout.LayoutParams().apply {
+                width = size
+                height = size
+                setMargins(margin, margin, margin, margin)
+            }
+            setOnClickListener {
+                selectEntryColor("")
+                dialog.dismiss()
             }
         }
+        grid.addView(noneSwatch)
+
+        ColorPalette.COLORS.forEach { hexColor ->
+            val circle = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.parseColor(hexColor))
+            }
+            val swatch = FrameLayout(requireContext()).apply {
+                background = circle
+                layoutParams = GridLayout.LayoutParams().apply {
+                    width = size
+                    height = size
+                    setMargins(margin, margin, margin, margin)
+                }
+                setOnClickListener {
+                    selectEntryColor(hexColor)
+                    dialog.dismiss()
+                }
+            }
+            grid.addView(swatch)
+        }
+
+        dialog.show()
     }
 
     // ---------- text-colour picker (WYSIWYG) ----------
