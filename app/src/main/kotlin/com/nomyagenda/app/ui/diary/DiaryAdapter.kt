@@ -111,11 +111,9 @@ class DiaryAdapter(
 
             val bgDrawableRes = DiaryBackgroundCatalog.resolveDrawable(entry.background)
             if (bgDrawableRes != 0) {
-                binding.imageDiaryBackground.visibility = View.VISIBLE
-                binding.imageDiaryBackground.setImageResource(bgDrawableRes)
+                binding.frameDiaryItemContainer.background = ContextCompat.getDrawable(context, bgDrawableRes)
             } else {
-                binding.imageDiaryBackground.visibility = View.GONE
-                binding.imageDiaryBackground.setImageDrawable(null)
+                binding.frameDiaryItemContainer.background = null
             }
         }
     }
