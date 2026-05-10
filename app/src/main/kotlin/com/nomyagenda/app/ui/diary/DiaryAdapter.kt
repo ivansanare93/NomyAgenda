@@ -64,14 +64,14 @@ class DiaryAdapter(
 
             if (entry.title.isNotBlank()) {
                 binding.textDiaryEntryTitle.visibility = View.VISIBLE
-                binding.textDiaryEntryTitle.text = entry.title
+                binding.textDiaryEntryTitle.text = RichTextConverter.markdownInlineToSpannable(entry.title)
             } else {
                 binding.textDiaryEntryTitle.visibility = View.GONE
             }
 
             if (entry.content.isNotBlank()) {
                 binding.textDiaryEntryPreview.visibility = View.VISIBLE
-                binding.textDiaryEntryPreview.text = RichTextConverter.markdownInlineToSpannable(entry.content.take(PREVIEW_MAX_CHARS))
+                binding.textDiaryEntryPreview.text = RichTextConverter.stripInlineMarkdown(entry.content).take(PREVIEW_MAX_CHARS)
             } else {
                 binding.textDiaryEntryPreview.visibility = View.GONE
             }
