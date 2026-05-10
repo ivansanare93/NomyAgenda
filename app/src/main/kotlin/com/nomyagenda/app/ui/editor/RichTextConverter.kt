@@ -63,32 +63,38 @@ object RichTextConverter {
             when {
                 boldContent != null -> {
                     // **bold**
-                    sb.append(boldContent)
-                    sb.setSpan(
-                        StyleSpan(Typeface.BOLD),
-                        spanStart, sb.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                italicContent != null -> {
-                    // *italic*
-                    sb.append(italicContent)
-                    sb.setSpan(
-                        StyleSpan(Typeface.ITALIC),
-                        spanStart, sb.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                colorContent != null && colorHex != null -> {
-                    // <font color="...">text</font>
-                    sb.append(colorContent)
-                    try {
+                    appendParsedLine(sb, boldContent)
+                    if (sb.length > spanStart) {
                         sb.setSpan(
-                            ForegroundColorSpan(Color.parseColor(colorHex)),
+                            StyleSpan(Typeface.BOLD),
                             spanStart, sb.length,
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                    } catch (_: IllegalArgumentException) { /* ignore bad color */ }
+                    }
+                }
+                italicContent != null -> {
+                    // *italic*
+                    appendParsedLine(sb, italicContent)
+                    if (sb.length > spanStart) {
+                        sb.setSpan(
+                            StyleSpan(Typeface.ITALIC),
+                            spanStart, sb.length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
+                colorContent != null && colorHex != null -> {
+                    // <font color="...">text</font>
+                    appendParsedLine(sb, colorContent)
+                    if (sb.length > spanStart) {
+                        try {
+                            sb.setSpan(
+                                ForegroundColorSpan(Color.parseColor(colorHex)),
+                                spanStart, sb.length,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                        } catch (_: IllegalArgumentException) { /* ignore bad color */ }
+                    }
                 }
             }
             lastEnd = match.range.last + 1
@@ -214,12 +220,11 @@ object RichTextConverter {
                 if (match.range.first > lastEnd) {
                     sb.append(line.substring(lastEnd, match.range.first))
                 }
-                sb.append(
-                    match.groups["boldContent"]?.value
-                        ?: match.groups["italicContent"]?.value
-                        ?: match.groups["colorContent"]?.value
-                        ?: ""
-                )
+                val inner = match.groups["boldContent"]?.value
+                    ?: match.groups["italicContent"]?.value
+                    ?: match.groups["colorContent"]?.value
+                    ?: ""
+                appendStrippedInlineContent(sb, inner)
                 lastEnd = match.range.last + 1
             }
             if (lastEnd < line.length) sb.append(line.substring(lastEnd))
@@ -255,6 +260,25 @@ object RichTextConverter {
                     if (line.isEmpty()) "" else "<font color=\"$color\">$line</font>"
                 }
             }
+        }
+    }
+
+    /** Recursively strips supported inline markup from [text] and appends plain output to [sb]. */
+    private fun appendStrippedInlineContent(sb: StringBuilder, text: String) {
+        var lastEnd = 0
+        INLINE_PATTERN.findAll(text).forEach { nested ->
+            if (nested.range.first > lastEnd) {
+                sb.append(text.substring(lastEnd, nested.range.first))
+            }
+            val nestedInner = nested.groups["boldContent"]?.value
+                ?: nested.groups["italicContent"]?.value
+                ?: nested.groups["colorContent"]?.value
+                ?: ""
+            appendStrippedInlineContent(sb, nestedInner)
+            lastEnd = nested.range.last + 1
+        }
+        if (lastEnd < text.length) {
+            sb.append(text.substring(lastEnd))
         }
     }
 
