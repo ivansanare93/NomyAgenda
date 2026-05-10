@@ -23,6 +23,13 @@ object RichTextConverter {
         """(?<bold>\*\*(?<boldContent>.+?)\*\*)|(?<italic>(?<!\*)\*(?!\*)(?<italicContent>.+?)(?<!\*)\*(?!\*))|(?<color><font color="(?<colorHex>#[0-9A-Fa-f]{6})">(?<colorContent>.+?)</font>)"""
     )
 
+    // Matches <font color> tags whose content may span multiple lines.
+    // Used only by normalizeMultilineFontTags() to repair legacy stored data.
+    private val MULTILINE_FONT_REGEX = Regex(
+        """<font color="(#[0-9A-Fa-f]{6})">(.*?)</font>""",
+        RegexOption.DOT_MATCHES_ALL
+    )
+
     // ---------- Markdown → SpannableStringBuilder ----------
 
     /**
@@ -30,8 +37,9 @@ object RichTextConverter {
      * with StyleSpans / ForegroundColorSpans applied.  Line breaks are preserved.
      */
     fun markdownInlineToSpannable(markdown: String): SpannableStringBuilder {
+        val normalized = normalizeMultilineFontTags(markdown)
         val result = SpannableStringBuilder()
-        val lines = markdown.split('\n')
+        val lines = normalized.split('\n')
         lines.forEachIndexed { idx, line ->
             if (idx > 0) result.append('\n')
             appendParsedLine(result, line)
@@ -97,6 +105,10 @@ object RichTextConverter {
      * Serialises an [Editable] that may contain [StyleSpan] (bold/italic) and
      * [ForegroundColorSpan] back to a Markdown string.  Plain text (including
      * block-level prefixes inserted by the toolbar) is written verbatim.
+     *
+     * Spans that cross a newline character are closed before the `\n` and
+     * re-opened immediately after, so every output line is self-contained and
+     * the line-by-line parser can handle it without seeing raw tag fragments.
      */
     fun spannableToMarkdown(text: Editable): String {
         val length = text.length
@@ -107,16 +119,7 @@ object RichTextConverter {
         var i = 0
 
         while (i <= length) {
-            // Markers to open at position i (spans that start here)
-            val openingBold = text.getSpans(i, i, StyleSpan::class.java)
-                .filter { it.style == Typeface.BOLD && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
-            val openingItalic = text.getSpans(i, i, StyleSpan::class.java)
-                .filter { it.style == Typeface.ITALIC && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
-            val openingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
-                .filter { text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
-
-            // Markers to close at position i (spans that end here)
-            // Close in REVERSE open order: color, italic, bold
+            // Spans ending at position i — close in reverse open order (color, italic, bold)
             val closingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
                 .filter { text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
             val closingItalic = text.getSpans(i, i, StyleSpan::class.java)
@@ -124,19 +127,68 @@ object RichTextConverter {
             val closingBold = text.getSpans(i, i, StyleSpan::class.java)
                 .filter { it.style == Typeface.BOLD && text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
 
-            // Emit closes first (reverse open order), then opens
             closingColors.forEach { sb.append("</font>") }
             if (closingItalic.isNotEmpty()) sb.append("*")
             if (closingBold.isNotEmpty()) sb.append("**")
 
-            if (openingBold.isNotEmpty()) sb.append("**")
-            if (openingItalic.isNotEmpty()) sb.append("*")
-            openingColors.forEach { span ->
-                val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
-                sb.append("<font color=\"$hex\">")
-            }
+            if (i < length) {
+                val ch = raw[i]
 
-            if (i < length) sb.append(raw[i])
+                // Spans starting at position i
+                val openingBold = text.getSpans(i, i, StyleSpan::class.java)
+                    .filter { it.style == Typeface.BOLD && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
+                val openingItalic = text.getSpans(i, i, StyleSpan::class.java)
+                    .filter { it.style == Typeface.ITALIC && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
+                val openingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
+                    .filter { text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
+
+                if (ch != '\n') {
+                    // Normal character: emit openings then the character
+                    if (openingBold.isNotEmpty()) sb.append("**")
+                    if (openingItalic.isNotEmpty()) sb.append("*")
+                    openingColors.forEach { span ->
+                        val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
+                        sb.append("<font color=\"$hex\">")
+                    }
+                    sb.append(ch)
+                } else {
+                    // Newline: ensure every open span is closed before the \n and
+                    // re-opened after it, so the serialised output is line-by-line safe.
+
+                    // Spans that started before i and continue past it
+                    val crossingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
+                        .filter { text.getSpanStart(it) < i && text.getSpanEnd(it) > i }
+                    val crossingItalic = text.getSpans(i, i, StyleSpan::class.java)
+                        .filter { it.style == Typeface.ITALIC && text.getSpanStart(it) < i && text.getSpanEnd(it) > i }
+                    val crossingBold = text.getSpans(i, i, StyleSpan::class.java)
+                        .filter { it.style == Typeface.BOLD && text.getSpanStart(it) < i && text.getSpanEnd(it) > i }
+
+                    // Spans that start exactly at the newline and extend to the next line
+                    // (spans covering only the \n itself are skipped — the newline needs no tag)
+                    val deferredColors = openingColors.filter { text.getSpanEnd(it) > i + 1 }
+                    val deferredItalic = openingItalic.filter { text.getSpanEnd(it) > i + 1 }
+                    val deferredBold = openingBold.filter { text.getSpanEnd(it) > i + 1 }
+
+                    // Close crossing spans before the newline (reverse order)
+                    crossingColors.forEach { sb.append("</font>") }
+                    if (crossingItalic.isNotEmpty()) sb.append("*")
+                    if (crossingBold.isNotEmpty()) sb.append("**")
+
+                    sb.append('\n')
+
+                    // Re-open crossing spans + open deferred spans after the newline (normal order)
+                    val boldAfter   = crossingBold.isNotEmpty()   || deferredBold.isNotEmpty()
+                    val italicAfter = crossingItalic.isNotEmpty() || deferredItalic.isNotEmpty()
+                    val colorsAfter = crossingColors + deferredColors
+
+                    if (boldAfter) sb.append("**")
+                    if (italicAfter) sb.append("*")
+                    colorsAfter.forEach { span ->
+                        val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
+                        sb.append("<font color=\"$hex\">")
+                    }
+                }
+            }
             i++
         }
 
@@ -151,8 +203,9 @@ object RichTextConverter {
      * the raw markdown string mid-tag would leave visible tag fragments.
      */
     fun stripInlineMarkdown(markdown: String): String {
+        val normalized = normalizeMultilineFontTags(markdown)
         val sb = StringBuilder()
-        val lines = markdown.split('\n')
+        val lines = normalized.split('\n')
         lines.forEachIndexed { idx, line ->
             if (idx > 0) sb.append('\n')
             var lastEnd = 0
@@ -174,6 +227,35 @@ object RichTextConverter {
     }
 
     // ---------- helpers ----------
+
+    /**
+     * Splits any `<font color>` tags whose content spans multiple lines into
+     * equivalent per-line tags.  This lets the line-by-line parser handle text
+     * that was previously serialised while a colour span crossed a newline
+     * (e.g. the user selected two lines and applied a colour, or typed with a
+     * colour active and pressed Enter).
+     *
+     * Example:
+     *   `<font color="#FF0000">hello\nworld</font>`
+     *   → `<font color="#FF0000">hello</font>\n<font color="#FF0000">world</font>`
+     *
+     * Empty lines inside the tag produce a bare newline with no surrounding tags,
+     * which is safe for the parser.
+     */
+    private fun normalizeMultilineFontTags(text: String): String {
+        if ('<' !in text) return text   // fast path: no HTML tags at all
+        return MULTILINE_FONT_REGEX.replace(text) { match ->
+            val color   = match.groupValues[1]
+            val content = match.groupValues[2]
+            if ('\n' !in content) {
+                match.value // single-line — no change needed
+            } else {
+                content.split('\n').joinToString("\n") { line ->
+                    if (line.isEmpty()) "" else "<font color=\"$color\">$line</font>"
+                }
+            }
+        }
+    }
 
     /** Merges overlapping or adjacent [ranges] and returns a sorted, disjoint list. */
     private fun mergeRanges(ranges: List<Pair<Int, Int>>): List<Pair<Int, Int>> {
