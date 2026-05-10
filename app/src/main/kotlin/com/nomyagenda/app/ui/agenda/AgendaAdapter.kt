@@ -18,8 +18,6 @@ import com.nomyagenda.app.ui.editor.EntryBackgroundCatalog
 import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
 import com.google.android.material.R as MaterialR
-import io.noties.markwon.Markwon
-import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -28,15 +26,6 @@ class AgendaAdapter(
     private val onClick: (AgendaEntry) -> Unit,
     private val onLongClick: (AgendaEntry) -> Unit
 ) : ListAdapter<AgendaEntry, AgendaAdapter.EntryViewHolder>(DIFF_CALLBACK) {
-
-    private lateinit var markwon: Markwon
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        markwon = Markwon.builder(recyclerView.context)
-            .usePlugin(HtmlPlugin.create())
-            .build()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {
         val binding = ItemAgendaEntryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -66,7 +55,7 @@ class AgendaAdapter(
                 EntryType.NOTE -> {
                     if (entry.content.isNotBlank()) {
                         binding.textEntryPreview.visibility = View.VISIBLE
-                        markwon.setMarkdown(binding.textEntryPreview, entry.content.take(PREVIEW_MAX_CHARS))
+                        binding.textEntryPreview.text = RichTextConverter.markdownInlineToSpannable(entry.content.take(PREVIEW_MAX_CHARS))
                     } else {
                         binding.textEntryPreview.visibility = View.GONE
                     }
@@ -80,7 +69,7 @@ class AgendaAdapter(
                 EntryType.REMINDER -> {
                     if (entry.content.isNotBlank()) {
                         binding.textEntryPreview.visibility = View.VISIBLE
-                        markwon.setMarkdown(binding.textEntryPreview, entry.content.take(PREVIEW_MAX_CHARS))
+                        binding.textEntryPreview.text = RichTextConverter.markdownInlineToSpannable(entry.content.take(PREVIEW_MAX_CHARS))
                     } else {
                         binding.textEntryPreview.visibility = View.GONE
                     }
