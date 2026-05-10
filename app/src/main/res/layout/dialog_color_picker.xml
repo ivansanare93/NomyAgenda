@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <GridLayout
@@ -11,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="5"
-        android:rowCount="2"
         android:useDefaultMargins="true" />
 
-</LinearLayout>
+</ScrollView>
