@@ -14,24 +14,14 @@ import com.nomyagenda.app.core.datetime.formatDiaryDateKey
 import com.nomyagenda.app.data.local.entity.DiaryEntry
 import com.nomyagenda.app.databinding.ItemDiaryEntryBinding
 import com.nomyagenda.app.ui.common.font.FontCatalog
+import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
-import io.noties.markwon.Markwon
-import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONArray
 
 class DiaryAdapter(
     private val onClick: (DiaryEntry) -> Unit,
     private val onLongClick: (DiaryEntry) -> Unit
 ) : ListAdapter<DiaryEntry, DiaryAdapter.DiaryViewHolder>(DIFF_CALLBACK) {
-
-    private lateinit var markwon: Markwon
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        markwon = Markwon.builder(recyclerView.context)
-            .usePlugin(HtmlPlugin.create())
-            .build()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryViewHolder {
         val binding = ItemDiaryEntryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -81,7 +71,7 @@ class DiaryAdapter(
 
             if (entry.content.isNotBlank()) {
                 binding.textDiaryEntryPreview.visibility = View.VISIBLE
-                markwon.setMarkdown(binding.textDiaryEntryPreview, entry.content.take(PREVIEW_MAX_CHARS))
+                binding.textDiaryEntryPreview.text = RichTextConverter.markdownInlineToSpannable(entry.content.take(PREVIEW_MAX_CHARS))
             } else {
                 binding.textDiaryEntryPreview.visibility = View.GONE
             }

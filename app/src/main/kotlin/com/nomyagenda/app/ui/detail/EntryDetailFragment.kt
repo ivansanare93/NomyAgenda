@@ -20,8 +20,6 @@ import com.nomyagenda.app.ui.editor.ChecklistManager
 import com.nomyagenda.app.ui.editor.EntryBackgroundCatalog
 import com.nomyagenda.app.ui.editor.RichTextConverter
 import com.nomyagenda.app.ui.resolveThemeColor
-import io.noties.markwon.Markwon
-import io.noties.markwon.html.HtmlPlugin
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -38,8 +36,6 @@ class EntryDetailFragment : Fragment() {
         EntryDetailViewModelFactory(app.agendaRepository)
     }
 
-    private lateinit var markwon: Markwon
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentEntryDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -47,10 +43,6 @@ class EntryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        markwon = Markwon.builder(requireContext())
-            .usePlugin(HtmlPlugin.create())
-            .build()
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
 
@@ -99,7 +91,7 @@ class EntryDetailFragment : Fragment() {
                 EntryType.NOTE, EntryType.REMINDER -> {
                     if (entry.content.isNotBlank()) {
                         binding.textDetailContent.visibility = View.VISIBLE
-                        markwon.setMarkdown(binding.textDetailContent, entry.content)
+                        binding.textDetailContent.text = RichTextConverter.markdownInlineToSpannable(entry.content)
                         binding.textDetailContent.setTextColor(contentColor)
                     } else {
                         binding.textDetailContent.visibility = View.GONE
