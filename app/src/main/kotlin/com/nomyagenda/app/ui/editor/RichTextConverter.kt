@@ -116,84 +116,85 @@ object RichTextConverter {
 
         val raw = text.toString()
         val sb = StringBuilder()
-        var i = 0
+        val boldRanges = mergeRanges(
+            text.getSpans(0, length, StyleSpan::class.java)
+                .filter { it.style == Typeface.BOLD }
+                .map { text.getSpanStart(it) to text.getSpanEnd(it) }
+        )
+        val italicRanges = mergeRanges(
+            text.getSpans(0, length, StyleSpan::class.java)
+                .filter { it.style == Typeface.ITALIC }
+                .map { text.getSpanStart(it) to text.getSpanEnd(it) }
+        )
 
-        while (i <= length) {
-            // Spans ending at position i — close in reverse open order (color, italic, bold)
-            val closingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
-                .filter { text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
-            val closingItalic = text.getSpans(i, i, StyleSpan::class.java)
-                .filter { it.style == Typeface.ITALIC && text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
-            val closingBold = text.getSpans(i, i, StyleSpan::class.java)
-                .filter { it.style == Typeface.BOLD && text.getSpanEnd(it) == i && text.getSpanStart(it) < i }
+        var activeBold = false
+        var activeItalic = false
+        var activeColorHex: String? = null
 
-            closingColors.forEach { sb.append("</font>") }
-            if (closingItalic.isNotEmpty()) sb.append("*")
-            if (closingBold.isNotEmpty()) sb.append("**")
+        for (i in 0 until length) {
+            val ch = raw[i]
 
-            if (i < length) {
-                val ch = raw[i]
-
-                // Spans starting at position i
-                val openingBold = text.getSpans(i, i, StyleSpan::class.java)
-                    .filter { it.style == Typeface.BOLD && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
-                val openingItalic = text.getSpans(i, i, StyleSpan::class.java)
-                    .filter { it.style == Typeface.ITALIC && text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
-                val openingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
-                    .filter { text.getSpanStart(it) == i && text.getSpanEnd(it) > i }
-
-                if (ch != '\n') {
-                    // Normal character: emit openings then the character
-                    if (openingBold.isNotEmpty()) sb.append("**")
-                    if (openingItalic.isNotEmpty()) sb.append("*")
-                    openingColors.forEach { span ->
-                        val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
-                        sb.append("<font color=\"$hex\">")
-                    }
-                    sb.append(ch)
-                } else {
-                    // Newline: ensure every open span is closed before the \n and
-                    // re-opened after it, so the serialised output is line-by-line safe.
-
-                    // Spans that started before i and continue past it
-                    val crossingColors = text.getSpans(i, i, ForegroundColorSpan::class.java)
-                        .filter { text.getSpanStart(it) < i && text.getSpanEnd(it) > i }
-                    val crossingItalic = text.getSpans(i, i, StyleSpan::class.java)
-                        .filter { it.style == Typeface.ITALIC && text.getSpanStart(it) < i && text.getSpanEnd(it) > i }
-                    val crossingBold = text.getSpans(i, i, StyleSpan::class.java)
-                        .filter { it.style == Typeface.BOLD && text.getSpanStart(it) < i && text.getSpanEnd(it) > i }
-
-                    // Spans that start exactly at the newline and extend to the next line
-                    // (spans covering only the \n itself are skipped — the newline needs no tag)
-                    val deferredColors = openingColors.filter { text.getSpanEnd(it) > i + 1 }
-                    val deferredItalic = openingItalic.filter { text.getSpanEnd(it) > i + 1 }
-                    val deferredBold = openingBold.filter { text.getSpanEnd(it) > i + 1 }
-
-                    // Close crossing spans before the newline (reverse order)
-                    crossingColors.forEach { sb.append("</font>") }
-                    if (crossingItalic.isNotEmpty()) sb.append("*")
-                    if (crossingBold.isNotEmpty()) sb.append("**")
-
-                    sb.append('\n')
-
-                    // Re-open crossing spans + open deferred spans after the newline (normal order)
-                    val boldAfter   = crossingBold.isNotEmpty()   || deferredBold.isNotEmpty()
-                    val italicAfter = crossingItalic.isNotEmpty() || deferredItalic.isNotEmpty()
-                    val colorsAfter = crossingColors + deferredColors
-
-                    if (boldAfter) sb.append("**")
-                    if (italicAfter) sb.append("*")
-                    colorsAfter.forEach { span ->
-                        val hex = "#%06X".format(span.foregroundColor and 0xFFFFFF)
-                        sb.append("<font color=\"$hex\">")
-                    }
+            if (ch == '\n') {
+                if (activeColorHex != null) {
+                    sb.append("</font>")
+                    activeColorHex = null
                 }
+                if (activeItalic) {
+                    sb.append("*")
+                    activeItalic = false
+                }
+                if (activeBold) {
+                    sb.append("**")
+                    activeBold = false
+                }
+                sb.append('\n')
+                continue
             }
-            i++
+
+            val hasBold = isInAnyRange(i, boldRanges)
+            val hasItalic = isInAnyRange(i, italicRanges)
+            val colorHex = text.getSpans(i, i + 1, ForegroundColorSpan::class.java)
+                .firstOrNull { text.getSpanStart(it) <= i && text.getSpanEnd(it) > i }
+                ?.let { "#%06X".format(it.foregroundColor and 0xFFFFFF) }
+
+            if (activeColorHex != null && activeColorHex != colorHex) {
+                sb.append("</font>")
+                activeColorHex = null
+            }
+            if (activeItalic && !hasItalic) {
+                sb.append("*")
+                activeItalic = false
+            }
+            if (activeBold && !hasBold) {
+                sb.append("**")
+                activeBold = false
+            }
+
+            if (!activeBold && hasBold) {
+                sb.append("**")
+                activeBold = true
+            }
+            if (!activeItalic && hasItalic) {
+                sb.append("*")
+                activeItalic = true
+            }
+            if (activeColorHex == null && colorHex != null) {
+                sb.append("<font color=\"$colorHex\">")
+                activeColorHex = colorHex
+            }
+
+            sb.append(ch)
         }
+
+        if (activeColorHex != null) sb.append("</font>")
+        if (activeItalic) sb.append("*")
+        if (activeBold) sb.append("**")
 
         return sb.toString()
     }
+
+    private fun isInAnyRange(index: Int, ranges: List<Pair<Int, Int>>): Boolean =
+        ranges.any { (s, e) -> index in s until e }
 
     // ---------- Plain-text extraction ----------
 
