@@ -143,6 +143,36 @@ object RichTextConverter {
         return sb.toString()
     }
 
+    // ---------- Plain-text extraction ----------
+
+    /**
+     * Strips all inline Markdown/HTML formatting (bold `**`, italic `*`, `<font color>`)
+     * and returns the plain text content.  Useful for truncated previews where cutting
+     * the raw markdown string mid-tag would leave visible tag fragments.
+     */
+    fun stripInlineMarkdown(markdown: String): String {
+        val sb = StringBuilder()
+        val lines = markdown.split('\n')
+        lines.forEachIndexed { idx, line ->
+            if (idx > 0) sb.append('\n')
+            var lastEnd = 0
+            INLINE_PATTERN.findAll(line).forEach { match ->
+                if (match.range.first > lastEnd) {
+                    sb.append(line.substring(lastEnd, match.range.first))
+                }
+                sb.append(
+                    match.groups["boldContent"]?.value
+                        ?: match.groups["italicContent"]?.value
+                        ?: match.groups["colorContent"]?.value
+                        ?: ""
+                )
+                lastEnd = match.range.last + 1
+            }
+            if (lastEnd < line.length) sb.append(line.substring(lastEnd))
+        }
+        return sb.toString()
+    }
+
     // ---------- helpers ----------
 
     /** Merges overlapping or adjacent [ranges] and returns a sorted, disjoint list. */
