@@ -427,13 +427,16 @@ class RichTextEditorHelper(
             text.setSpan(ForegroundColorSpan(color), selStart, selEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             activeTextColor = null
             contentBinding.editorBtnContentColor.isChecked = false
+            onContentColorChanged(hexColor)
         } else {
             if (activeTextColor == color) {
                 activeTextColor = null
                 contentBinding.editorBtnContentColor.isChecked = false
+                onContentColorChanged("")
             } else {
                 activeTextColor = color
                 contentBinding.editorBtnContentColor.isChecked = true
+                onContentColorChanged(hexColor)
             }
         }
     }
