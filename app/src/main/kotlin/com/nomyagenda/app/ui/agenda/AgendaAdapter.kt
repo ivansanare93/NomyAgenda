@@ -55,7 +55,7 @@ class AgendaAdapter(
                 EntryType.NOTE -> {
                     if (entry.content.isNotBlank()) {
                         binding.textEntryPreview.visibility = View.VISIBLE
-                        binding.textEntryPreview.text = RichTextConverter.markdownInlineToSpannable(entry.content.take(PREVIEW_MAX_CHARS))
+                        binding.textEntryPreview.text = RichTextConverter.stripInlineMarkdown(entry.content).take(PREVIEW_MAX_CHARS)
                     } else {
                         binding.textEntryPreview.visibility = View.GONE
                     }
@@ -69,7 +69,7 @@ class AgendaAdapter(
                 EntryType.REMINDER -> {
                     if (entry.content.isNotBlank()) {
                         binding.textEntryPreview.visibility = View.VISIBLE
-                        binding.textEntryPreview.text = RichTextConverter.markdownInlineToSpannable(entry.content.take(PREVIEW_MAX_CHARS))
+                        binding.textEntryPreview.text = RichTextConverter.stripInlineMarkdown(entry.content).take(PREVIEW_MAX_CHARS)
                     } else {
                         binding.textEntryPreview.visibility = View.GONE
                     }
