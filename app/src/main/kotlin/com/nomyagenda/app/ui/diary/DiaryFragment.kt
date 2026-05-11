@@ -63,10 +63,11 @@ class DiaryFragment : Fragment() {
 
         val bottomNavView: View? = requireActivity().findViewById(R.id.bottom_navigation)
         val baseMargin = resources.getDimensionPixelSize(R.dimen.spacing_medium)
-        val basePadding = resources.getDimensionPixelSize(R.dimen.spacing_xlarge)
+        val basePadding = resources.getDimensionPixelSize(R.dimen.list_bottom_padding)
+        val minBottomNavHeight = resources.getDimensionPixelSize(R.dimen.bottom_nav_height)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-            val totalOffset = maxOf(navBarHeight, bottomNavView?.height ?: navBarHeight)
+            val totalOffset = maxOf(navBarHeight, bottomNavView?.height ?: 0, minBottomNavHeight)
             binding.fabAddDiaryEntry.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = baseMargin + totalOffset
             }
