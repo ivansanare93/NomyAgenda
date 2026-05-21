@@ -138,7 +138,7 @@ class EntryDetailFragment : Fragment() {
         }
 
         binding.fabEditEntry.setOnClickListener {
-            val action = EntryDetailFragmentDirections.actionEntryDetailFragmentToEntryEditorFragment(args.entryId, "")
+            val action = EntryDetailFragmentDirections.actionEntryDetailFragmentToEntryEditorFragment(args.entryId, EntryType.NOTE)
             findNavController().navigate(action)
         }
     }

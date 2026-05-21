@@ -134,7 +134,7 @@ class AgendaFragment : Fragment() {
 
     private fun openEditor(entryId: Int) {
         if (entryId == 0) {
-            val initialType = if (binding.chipFilterReminder.isChecked) EntryType.REMINDER.name else EntryType.NOTE.name
+            val initialType = if (binding.chipFilterReminder.isChecked) EntryType.REMINDER else EntryType.NOTE
             val action = AgendaFragmentDirections.actionAgendaFragmentToEntryEditorFragment(entryId, initialType)
             findNavController().navigate(action)
         } else {

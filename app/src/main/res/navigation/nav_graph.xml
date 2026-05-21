@@ -127,8 +127,8 @@
             android:defaultValue="0" />
         <argument
             android:name="initialType"
-            app:argType="string"
-            android:defaultValue="" />
+            app:argType="com.nomyagenda.app.data.local.entity.EntryType"
+            android:defaultValue="NOTE" />
     </fragment>
 
 </navigation>
