@@ -30,7 +30,7 @@ class EntryDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: EntryDetailFragmentArgs by navArgs()
-    private var currentEntryType: EntryType = EntryType.NOTE
+    private var currentEntryType: EntryType? = null
 
     private val viewModel: EntryDetailViewModel by viewModels {
         val app = requireActivity().application as NomyAgendaApp
@@ -140,7 +140,10 @@ class EntryDetailFragment : Fragment() {
         }
 
         binding.fabEditEntry.setOnClickListener {
-            val action = EntryDetailFragmentDirections.actionEntryDetailFragmentToEntryEditorFragment(args.entryId, currentEntryType)
+            val action = EntryDetailFragmentDirections.actionEntryDetailFragmentToEntryEditorFragment(
+                args.entryId,
+                currentEntryType ?: EntryType.NOTE
+            )
             findNavController().navigate(action)
         }
     }
