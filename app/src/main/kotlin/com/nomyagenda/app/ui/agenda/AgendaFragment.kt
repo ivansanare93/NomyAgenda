@@ -125,7 +125,6 @@ class AgendaFragment : Fragment() {
         binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
             val filterType = when {
                 checkedIds.contains(R.id.chip_filter_note) -> EntryType.NOTE
-                checkedIds.contains(R.id.chip_filter_task) -> EntryType.TASK
                 checkedIds.contains(R.id.chip_filter_reminder) -> EntryType.REMINDER
                 else -> null
             }

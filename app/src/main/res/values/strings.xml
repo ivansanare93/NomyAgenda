@@ -29,6 +29,8 @@
     <string name="type_note">Nota</string>
     <string name="type_task">Tarea</string>
     <string name="type_reminder">Recordatorio</string>
+    <string name="type_note_plural">Notas</string>
+    <string name="type_reminder_plural">Recordatorios</string>
 
     <!-- Editor hints -->
     <string name="hint_note_content">Contenido (Markdown)</string>

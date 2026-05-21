@@ -28,6 +28,8 @@
     <string name="type_note">Note</string>
     <string name="type_task">Task</string>
     <string name="type_reminder">Reminder</string>
+    <string name="type_note_plural">Notes</string>
+    <string name="type_reminder_plural">Reminders</string>
 
     <!-- Editor hints -->
     <string name="hint_note_content">Content (Markdown)</string>
