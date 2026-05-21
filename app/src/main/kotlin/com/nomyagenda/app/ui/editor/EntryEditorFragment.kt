@@ -143,7 +143,6 @@ class EntryEditorFragment : Fragment() {
         binding.recyclerChecklist.adapter = checklistAdapter
 
         binding.chipNote.setOnClickListener     { setType(EntryType.NOTE) }
-        binding.chipTask.setOnClickListener     { setType(EntryType.TASK) }
         binding.chipReminder.setOnClickListener { setType(EntryType.REMINDER) }
 
         binding.btnNoteEdit.isChecked = true
@@ -257,14 +256,13 @@ class EntryEditorFragment : Fragment() {
 
     private fun setType(type: EntryType) {
         currentType = type
+        val usesRichTextContent = type == EntryType.NOTE || type == EntryType.REMINDER
         binding.chipNote.isChecked     = type == EntryType.NOTE
-        binding.chipTask.isChecked     = type == EntryType.TASK
         binding.chipReminder.isChecked = type == EntryType.REMINDER
-        binding.layoutNoteContent.visibility = if (type == EntryType.NOTE || type == EntryType.REMINDER) View.VISIBLE else View.GONE
-        binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
+        binding.layoutNoteContent.visibility = if (usesRichTextContent) View.VISIBLE else View.GONE
         binding.layoutReminderContent.visibility = View.VISIBLE
         binding.layoutAdvanceNotice.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
-        if (type == EntryType.NOTE || type == EntryType.REMINDER) {
+        if (usesRichTextContent) {
             binding.btnNoteEdit.isChecked = true
             showNoteEditMode()
         }

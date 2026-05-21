@@ -41,6 +41,7 @@ class AgendaViewModel(
         val source = if (query.isBlank()) repository.getAll() else repository.search(query)
         source.map { list ->
             list
+                .filter { entry -> entry.type != EntryType.TASK }
                 .filter { entry -> filterType == null || entry.type == filterType }
                 .filter { entry ->
                     if (selectedDate == null) true
