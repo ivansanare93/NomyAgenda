@@ -259,7 +259,6 @@ class EntryEditorFragment : Fragment() {
         binding.chipNote.isChecked     = type == EntryType.NOTE
         binding.chipReminder.isChecked = type == EntryType.REMINDER
         binding.layoutNoteContent.visibility = if (type == EntryType.NOTE || type == EntryType.REMINDER) View.VISIBLE else View.GONE
-        binding.layoutTaskContent.visibility = if (type == EntryType.TASK) View.VISIBLE else View.GONE
         binding.layoutReminderContent.visibility = View.VISIBLE
         binding.layoutAdvanceNotice.visibility = if (type == EntryType.REMINDER) View.VISIBLE else View.GONE
         if (type == EntryType.NOTE || type == EntryType.REMINDER) {
