@@ -125,6 +125,10 @@
             android:name="entryId"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="initialType"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 
 </navigation>

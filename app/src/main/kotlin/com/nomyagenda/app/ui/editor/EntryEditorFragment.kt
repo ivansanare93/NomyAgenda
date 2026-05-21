@@ -184,6 +184,10 @@ class EntryEditorFragment : Fragment() {
         selectedDueAt = System.currentTimeMillis()
         binding.editDueDate.setText(DATE_FORMAT.format(Date(selectedDueAt!!)))
 
+        if (args.entryId == 0) {
+            currentType = runCatching { EntryType.valueOf(args.initialType) }.getOrDefault(EntryType.NOTE)
+        }
+
         binding.fabSaveEntry.setOnClickListener { saveEntry() }
         setType(currentType)
 
